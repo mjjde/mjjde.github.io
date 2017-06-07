@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>widget和Notification上的RemoteView | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我们在开发过程中有关于View的基本都是在当前的进程，那么会不会存在一个需要我们编写一个远程使用View的需求呢，答案是肯定的。我们在开发桌面小工具或者自定义消息通知栏的布局的时候，我们就有可能需要编写远程的View-RemoteView.  Notification我们在使用消息通知栏时，经常有需要要求我们去自定义UI，毕竟系统自带的布局不怎么好看，或者于我们的应用Style不统一。那么我就需">
+<meta name="keywords" content="widget,Notification,RemoteView">
+<meta property="og:type" content="article">
+<meta property="og:title" content="widget和Notification上的RemoteView">
+<meta property="og:url" content="http://yoursite.com/2016/03/16/widget和Notification上的RemoteView/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="我们在开发过程中有关于View的基本都是在当前的进程，那么会不会存在一个需要我们编写一个远程使用View的需求呢，答案是肯定的。我们在开发桌面小工具或者自定义消息通知栏的布局的时候，我们就有可能需要编写远程的View-RemoteView.  Notification我们在使用消息通知栏时，经常有需要要求我们去自定义UI，毕竟系统自带的布局不怎么好看，或者于我们的应用Style不统一。那么我就需">
+<meta property="og:updated_time" content="2017-06-07T07:17:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="widget和Notification上的RemoteView">
+<meta name="twitter:description" content="我们在开发过程中有关于View的基本都是在当前的进程，那么会不会存在一个需要我们编写一个远程使用View的需求呢，答案是肯定的。我们在开发桌面小工具或者自定义消息通知栏的布局的时候，我们就有可能需要编写远程的View-RemoteView.  Notification我们在使用消息通知栏时，经常有需要要求我们去自定义UI，毕竟系统自带的布局不怎么好看，或者于我们的应用Style不统一。那么我就需">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-widget和Notification上的RemoteView" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/16/widget和Notification上的RemoteView/" class="article-date">
+  	<time datetime="2016-03-16T07:15:57.000Z" itemprop="datePublished">2016-03-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      widget和Notification上的RemoteView
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notification/">Notification</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RemoteView/">RemoteView</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/widget/">widget</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>我们在开发过程中有关于View的基本都是在当前的进程，那么会不会存在一个需要我们编写一个远程使用View的需求呢，答案是肯定的。我们在开发桌面小工具或者自定义消息通知栏的布局的时候，我们就有可能需要编写远程的View-RemoteView.</p>
+</blockquote>
+<h4 id="Notification"><a href="#Notification" class="headerlink" title="Notification"></a><a href="#Notification" title="Notification"></a>Notification</h4><p>我们在使用消息通知栏时，经常有需要要求我们去自定义UI，毕竟系统自带的布局不怎么好看，或者于我们的应用Style不统一。那么我就需要自己去定义布局了。</p>
+<p>Notification布局的自定义中，就会使用要我们的RemoteView</p>
+<p>一般使用系统自带的UI代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Notification n = new Notification();</div><div class="line">n.icon = R.drawable.ic_launcher;</div><div class="line">n.tickText = &quot;Hello&quot;;</div><div class="line">n.when = System.currentTimeMillis();</div><div class="line">n.flags = Notification.FLAG_AUTO_CANCEL;</div><div class="line">Intent intent = new Intent(this,MainAct.class);</div><div class="line">PendingIntent pendingIntent = PendingIntent</div><div class="line">.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);</div><div class="line">n.setLatestEventInfo(this,&quot;test&quot;,&quot;this is</div><div class="line">notification&quot;,pendingInetnt);</div><div class="line">NotificationManager manager =(NotificatiobManager)</div><div class="line">getService(Context.NOTIFICATION_SERVICE);</div><div class="line">manager.notify(0,n);</div></pre></td></tr></table></figure>
+<p>如果我们需要自定义通知栏的UI,我们可以通过RemoteView来实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Notification n = new Notification();</div><div class="line">n.icon = R.drawable.ic_launcher;</div><div class="line">n.tickText = &quot;Hello&quot;;</div><div class="line">n.when = System.currentTimeMillis();</div><div class="line">n.flags = Notification.FLAG_AUTO_CANCEL;</div><div class="line">Intent intent = new Intent(this,MainAct.class);</div><div class="line">PendingIntent pendingIntent = PendingIntent</div><div class="line">.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);</div><div class="line">RemoteViews remoteViews = new </div><div class="line">RemoteViews(getPackageName(),R.layout.layout_notification);</div><div class="line">remoteViews.setTextViewText(R.id.name,&quot;hello&quot;);</div><div class="line">remoteViews.setImageViewResource(R.id.icon,R.id.tuan);</div><div class="line">PendingIntent pendingIntent2 = PendingIntent</div><div class="line">.getActivity(this,0,new Intent(this,test2.class),PendingIntent.FLAG_UPDATE_CURRENT);</div><div class="line">remoteViews.setOnclickPendingIntent(R.id.icon,pendingIntent2);</div><div class="line">n.contentView = remoteViews;</div><div class="line">n.contentIntent = pendingIntent;</div><div class="line">NotificationManager manager =(NotificatiobManager)</div><div class="line">getService(Context.NOTIFICATION_SERVICE);</div><div class="line">manager.notify(0,n);</div></pre></td></tr></table></figure>
+<p>我们在上面看到如果要给RemoteView布局设置属性的时候，不是通过findById去找到对应的View去设置的，而是通过RemoteViews自带的API去设置，这是因为这个RemoteView最终是要显示在另一个进程中的，所以我们是没办法通过findById去找到对应的Vioew的，通过自身的API去设置View的属性也不是立即就会应用的，而是等待notify的时候，再去设置。</p>
+<h4 id="AppWidgetProvider"><a href="#AppWidgetProvider" class="headerlink" title="AppWidgetProvider"></a><a href="#AppWidgetProvider" title="AppWidgetProvider"></a>AppWidgetProvider</h4><p>桌面小部件是Android为应该提供快捷或小工具的应用，要实现这样的一个小部件，我们当然也是需要使用RemoteView，它会显示在系统的进程中，于Notification类似，都会显示在system进程中去。</p>
+<p>创建一个小部件需要以下步骤：</p>
+<ul>
+<li>定义小部件的布局。我们可以在res下面的layout目录下创建xml文件，来布局我们的小部件样式。</li>
+<li>定义小部件的配置信息。在res下的xml目录下创建一个xml文件。用来描述小部件的信息。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;appwidget-provider </div><div class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    android:initialLayout=&quot;@layout/widget&quot;</div><div class="line">    android:minHeight=&quot;30dp&quot;</div><div class="line">    android:minWidth=&quot;30dp&quot;</div><div class="line">    android:updatePeriodMillis=&quot;1000&quot;</div><div class="line">&gt;</div><div class="line">&lt;/appwidget-provider&gt;</div></pre></td></tr></table></figure>
+<p>android:initialLayout表示小部件显示的layout，android:updatePeriodMillis表示小部件自动更新的时间周期。</p>
+<ul>
+<li><p>定义小部件的实现类，继承AppWidgetProvider.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class MyAppWidget extends AppWidgetProvider&#123;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void onReceive(final Context context,Intent intent)</div><div class="line">    //桌面小布局本身就是个广播接收器。</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void onUpdate(Context conetx,AppWidgetManager appWidgetManager ,int [] appWidgetIds)&#123;</div><div class="line">    //桌面小部件每次更新都会调用该方法。</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在manifest中声明小部件。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;receiver android:name=&quot;.MyAppWidgetProviders&quot;&gt;</div><div class="line">    &lt;meta-data</div><div class="line">        android:name=&quot;android.appwidget.provider&quot;</div><div class="line">        android:resource=&quot;@xml/appwidget_provider_info&quot;&gt;&lt;/meta-data&gt;</div><div class="line">    &lt;intent-filter&gt;</div><div class="line">        &lt;action android:name=&quot;com.open_source.joker.myapplication.click&quot;&gt;&lt;/action&gt;</div><div class="line">        &lt;action android:name=&quot;android.appwidget.action.APPWIDGET_UPDATE&quot;&gt;&lt;/action&gt;</div><div class="line">    &lt;/intent-filter&gt;</div><div class="line">&lt;/receiver&gt;</div></pre></td></tr></table></figure>
+<h4 id="PendingIntent"><a href="#PendingIntent" class="headerlink" title="PendingIntent"></a><a href="#PendingIntent" title="PendingIntent"></a>PendingIntent</h4><p>在上面多次提到了PendingIntent,它于Intent是有区别的，PendingIntent主要是用于待定的意图，该意图将会在未来的某个时刻发生，而Intent一旦被Start后就会立刻生效，这就是主要的区别。</p>
+<p>PendingIntent可以实现三中意图的发生，分别是Activity，Service，广播，分别对应的三个API是</p>
+<p>PendingIntent.getActivity(Context context, int requestCode, Intent, int flags);</p>
+<p>对应startActivity();</p>
+<p>PengdingIntent.getService(Context context, int requestCode, Intent, int flags)</p>
+<p>对应startService();</p>
+<p>PengdingIntent.getBroadcast(Context context, int requestCode, Intent, int flags)</p>
+<p>对应sendBroadcast();</p>
+<p>对于第一和第三个参数还是很明白的，主要是第二和第四个参数需要说明。</p>
+<p>requestCode表是返回码，于Flag一起标示一个PendingIntent。</p>
+<p>一般requestCode设置为0，使用Flag去区别PendingIntent。</p>
+<p>Flag有四个常见类型。</p>
+<ul>
+<li><p>FLAG_ONE_SHOT: 使用该Flag标记PendingIntent时，标示该意图只会发生一次，之后将不会再次触发意图，在Notification上的表现为，当有多个消息通知栏出现，点击其中的一个触发了意图，之后的消息通知点击后无效。</p>
+</li>
+<li><p>FLAG_NO_CREATE: 使用该Flag设置的PendingIntent时，不会主动创建，在Notification上的表现为。如果没有触发过这个意图的PendingIntent存在，那么点击后无反应，在使用中很少会用到</p>
+</li>
+<li><p>FLAG_CANCEL_CURRENT: 使用这个表示的PendingIntent时，对于已经存在的PendingIntent来说，如果有产生一个PendingIntent的话，之前的都会被取消掉，新创建一个PendingIntent。在Notification上的表现为，之前展示消息通知无法点开，最后一个可以点开。</p>
+</li>
+<li><p>FLAG_UPDATE_CURRENT: 使用这个表示的PendingIntent时，对于之前的PendingIntent都会被更新成最新的Intent，Extras也会被替换。在Notification上的表现为，之前展示的通知与最后一个一样。</p>
+</li>
+</ul>
+<p>上面讨论的是基于同一个PendingIntent，那么匹配原则是：requestCode相同，Intent相同。<br>requestCode相同很容易理解，Intent相同的原则是：ComponentName和intent-filtre相同，Intent的Extra是不参与匹配的。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          DiskLruCache Java实现基于LRU的磁盘缓存
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/15/android事件分发机制/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">android事件分发机制</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="widget和Notification上的RemoteView" data-title="widget和Notification上的RemoteView" data-url="http://yoursite.com/2016/03/16/widget和Notification上的RemoteView/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="widget和Notification上的RemoteView">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2017 John Doe
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>

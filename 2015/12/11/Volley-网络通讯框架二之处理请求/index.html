@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Volley-网络通讯框架二之处理请求 | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="说到Volley的请求处理，其实并没有，只是使用了Android自带的HTTP工具类HttpURLConnection和HttpClient，我们知道这两个类根据Android系统版本的不同，会有各自的优点和缺点。Volley只是合理的对两着进行取舍。所以个人认为Volley更像是一个Http工具，帮我们管理请求队列，请求分发，缓存处理等等，当然我们也可以不用以上两个Http工具类，比如使用OkH">
+<meta name="keywords" content="volley">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Volley-网络通讯框架二之处理请求">
+<meta property="og:url" content="http://yoursite.com/2015/12/11/Volley-网络通讯框架二之处理请求/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="说到Volley的请求处理，其实并没有，只是使用了Android自带的HTTP工具类HttpURLConnection和HttpClient，我们知道这两个类根据Android系统版本的不同，会有各自的优点和缺点。Volley只是合理的对两着进行取舍。所以个人认为Volley更像是一个Http工具，帮我们管理请求队列，请求分发，缓存处理等等，当然我们也可以不用以上两个Http工具类，比如使用OkH">
+<meta property="og:updated_time" content="2017-06-07T07:01:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Volley-网络通讯框架二之处理请求">
+<meta name="twitter:description" content="说到Volley的请求处理，其实并没有，只是使用了Android自带的HTTP工具类HttpURLConnection和HttpClient，我们知道这两个类根据Android系统版本的不同，会有各自的优点和缺点。Volley只是合理的对两着进行取舍。所以个人认为Volley更像是一个Http工具，帮我们管理请求队列，请求分发，缓存处理等等，当然我们也可以不用以上两个Http工具类，比如使用OkH">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Volley-网络通讯框架二之处理请求" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/11/Volley-网络通讯框架二之处理请求/" class="article-date">
+  	<time datetime="2015-12-11T06:58:37.000Z" itemprop="datePublished">2015-12-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Volley-网络通讯框架二之处理请求
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volley/">volley</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>说到Volley的请求处理，其实并没有，只是使用了Android自带的HTTP工具类HttpURLConnection和HttpClient，我们知道这两个类根据Android系统版本的不同，会有各自的优点和缺点。Volley只是合理的对两着进行取舍。所以个人认为Volley更像是一个Http工具，帮我们管理请求队列，请求分发，缓存处理等等，当然我们也可以不用以上两个Http工具类，比如使用OkHttp来作为我们request处理者。</p>
+<p>我们上篇文章里提到过RequestQueue中得构造参数，其中有一个是Network network，这个就是我们request处理者。</p>
+<p>当然一开始我们要先了解下被处理这Request</p>
+<h4 id="Reqeust-java"><a href="#Reqeust-java" class="headerlink" title="Reqeust.java"></a><a href="#Reqeust-java" title="Reqeust.java"></a>Reqeust.java</h4><p><a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/Request.java" target="_blank" rel="external">Github For Request,java</a></p>
+<p>Request是一个抽象类，很显然是要我们定制符合自己的Request，当然Volley也给我们提供了几个定义好的Request。在Volley里面Request地位是很高的，它包括了分发器，怎么去解析NetWorkResponse的方法。我们要定制自己的Request，就要去实现相应的抽象方法。</p>
+<ol>
+<li>abstract protected Response <t>parseNetworkResponse(NetworkResponse response);</t></li>
+<li>abstract protected void deliverResponse(T response);</li>
+</ol>
+<p>第一个方法是用来解析结果的，我们可以获取response.data 获得数据，然后按照自己的规则去解析。<br>第二个方法是用来进行成功分发的，下面会说到。</p>
+<p>还有两个方法值得注意getParams(),和getBody().下面也会具体的介绍到。</p>
+<h4 id="Network-java"><a href="#Network-java" class="headerlink" title="Network.java"></a><a href="#Network-java" title="Network.java"></a>Network.java</h4><p><a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/Network.java" target="_blank" rel="external">Github For Network.java</a></p>
+<p>我们可以看到这个是一个接口，里面只有一个方法 <strong>NetworkResponse performRequest(Request&lt;?&gt; request) throws VolleyError</strong> ，这个方法的定义是用来规约如何处理请求的，返回类型是NetworkResponse，我们之后在说。刚刚说了Volley会根据版本而对HttpURLConnection和HttpClient进行取舍，那么既然这两个是处理request的主角，自然好受到规约，定制2个不同的实现类。接下来我们来看看Network的实现者：BasicNetwork。</p>
+<h4 id="BasicNetwork-java"><a href="#BasicNetwork-java" class="headerlink" title="BasicNetwork.java"></a><a href="#BasicNetwork-java" title="BasicNetwork.java"></a>BasicNetwork.java</h4><p><a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/toolbox/BasicNetwork.java" target="_blank" rel="external">Github For BasicNetwork.java</a></p>
+<ol>
+<li>我们先来看下它的构造方法 <strong>BasicNetwork(HttpStack httpStack, ByteArrayPool pool)</strong> HttpStack到底是神马呢。我们点开看下。又是一个接口<a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/toolbox/HttpStack.java" target="_blank" rel="external">Github For HttpStack.java</a>.里面也只有一个方法 <strong>HttpResponse performRequest(Request&lt;?&gt; request, Map <string, string="">additionalHeaders)</string,></strong> 这个方法名和@BasicNetwork方法名一模一样，但是方法的入参和返回类型不一样，我们可以发现HttpStack是更“原始”一点，有啥用的呢，我们看下面。</li>
+<li>我们再来看下<strong>BasicNetwork(HttpStack httpStack, ByteArrayPool pool)</strong> 的实现。原来虚有其表，调用的还是HttpStack.java的performRequest,这里做得只是构建HttpStack所需要的 <em>Map <string, string="">additionalHeaders</string,></em> 和对返回值的修改 HttpResponse-&gt;NetworkResponse.</li>
+<li>对这里的返回值NetworkResponse我们要说下。跟着代码往下走我们发现它会根据statusCode的不同来返回NetworkResponse，首先来看下第一个判断<strong>statusCode == HttpStatus.SC_NOT_MODIFIED</strong> code = 304 表示的是返回值是不需要更新的，没有做修改的response。那么我们就直接去拿下缓存，如果有的话我们就去拿缓存，没有的话就没办法new 一个空数据的NetworkResponse。接下来看第二个code值判断 <strong>statusCode == HttpStatus.SC_MOVED_PERMANENTLY || statusCode == HttpStatus.SC_MOVED_TEMPORARILY</strong> 这个表示重定向的。那么有这样的response返回我们就会set要重定向的url给request，为后面的Retry设置内容。再往下走，我们就要获取response里面的内容了。接着往下判断statusCode &lt; 200 || statusCode &gt; 299 我们就抛出IO异常，else 正常返回NetworkResponse。那我们在来看下catch 到IOException后做了什么。哦，是要对两个特殊的code做retry。一个是授权，一个是重定向。好了，那问题来了，我们如何retry呢。</li>
+<li>我们看 <strong>attemptRetryOnException(String logPrefix, Request &lt; ? &gt;;request,VolleyError exception)</strong> 方法，在request里获取了<a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/RetryPolicy.java" target="_blank" rel="external">RetryPolicy.java</a>; 我们看到RetryPolicy是个接口，volley提供了一个默认的实现类<a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/DefaultRetryPolicy.java" target="_blank" rel="external">DefaultRetryPolicy.java</a>,然而并没有做什么retry操作，所以你得要实现自己的重试机制(当你有需要)。</li>
+</ol>
+<p>刚刚在上面说到BasicNetwork.java调用的是HttpStack的方法，那么具体实现自然是在httpStack里了，我们来看下HttpStack的两个实现类。</p>
+<p><a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/toolbox/HurlStack.java" target="_blank" rel="external">Github For HurlStack.java</a>和<a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/toolbox/HttpClientStack.java" target="_blank" rel="external">Github For HttpClientStack.java</a></p>
+<p>我们看到它们并没有什么特殊之处，和我们使用的时候差不多，Volley并没有对http的具体请求做什么，依旧是使用上面提到的两个Android系统自带的API</p>
+<p>这里有个值得注意的地方：关于传参，分2点：</p>
+<ol>
+<li>get请求的时候，我们一般会带有一个完整的url，但是在我们项目中可能考虑到统一性，可能会出现get请求是会传递一个map参数用来构建完整的url，那么这个就可以自定义自己的Request，定义方法传入主url和map的参数，内部在自己做拼接</li>
+<li>post等需要在body里面传参的时候，我们看到这两个stack传参的时候是调用了request.getBody();<br>getBody()调用了reques.getParams();所以要是传参需要重写二者之一。</li>
+</ol>
+<p>好了我们已经知道request的处理过程了，那么我们在来看看如何管理request，并且如何安排它们去<br>performRequest。</p>
+<p>回顾之前一篇讲的request上膛是在RequestQueue的add方法里面，会根据不同条件放到mCacheQueue和mNetworkQueue队列里面。那么放入队列之后又是如何处理呢，接下来就是Volley优美的两个Dispatch出场了。</p>
+<h4 id="CacheDispatcher-java"><a href="#CacheDispatcher-java" class="headerlink" title="CacheDispatcher.java"></a><a href="#CacheDispatcher-java" title="CacheDispatcher.java"></a>CacheDispatcher.java</h4><p><a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/CacheDispatcher.java" target="_blank" rel="external">Github For CacheDispatcher.java</a></p>
+<p>我们看到继承Thread，所以是个线程。</p>
+<ol>
+<li>我们首先看下构造 <strong>CacheDispatcher(BlockingQueue<request<?>&gt;cacheQueue, BlockingQueue<request<?>&gt;networkQueue,Cache cache, ResponseDelivery delivery)</request<?></request<?></strong> 第一个参数很容易理解是个缓存request队列，第二个怎么又会有网络request队列呢，下面再说，第三个是硬盘缓存对象，默认的是DiskBasedCache，第四个参数是负责分发结果的分发器。</li>
+<li>既然是个线程我们当然要看它的run()方法了。首先硬盘缓存初始化，来读取之前的已经存在的缓存，放入内存中(少量信息)。 然后我们看到while死循环，循环体内首先从队列里取出一个request对象，这里说下BlockingQueue是一个阻塞的队列，如果队列空了，那就阻塞。然后判断是否要求stop.然后判断request是否被isCanceled，如果完成请求，调用的是request.finish(),而内部实现的是requestQueue.finish();,接下来我们就要从缓存里尝试拿response，调用的是DiskBasedCache.get(key);如果为空，说明没有缓存，那么就扔给networkQueue，这就是构造器里带这个参数的原因，接下来就是NetworkDispatch干活了。如果不为空，说明是有缓存的。那么就要对缓存有效性进行判断了Cache.Entry里面是带请求头和数据的对象。entry.isExpired()如果过期了那么就扔给networkQueue。如果没过去就构建NetworkResponse，然后调用request.parseNetworkResponse（）方法解析NetworkResponse，来作为我们需要的数据结构。接下来我们还有判断是否为软过期entry.refreshNeeded()，如果过期了我们仍然先把旧的数据返回去，再把request扔给networkQueue数据刷新。之后分发结果。</li>
+</ol>
+<p>这样CacheDispatcher的工作流程就结束了一次request请求。<br>接下来我们来看NetworkDispatcher</p>
+<h4 id="NetworkDispatcher-java"><a href="#NetworkDispatcher-java" class="headerlink" title="NetworkDispatcher.java"></a><a href="#NetworkDispatcher-java" title="NetworkDispatcher.java"></a>NetworkDispatcher.java</h4><p><a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/NetworkDispatcher.java" target="_blank" rel="external">Github For NetworkDispatcher.java</a></p>
+<p>NetworkDispatcher同样也是继承了Thread，我们可以在RequestQueue.start();方法里可以看到Volley默认的是给我们开启了4个NetworkDispatcher线程。</p>
+<p>NetworkDispatcher相应的会简单一些我们来看构造</p>
+<ol>
+<li><strong>NetworkDispatcher(BlockingQueue<request<?>&gt; queue,Network network, Cache cache,ResponseDelivery delivery)</request<?></strong> 第一个是请求队列，第二个是network,第三个是缓存，第四个是分发对象。</li>
+<li>再来看下run(),首先是获取一个request。然后判断是否被取消了。如果没有的。调用network.performRequest(),如果返回的结果是不需要修改，就可以结束这次请求。如果正常返回，那么就request.parseNetworkRespons去解析自己需要得response，delivery分发结果。如果需要进行缓存的调用cache.put();</li>
+</ol>
+<p>这样就结束了一次网络请求，下面我们来看下Volley的分发器ResponseDelivery</p>
+<h4 id="ResponseDelivery-java"><a href="#ResponseDelivery-java" class="headerlink" title="ResponseDelivery.java"></a><a href="#ResponseDelivery-java" title="ResponseDelivery.java"></a>ResponseDelivery.java</h4><p><a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/ResponseDelivery.java" target="_blank" rel="external">Github For ResponseDelivery.java</a></p>
+<p>我们看到这个是一个接口。</p>
+<h4 id="ExecutorDelivery-java"><a href="#ExecutorDelivery-java" class="headerlink" title="ExecutorDelivery.java"></a><a href="#ExecutorDelivery-java" title="ExecutorDelivery.java"></a>ExecutorDelivery.java</h4><p><a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/ExecutorDelivery.java" target="_blank" rel="external">Github For ExecutorDelivery.java</a></p>
+<p>这个实现类主要的目的是把子线程的Response分发到MainThread线程上。<br>在postError的时候我们会自己new一个带err的response，在run方法中我们会根据是否是err的Request来调用Request的相应的 abstract deliverResponse(T response) 和 deliverError(VolleyError error)</p>
+<p>对于分发来说一共有两种情况，第一是正确分发，一个是错误分发<br>在Volley上的分发有点绕，错误的分发接口是定义在Request中，所以在构造的时候需要直接传入。分发的调用者都是Request中， <strong>abstract protected void deliverResponse(T response)</strong> 成功的分发是一个抽象方法需要实现者自己实现， <strong>deliverError(VolleyError error)</strong> 而失败的方法是已经实现的会调用 <strong>mErrorListener.onErrorResponse(error)</strong> 来进行分发。那我我们要去实现成功分发的方法。</p>
+<p>Volley是这样实现的<br>在继承Request的时候放入一个实现Response.Listener的接口为成员变量，在构造的时候传入，然后再抽象方法deliverResponse的时候在去调用Response.Listener.onResponse()方法来进行分发，</p>
+<p>那分发器在何时发生的呢。我们依然分2点。</p>
+<ol>
+<li>错误的分发，这种分发会出现在2个地方，第一个是网络请求的时候也就是BasicNetwork.performRequest()方法在抛出Exception的时候会被NetWorkDispatch捕获到。这时候调用上面分析的ExecutorDelivery的postError()方法，然后后调用Request.deliverError()方法，这个方法里调用的就是在构造里的成员变量Response.ErrorListener mErrorListener的onErrorResponse(VolleyError error),完成一次错误分发，第二个是在Request.parseNetworkResponse(),这个异常在CacheDispatch和NetworkDispatch上都会捕获，然后和上面一样的方式传递。</li>
+<li>正确的分发。这种的分发会出现在CacheDispatch和NetworkDispatch上，然后会调用Request的抽象方法deliverResponse(T response)，按照上面说的去实现这个方法会调用Response.Listener.onResponse()来完成传递。</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/14/Rxjava-简化你的异步调用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          Rxjava-简化你的异步调用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/12/11/Volley-网络通讯框架一之发起请求/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Volley 网络通讯框架一之发起请求</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="Volley-网络通讯框架二之处理请求" data-title="Volley-网络通讯框架二之处理请求" data-url="http://yoursite.com/2015/12/11/Volley-网络通讯框架二之处理请求/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="Volley-网络通讯框架二之处理请求">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2017 John Doe
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>

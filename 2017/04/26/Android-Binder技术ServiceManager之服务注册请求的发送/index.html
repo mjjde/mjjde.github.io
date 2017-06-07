@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android-Binder技术ServiceManager之服务注册请求的发送 | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ServiceManager的启动已经介绍过了,那么ServiceManager的主要功能是注册和获取服务，那么这些功能的前提都是要能够获取ServiceManager，当然这部分我们也上上篇介绍过了，接下来我们就介绍一下具体的一个服务是如果注册的。当然我们选一个Service就可以了。其他的Service都是类似的。那么我们接下来就说说MediaPlayerService是如何注册的。  Me">
+<meta name="keywords" content="Binder,Android,ServiceManager">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-Binder技术ServiceManager之服务注册请求的发送">
+<meta property="og:url" content="http://yoursite.com/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ServiceManager的启动已经介绍过了,那么ServiceManager的主要功能是注册和获取服务，那么这些功能的前提都是要能够获取ServiceManager，当然这部分我们也上上篇介绍过了，接下来我们就介绍一下具体的一个服务是如果注册的。当然我们选一个Service就可以了。其他的Service都是类似的。那么我们接下来就说说MediaPlayerService是如何注册的。  Me">
+<meta property="og:updated_time" content="2017-06-07T07:26:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-Binder技术ServiceManager之服务注册请求的发送">
+<meta name="twitter:description" content="ServiceManager的启动已经介绍过了,那么ServiceManager的主要功能是注册和获取服务，那么这些功能的前提都是要能够获取ServiceManager，当然这部分我们也上上篇介绍过了，接下来我们就介绍一下具体的一个服务是如果注册的。当然我们选一个Service就可以了。其他的Service都是类似的。那么我们接下来就说说MediaPlayerService是如何注册的。  Me">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Android-Binder技术ServiceManager之服务注册请求的发送" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/" class="article-date">
+  	<time datetime="2017-04-26T07:26:06.000Z" itemprop="datePublished">2017-04-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android-Binder技术ServiceManager之服务注册请求的发送
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Binder/">Binder</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ServiceManager/">ServiceManager</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>ServiceManager的启动已经介绍过了,那么ServiceManager的主要功能是注册和获取服务，那么这些功能的前提都是要能够获取ServiceManager，当然这部分我们也上上篇介绍过了，接下来我们就介绍一下具体的一个服务是如果注册的。当然我们选一个Service就可以了。其他的Service都是类似的。那么我们接下来就说说MediaPlayerService是如何注册的。</p>
+</blockquote>
+<p>MediaPlayerService的入口函数是main_mediaserver.cpp中的main方法。</p>
+<h3 id="MediaPlayerService-main"><a href="#MediaPlayerService-main" class="headerlink" title="MediaPlayerService::main()"></a><a href="#MediaPlayerService_3A_3Amain_28_29" title="MediaPlayerService::main()"></a>MediaPlayerService::main()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">int main(int argc, char** argv)</div><div class="line">&#123;</div><div class="line">    signal(SIGPIPE, SIG_IGN);</div><div class="line">    char value[PROPERTY_VALUE_MAX];</div><div class="line">    bool doLog = (property_get(&quot;ro.test_harness&quot;, value, &quot;0&quot;) &gt; 0) &amp;&amp; (atoi(value) == 1);</div><div class="line">    pid_t childPid;</div><div class="line"></div><div class="line">    if (doLog &amp;&amp; (childPid = fork()) != 0) &#123;</div><div class="line">        ...</div><div class="line">    &#125; else &#123;</div><div class="line">        // all other services</div><div class="line">        ...</div><div class="line">        sp&lt;ProcessState&gt; proc(ProcessState::self());</div><div class="line">        sp&lt;IServiceManager&gt; sm = defaultServiceManager();</div><div class="line">        ...</div><div class="line">        MediaPlayerService::instantiate();</div><div class="line">        ...</div><div class="line">        ProcessState::self()-&gt;startThreadPool();</div><div class="line">        IPCThreadState::self()-&gt;joinThreadPool();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>property_get(“ro.test_harness”, value, “0”)是获取”ro.test_harness”属性，为false。</li>
+<li>ProcessState:self()是获取ProcessState对象，并赋值给proc,已经介绍过了。</li>
+<li>defaultServiceManager()是获取IServiceManager对象，已经介绍过了。</li>
+</ol>
+<h4 id="MediaPlayerService-instantiate"><a href="#MediaPlayerService-instantiate" class="headerlink" title="MediaPlayerService::instantiate()"></a><a href="#MediaPlayerService_3A_3Ainstantiate_28_29" title="MediaPlayerService::instantiate()"></a>MediaPlayerService::instantiate()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">void MediaPlayerService::instantiate() &#123;</div><div class="line">    defaultServiceManager()-&gt;addService(</div><div class="line">            String16(&quot;media.player&quot;), new MediaPlayerService());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>defaultServiceManager() 获取到一个BpServiceManager实例对象，调用addService方法将”media.player”和MediaPlayerService对象。我们客户端可以通过”media.player”来获取该服务。</p>
+<h4 id="MediaPlayerService-MediaPlayerService"><a href="#MediaPlayerService-MediaPlayerService" class="headerlink" title="MediaPlayerService::MediaPlayerService()"></a><a href="#MediaPlayerService_3A_3AMediaPlayerService_28_29" title="MediaPlayerService::MediaPlayerService()"></a>MediaPlayerService::MediaPlayerService()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">MediaPlayerService::MediaPlayerService()</div><div class="line">&#123;</div><div class="line">    ALOGV(&quot;MediaPlayerService created&quot;);</div><div class="line">    mNextConnId = 1; </div><div class="line"></div><div class="line">    mBatteryAudio.refCount = 0; </div><div class="line">    for (int i = 0; i &lt; NUM_AUDIO_DEVICES; i++) &#123;</div><div class="line">        mBatteryAudio.deviceOn[i] = 0; </div><div class="line">        mBatteryAudio.lastTime[i] = 0; </div><div class="line">        mBatteryAudio.totalTime[i] = 0; </div><div class="line">    &#125;    </div><div class="line">    // speaker is on by default</div><div class="line">    mBatteryAudio.deviceOn[SPEAKER] = 1; </div><div class="line">    mOOMKilling = false;</div><div class="line">    MediaPlayerFactory::registerBuiltinFactories();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单的变量初始化，MediaPlayerService是实现了BBinder的。</p>
+<h4 id="BpServiceManager-addService"><a href="#BpServiceManager-addService" class="headerlink" title="BpServiceManager::addService()"></a><a href="#BpServiceManager_3A_3AaddService_28_29" title="BpServiceManager::addService()"></a>BpServiceManager::addService()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">class BpServiceManager : public BpInterface&lt;IServiceManager&gt;</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    ...</div><div class="line"></div><div class="line">    virtual status_t addService(const String16&amp; name, const sp&lt;IBinder&gt;&amp; service,          </div><div class="line">            bool allowIsolated)         </div><div class="line">    &#123;     </div><div class="line">        Parcel data, reply;             </div><div class="line">        data.writeInterfaceToken(IServiceManager::getInterfaceDescriptor());</div><div class="line">        data.writeString16(name);       </div><div class="line">        data.writeStrongBinder(service);</div><div class="line">        data.writeInt32(allowIsolated ? 1 : 0);</div><div class="line">        status_t err = remote()-&gt;transact(ADD_SERVICE_TRANSACTION, data, &amp;reply);          </div><div class="line">        return err == NO_ERROR ? reply.readExceptionCode() : err;</div><div class="line">    &#125;     </div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>addService()会现将MediaPlayerService服务的名称(“media.player”)以及它的实例等参数保存到data(Parcel对象)中，然后再调用remote()返回的BpBinder对象的transact()与Binder驱动进行交互。</p>
+<h4 id="Parcel-Parcel"><a href="#Parcel-Parcel" class="headerlink" title="Parcel::Parcel()"></a><a href="#Parcel_3A_3AParcel_28_29" title="Parcel::Parcel()"></a>Parcel::Parcel()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Parcel::Parcel()</div><div class="line">&#123;   </div><div class="line">    initState(); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Parcel-initState"><a href="#Parcel-initState" class="headerlink" title="Parcel::initState()"></a><a href="#Parcel_3A_3AinitState_28_29" title="Parcel::initState()"></a>Parcel::initState()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">void Parcel::initState()</div><div class="line">&#123;</div><div class="line">    mError = NO_ERROR;</div><div class="line">    mData = 0;              // 数据的地址指针</div><div class="line">    mDataSize = 0;          // 数据的大小</div><div class="line">    mDataCapacity = 0;      // 数据的容量</div><div class="line">    mDataPos = 0;           // 数据的位置</div><div class="line">    mObjects = NULL;        // 保存对象的地址指针</div><div class="line">    mObjectsSize = 0;       // 对象的个数</div><div class="line">    mObjectsCapacity = 0;   // 对象的容量</div><div class="line">    mNextObjectHint = 0;</div><div class="line">    mHasFds = false;</div><div class="line">    mFdsKnown = true;</div><div class="line">    mAllowFds = true;</div><div class="line">    mOwner = NULL;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Parcel将会申请内存地址来保存数据。</p>
+<h4 id="BpBinder-transact"><a href="#BpBinder-transact" class="headerlink" title="BpBinder::transact()"></a><a href="#BpBinder_3A_3Atransact_28_29" title="BpBinder::transact()"></a>BpBinder::transact()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">status_t BpBinder::transact(            </div><div class="line">    uint32_t code, const Parcel&amp; data, Parcel* reply, uint32_t flags)</div><div class="line">&#123;</div><div class="line">    // mAlive的初始值为1</div><div class="line">    if (mAlive) &#123;</div><div class="line">        status_t status = IPCThreadState::self()-&gt;transact(</div><div class="line">            mHandle, code, data, reply, flags);</div><div class="line">        if (status == DEAD_OBJECT) mAlive = 0;</div><div class="line">        return status;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return DEAD_OBJECT;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>IPCThreadState::self()会获取单例的IPCThreadState对象，并且调用transact方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">status_t IPCThreadState::transact(int32_t handle,</div><div class="line">                                uint32_t code, const Parcel&amp; data,</div><div class="line">                                Parcel* reply, uint32_t flags)</div><div class="line">&#123;</div><div class="line">    status_t err = data.errorCheck();</div><div class="line"></div><div class="line">    flags |= TF_ACCEPT_FDS;</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    if (err == NO_ERROR) &#123;</div><div class="line">        ...</div><div class="line">        err = writeTransactionData(BC_TRANSACTION, flags, handle, code, data, NULL);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    if ((flags &amp; TF_ONE_WAY) == 0) &#123;</div><div class="line">        if (reply) &#123;</div><div class="line">            err = waitForResponse(reply);</div><div class="line">        &#125; else &#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return err;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>先看看函数的参数。handle是BpBinder中的mHandle对象，BpBinder中的mHandle是ServiceManager的句柄，值为0。code=ADD_SERVICE_TRANSACTION。data就是在addService中设置的Parcel对象。reply是用来接收Binder驱动反馈数据的Parcel对象。flags是默认值0</li>
+<li><p>该函数会先通过writeTransactionData()将数据打包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">status_t IPCThreadState::writeTransactionData(int32_t cmd, uint32_t binderFlags,</div><div class="line">    int32_t handle, uint32_t code, const Parcel&amp; data, status_t* statusBuffer)</div><div class="line">&#123;</div><div class="line">    binder_transaction_data tr;</div><div class="line"></div><div class="line">    tr.target.handle = handle;</div><div class="line">    tr.code = code;</div><div class="line">    tr.flags = binderFlags;</div><div class="line">    tr.cookie = 0;</div><div class="line">    tr.sender_pid = 0;</div><div class="line">    tr.sender_euid = 0;</div><div class="line"></div><div class="line">    const status_t err = data.errorCheck();</div><div class="line">    if (err == NO_ERROR) &#123;</div><div class="line">        tr.data_size = data.ipcDataSize();</div><div class="line">        tr.data.ptr.buffer = data.ipcData();</div><div class="line">        tr.offsets_size = data.ipcObjectsCount()*sizeof(size_t);</div><div class="line">        tr.data.ptr.offsets = data.ipcObjects();</div><div class="line">    &#125; else if (statusBuffer) &#123;</div><div class="line">        ..</div><div class="line">    &#125; else &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    mOut.writeInt32(cmd);</div><div class="line">    mOut.write(&amp;tr, sizeof(tr));</div><div class="line"></div><div class="line">    return NO_ERROR;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该函数会读取Parcel中的数据，然后将其打包到binder_transaction_data结构体中。binder_transaction_data结构体是Binder驱动能够识别并对之进行解析的数据结构.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">tr.target.handle = handle;  // 0，即Service Manager的句柄</div><div class="line">tr.code = code;             // ADD_SERVICE_TRANSACTION</div><div class="line">tr.flags = binderFlags;     // TF_ACCEPT_FDS</div><div class="line">tr.cookie = 0;</div><div class="line">tr.sender_pid = 0;</div><div class="line"></div><div class="line">tr.data_size = data.ipcDataSize();      // 数据大小(对应mDataSize)</div><div class="line">tr.data.ptr.buffer = data.ipcData();    // 数据的起始地址(对应mData)</div><div class="line">tr.offsets_size = data.ipcObjectsCount()*sizeof(size_t); // data中保存的对象个数(对应mObjectsSize)</div><div class="line">tr.data.ptr.offsets = data.ipcObjects();                 // data中保存的对象的偏移地址数组(对应mObjects)</div></pre></td></tr></table></figure>
+</li>
+<li><p>lags的初始化为0，并且reply非空。因此，将数据打包号之后，会调用waitForResponse()将数据发送给Binder驱动，然后等待Binder驱动反馈。</p>
+</li>
+</ol>
+<p>初始化tr之后，将cmd=BC_TRANSACTION和tr重新打包到mOut中。mOut中的数据将来会被以请求的方式发送给Binder驱动</p>
+<h4 id="IPCThreadState-waitForResponse"><a href="#IPCThreadState-waitForResponse" class="headerlink" title="IPCThreadState::waitForResponse()"></a><a href="#IPCThreadState_3A_3AwaitForResponse_28_29" title="IPCThreadState::waitForResponse()"></a>IPCThreadState::waitForResponse()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">status_t IPCThreadState::waitForResponse(Parcel *reply, status_t *acquireResult)</div><div class="line">&#123;</div><div class="line">    int32_t cmd;</div><div class="line">    int32_t err;</div><div class="line"></div><div class="line">    while (1) &#123;</div><div class="line">        // 先通过talkWithDriver()和Binder驱动交互</div><div class="line">        if ((err=talkWithDriver()) &lt; NO_ERROR) break;</div><div class="line">        ...</div><div class="line">        if (mIn.dataAvail() == 0) continue;</div><div class="line"></div><div class="line">        // 然后读取返回结果，再根据结果进行处理</div><div class="line">        cmd = mIn.readInt32();</div><div class="line"></div><div class="line">        switch (cmd) &#123;</div><div class="line">        case BR_TRANSACTION_COMPLETE:</div><div class="line">            ...</div><div class="line">        case BR_DEAD_REPLY:</div><div class="line">            ...</div><div class="line">        case BR_FAILED_REPLY:</div><div class="line">            ...</div><div class="line">        case BR_ACQUIRE_RESULT:</div><div class="line">            ...</div><div class="line">        case BR_REPLY:</div><div class="line">            ...</div><div class="line">        default:</div><div class="line">            err = executeCommand(cmd);</div><div class="line">            if (err != NO_ERROR) goto finish;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">finish:</div><div class="line">    ...</div><div class="line"></div><div class="line">    return err;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法会先调用talkWithDriver来发送数据给Binder。然后再等待返回。</p>
+<h4 id="IPCThreadState-talkWithDriver"><a href="#IPCThreadState-talkWithDriver" class="headerlink" title="IPCThreadState::talkWithDriver()"></a><a href="#IPCThreadState_3A_3AtalkWithDriver_28_29" title="IPCThreadState::talkWithDriver()"></a>IPCThreadState::talkWithDriver()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">status_t IPCThreadState::talkWithDriver(bool doReceive)</div><div class="line">&#123;</div><div class="line">    ...</div><div class="line">    binder_write_read bwr;</div><div class="line"></div><div class="line">    // Is the read buffer empty?</div><div class="line">    const bool needRead = mIn.dataPosition() &gt;= mIn.dataSize();</div><div class="line">    const size_t outAvail = (!doReceive || needRead) ? mOut.dataSize() : 0;</div><div class="line"></div><div class="line">    bwr.write_size = outAvail;</div><div class="line">    bwr.write_buffer = (long unsigned int)mOut.data();</div><div class="line"></div><div class="line">    // This is what we&apos;ll read.</div><div class="line">    if (doReceive &amp;&amp; needRead) &#123;</div><div class="line">        bwr.read_size = mIn.dataCapacity();</div><div class="line">        bwr.read_buffer = (long unsigned int)mIn.data();</div><div class="line">    &#125; else &#123;</div><div class="line">        bwr.read_size = 0;</div><div class="line">        bwr.read_buffer = 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">    if ((bwr.write_size == 0) &amp;&amp; (bwr.read_size == 0)) return NO_ERROR;</div><div class="line"></div><div class="line">    bwr.write_consumed = 0;</div><div class="line">    bwr.read_consumed = 0;</div><div class="line">    status_t err;</div><div class="line">    do &#123;</div><div class="line">        ...</div><div class="line">        if (ioctl(mProcess-&gt;mDriverFD, BINDER_WRITE_READ, &amp;bwr) &gt;= 0)</div><div class="line">            err = NO_ERROR;</div><div class="line">        else</div><div class="line">            ...</div><div class="line">        ...</div><div class="line">    &#125; while (err == -EINTR);</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    if (err &gt;= NO_ERROR) &#123;</div><div class="line">        // 清空已写的数据</div><div class="line">        if (bwr.write_consumed &gt; 0) &#123;</div><div class="line">            if (bwr.write_consumed &lt; (ssize_t)mOut.dataSize())</div><div class="line">                mOut.remove(0, bwr.write_consumed);</div><div class="line">            else</div><div class="line">                mOut.setDataSize(0);</div><div class="line">        &#125;</div><div class="line">        // 设置已读数据</div><div class="line">        if (bwr.read_consumed &gt; 0) &#123;</div><div class="line">            mIn.setDataSize(bwr.read_consumed);</div><div class="line">            mIn.setDataPosition(0);</div><div class="line">        &#125;</div><div class="line">        ...</div><div class="line">        return NO_ERROR;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return err;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>bwr初始化完成之后，调用ioctl(,BINDER_WRITE_READ,)和Binder驱动进行交互</p>
+<h4 id="binder-ioctl-BINDER-WRITE-READ"><a href="#binder-ioctl-BINDER-WRITE-READ" class="headerlink" title="binder_ioctl(BINDER_WRITE_READ)"></a><a href="#binder_ioctl_28BINDER_WRITE_READ_29" title="binder_ioctl(BINDER_WRITE_READ)"></a>binder_ioctl(BINDER_WRITE_READ)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">static long binder_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)</div><div class="line">&#123;</div><div class="line">int ret;</div><div class="line">struct binder_proc *proc = filp-&gt;private_data;</div><div class="line">struct binder_thread *thread;</div><div class="line">unsigned int size = _IOC_SIZE(cmd);</div><div class="line">void __user *ubuf = (void __user *)arg;</div><div class="line"></div><div class="line">// 中断等待函数。</div><div class="line">// 1\. 当binder_stop_on_user_error &lt; 2为true时；不会进入等待状态；直接跳过。</div><div class="line">// 2\. 当binder_stop_on_user_error &lt; 2为false时，进入等待状态。</div><div class="line">//    当有其他进程通过wake_up_interruptible来唤醒binder_user_error_wait队列，并且binder_stop_on_user_error &lt; 2为true时；</div><div class="line">//    则继续执行；否则，再进入等待状态。</div><div class="line">ret = wait_event_interruptible(binder_user_error_wait, binder_stop_on_user_error &lt; 2);</div><div class="line"></div><div class="line">binder_lock(__func__);</div><div class="line">// 在proc进程中查找该线程对应的binder_thread；若查找失败，则新建一个binder_thread，并添加到proc-&gt;threads中。</div><div class="line">thread = binder_get_thread(proc);</div><div class="line">...</div><div class="line"></div><div class="line">switch (cmd) &#123;</div><div class="line">case BINDER_WRITE_READ: &#123;</div><div class="line">    struct binder_write_read bwr;</div><div class="line">    ...</div><div class="line"></div><div class="line">    // 将binder_write_read从&quot;用户空间&quot; 拷贝到 &quot;内核空间&quot;</div><div class="line">    if (copy_from_user(&amp;bwr, ubuf, sizeof(bwr))) &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 如果write_size&gt;0，则进行写操作</div><div class="line">    if (bwr.write_size &gt; 0) &#123;</div><div class="line">        ret = binder_thread_write(proc, thread, (void __user *)bwr.write_buffer, bwr.write_size, &amp;bwr.write_consumed);</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 如果read_size&gt;0，则进行读操作</div><div class="line">    if (bwr.read_size &gt; 0) &#123;</div><div class="line">        ret = binder_thread_read(proc, thread, (void __user *)bwr.read_buffer, bwr.read_size, &amp;bwr.read_consumed, filp-&gt;f_flags   &amp; O_NONBLOCK);</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line"></div><div class="line">    if (copy_to_user(ubuf, &amp;bwr, sizeof(bwr))) &#123;</div><div class="line">        ret = -EFAULT;</div><div class="line">        goto err;</div><div class="line">    &#125;</div><div class="line">    break;</div><div class="line">&#125;</div><div class="line">...</div><div class="line">&#125;</div><div class="line">ret = 0;</div><div class="line"></div><div class="line">...</div><div class="line">return ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此时的write_size&gt;0那么就会调用binder_thread_write方法</p>
+<p>这个函数上篇已经介绍过了。这里将binder_write_read从用户空间拷贝到内核空间之后，读取bwr.write_size和bwr.read_size都&gt;0，因此先写后读。<br>这个方法在后会调用binder_transaction函数</p>
+<h4 id="binder-transaction"><a href="#binder-transaction" class="headerlink" title="binder_transaction()"></a><a href="#binder_transaction_28_29" title="binder_transaction()"></a>binder_transaction()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div></pre></td><td class="code"><pre><div class="line">static void binder_transaction(struct binder_proc *proc,</div><div class="line">            struct binder_thread *thread,</div><div class="line">            struct binder_transaction_data *tr, int reply)&#123;</div><div class="line"></div><div class="line">    if (reply) &#123;</div><div class="line">        ...</div><div class="line">    &#125;else &#123;</div><div class="line">        if (tr-&gt;target.handle) &#123;</div><div class="line">            ...</div><div class="line">        &#125; else &#123;</div><div class="line">            // handle=0则找到servicemanager实体</div><div class="line">            target_node = binder_context_mgr_node;</div><div class="line">        &#125;</div><div class="line">        //target_proc为servicemanager进程</div><div class="line">        target_proc = target_node-&gt;proc;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (target_thread) &#123;</div><div class="line">        ...</div><div class="line">    &#125; else &#123;</div><div class="line">        //找到servicemanager进程的todo队列</div><div class="line">        target_list = &amp;target_proc-&gt;todo;</div><div class="line">        target_wait = &amp;target_proc-&gt;wait;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    t = kzalloc(sizeof(*t), GFP_KERNEL);</div><div class="line">    tcomplete = kzalloc(sizeof(*tcomplete), GFP_KERNEL);</div><div class="line"></div><div class="line">    //非oneway的通信方式，把当前thread保存到transaction的from字段</div><div class="line">    if (!reply &amp;&amp; !(tr-&gt;flags &amp; TF_ONE_WAY))</div><div class="line">        t-&gt;from = thread;</div><div class="line">    else</div><div class="line">        t-&gt;from = NULL;</div><div class="line"></div><div class="line">    t-&gt;sender_euid = task_euid(proc-&gt;tsk);</div><div class="line">    t-&gt;to_proc = target_proc; //此次通信目标进程为servicemanager进程</div><div class="line">    t-&gt;to_thread = target_thread;</div><div class="line">    t-&gt;code = tr-&gt;code;  //此次通信code = ADD_SERVICE_TRANSACTION</div><div class="line">    t-&gt;flags = tr-&gt;flags;  // 此次通信flags = 0</div><div class="line">    t-&gt;priority = task_nice(current);</div><div class="line"></div><div class="line">    //从servicemanager进程中分配buffer</div><div class="line">    t-&gt;buffer = binder_alloc_buf(target_proc, tr-&gt;data_size,</div><div class="line">        tr-&gt;offsets_size, !reply &amp;&amp; (t-&gt;flags &amp; TF_ONE_WAY));</div><div class="line"></div><div class="line">    t-&gt;buffer-&gt;allow_user_free = 0;</div><div class="line">    t-&gt;buffer-&gt;transaction = t;</div><div class="line">    t-&gt;buffer-&gt;target_node = target_node;</div><div class="line"></div><div class="line">    if (target_node)</div><div class="line">        binder_inc_node(target_node, 1, 0, NULL); //引用计数加1</div><div class="line">    offp = (binder_size_t *)(t-&gt;buffer-&gt;data + ALIGN(tr-&gt;data_size, sizeof(void *)));</div><div class="line"></div><div class="line">    //分别拷贝用户空间的binder_transaction_data中ptr.buffer和ptr.offsets到内核</div><div class="line">    copy_from_user(t-&gt;buffer-&gt;data,</div><div class="line">        (const void __user *)(uintptr_t)tr-&gt;data.ptr.buffer, tr-&gt;data_size);</div><div class="line">    copy_from_user(offp,</div><div class="line">        (const void __user *)(uintptr_t)tr-&gt;data.ptr.offsets, tr-&gt;offsets_size);</div><div class="line"></div><div class="line">    off_end = (void *)offp + tr-&gt;offsets_size;</div><div class="line"></div><div class="line">    for (; offp &lt; off_end; offp++) &#123;</div><div class="line">        struct flat_binder_object *fp;</div><div class="line">        fp = (struct flat_binder_object *)(t-&gt;buffer-&gt;data + *offp);</div><div class="line">        off_min = *offp + sizeof(struct flat_binder_object);</div><div class="line">        switch (fp-&gt;type) &#123;</div><div class="line">            case BINDER_TYPE_BINDER:</div><div class="line">            case BINDER_TYPE_WEAK_BINDER: &#123;</div><div class="line">            struct binder_ref *ref;</div><div class="line">            //【见4.3.1】</div><div class="line">            struct binder_node *node = binder_get_node(proc, fp-&gt;binder);</div><div class="line">            if (node == NULL) &#123; </div><div class="line">                //服务所在进程 创建binder_node实体【见4.3.2】</div><div class="line">                node = binder_new_node(proc, fp-&gt;binder, fp-&gt;cookie);</div><div class="line">                ...</div><div class="line">            &#125;</div><div class="line">            //servicemanager进程binder_ref【见4.3.3】</div><div class="line">            ref = binder_get_ref_for_node(target_proc, node);</div><div class="line">            ...</div><div class="line">            //调整type为HANDLE类型</div><div class="line">            if (fp-&gt;type == BINDER_TYPE_BINDER)</div><div class="line">                fp-&gt;type = BINDER_TYPE_HANDLE;</div><div class="line">            else</div><div class="line">                fp-&gt;type = BINDER_TYPE_WEAK_HANDLE;</div><div class="line">            fp-&gt;binder = 0;</div><div class="line">            fp-&gt;handle = ref-&gt;desc; //设置handle值</div><div class="line">            fp-&gt;cookie = 0;</div><div class="line">            binder_inc_ref(ref, fp-&gt;type == BINDER_TYPE_HANDLE,</div><div class="line">                    &amp;thread-&gt;todo);</div><div class="line">            &#125; break;</div><div class="line">            case :...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (reply) &#123;</div><div class="line">        ..</div><div class="line">    &#125; else if (!(t-&gt;flags &amp; TF_ONE_WAY)) &#123;</div><div class="line">        //BC_TRANSACTION 且 非oneway,则设置事务栈信息</div><div class="line">        t-&gt;need_reply = 1;</div><div class="line">        t-&gt;from_parent = thread-&gt;transaction_stack;</div><div class="line">        thread-&gt;transaction_stack = t;</div><div class="line">    &#125; else &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //将BINDER_WORK_TRANSACTION添加到目标队列，本次通信的目标队列为target_proc-&gt;todo</div><div class="line">    t-&gt;work.type = BINDER_WORK_TRANSACTION;</div><div class="line">    list_add_tail(&amp;t-&gt;work.entry, target_list);</div><div class="line"></div><div class="line">    //将BINDER_WORK_TRANSACTION_COMPLETE添加到当前线程的todo队列</div><div class="line">    tcomplete-&gt;type = BINDER_WORK_TRANSACTION_COMPLETE;</div><div class="line">    list_add_tail(&amp;tcomplete-&gt;entry, &amp;thread-&gt;todo);</div><div class="line"></div><div class="line">    //唤醒等待队列，本次通信的目标队列为target_proc-&gt;wait</div><div class="line">    if (target_wait)</div><div class="line">        wake_up_interruptible(target_wait);</div><div class="line">    return;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的目标节点是ServiceManager的Binder实体。这个的addService指令最后是交给ServiceManager来处理的。这个时候会创建1个待处理事务t和一个带完成事务tcomplete，并进行初始化，事务t是交给ServiceManager也就是目标进程来处理，tcomplete事务是返回给MediaPlayerService服务的，用来说明Binder请求已经收到。<br>在初始化完待完成任务t之后，接着讲用户空间的数据拷贝到内核空间，从内存数据中解析MediaPlayerService请求的数据中的flat_binder_object对象。改对象的类型是BINDER_TYPE_BINDER，然后调用binder_get_node来寻找当前进程的上下文环境proc中查找fp-&gt;binder对象的Binder实体。fp-&gt;binder是MediaPlayerService在本地引用的描述。即ServiceManager的BBinder的实例引用的描述。在此时是初次交互，proc中并没有本地BBinder对象描述所对应的Binder实体（MediaPlayerService的BpBinder对应的实体）。接下来调用binder_new_node来创建一个对应的Binder实体。也就是BpBinder对象是实体。然后调用binder_get_ref_for_node来chaz目标上下问proc的Binder实体用，这个对象是刚刚创建出来的，所以在ServiceManager的proc中是找不到的。那么就创建该Binder实体的引用并且添加到refs_by_node的红黑树和refs_by_desc红黑树中。这样，ServiceManager就可以通过这个引用来管理这个Service</p>
+<p>那么此时的MediaPlayerService上下文中的proc保存了BpBinder，同是也持有了fp-&gt;binder本地BBinder的引用，同是ServiceManager的proc中也保存了BpBinder的引用，可与对MediaPlayerService服务进行管理。</p>
+<p>然后，设置待处理事务的类型为BINDER_WORK_TRANSACTION,并将其加入到target_list队列中，此时的目标是ServiceManager，那么就会唤醒ServiceManager对象的事务处理队列。<br>设置待完成工作类型为BINDER_WORK_TRANSACTION_COMPLETE,并将其加入到当前线程的待完成队列中，主要是用来告知MediaPlayerService发送给Binder驱动的请求已被处理了。</p>
+<p>此时的MediaPlayerService进程继续运行，并且调用wake_up_interruptible唤醒了ServiceManager进程。被唤醒的ServiceManager将会去处理MediaPlayerService加入到该进程待完成任务队列的任务。所做的工作就是将这个服务注册到服务队列中进行管理。</p>
+<p>binder_transaction方法主要的工作是</p>
+<ol>
+<li>解析MediaPlayerService发送过来的数据。</li>
+<li>新建MediaPlayerService对象的BpBinder的Binder实体和引用，并将该引用加入到ServiceManager的proc中，用于以后的管理。</li>
+<li>创建待处理事务，并将该事务加入到ServiceManager的待处理事务队列中，接着唤醒ServiceManager进程处理这个事务。</li>
+<li>创建待完成事务，并将该事务加入到当前进程的待完成事务队列，也就是MediaPlayerService所在进程，</li>
+</ol>
+<h4 id="binder-thread-read"><a href="#binder-thread-read" class="headerlink" title="binder_thread_read()"></a><a href="#binder_thread_read_28_29" title="binder_thread_read()"></a>binder_thread_read()</h4><p>接下来ioctl将会把处理后的数据返回给当前进程里来。<br>static int binder_thread_read(struct binder_proc _proc,<br>struct binder<em>thread</em> thread,<br>void <strong>user <em>buffer, int size,<br>signed long</em> consumed, int non_block)<br>{<br>void</strong> user <em>ptr = buffer +</em> consumed;<br>void __user *end = buffer + size;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">    int ret = 0;</div><div class="line">    int wait_for_proc_work;</div><div class="line"></div><div class="line">    // 如果*consumed=0，则写入BR_NOOP到用户传进来的bwr.read_buffer缓存区</div><div class="line">    if (*consumed == 0) &#123;</div><div class="line">        if (put_user(BR_NOOP, (uint32_t __user *)ptr))</div><div class="line">            return -EFAULT;</div><div class="line">        ptr += sizeof(uint32_t);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">retry:</div><div class="line">    // 等待proc进程的事务标记。</div><div class="line">    // 当线程的事务栈为空 并且 待处理事务队列为空时，该标记位true。</div><div class="line">    wait_for_proc_work = thread-&gt;transaction_stack == NULL &amp;&amp;</div><div class="line">                list_empty(&amp;thread-&gt;todo);</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    if (wait_for_proc_work) &#123;</div><div class="line">        ...</div><div class="line">    &#125; else &#123;</div><div class="line">        if (non_block) &#123;</div><div class="line">            ...</div><div class="line">        &#125; else</div><div class="line">            ret = wait_event_interruptible(thread-&gt;wait, binder_has_thread_work(thread));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    while (1) &#123;</div><div class="line">        uint32_t cmd;</div><div class="line">        struct binder_transaction_data tr;</div><div class="line">        struct binder_work *w;</div><div class="line">        struct binder_transaction *t = NULL;</div><div class="line"></div><div class="line">        // 如果当前线程的&quot;待完成工作&quot;不为空，则取出待完成工作。</div><div class="line">        if (!list_empty(&amp;thread-&gt;todo))</div><div class="line">            w = list_first_entry(&amp;thread-&gt;todo, struct binder_work, entry);</div><div class="line">        else if (!list_empty(&amp;proc-&gt;todo) &amp;&amp; wait_for_proc_work)</div><div class="line">            ...</div><div class="line">        else &#123;</div><div class="line">            if (ptr - buffer == 4 &amp;&amp; !(thread-&gt;looper &amp; BINDER_LOOPER_STATE_NEED_RETURN)) /* no data added */</div><div class="line">                goto retry;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        ...</div><div class="line"></div><div class="line">        switch (w-&gt;type) &#123;</div><div class="line">        ...</div><div class="line">        case BINDER_WORK_TRANSACTION_COMPLETE: &#123;</div><div class="line">            cmd = BR_TRANSACTION_COMPLETE;</div><div class="line">            // 将BR_TRANSACTION_COMPLETE写入到用户缓冲空间中</div><div class="line">            if (put_user(cmd, (uint32_t __user *)ptr))</div><div class="line">                return -EFAULT;</div><div class="line">            ptr += sizeof(uint32_t);</div><div class="line"></div><div class="line">            binder_stat_br(proc, thread, cmd);</div><div class="line">            ...</div><div class="line"></div><div class="line">            // 待完成事务已经处理完毕，将其从待完成事务队列中删除。</div><div class="line">            list_del(&amp;w-&gt;entry);</div><div class="line">            kfree(w);</div><div class="line">            binder_stats_deleted(BINDER_STAT_TRANSACTION_COMPLETE);</div><div class="line">        &#125; break;</div><div class="line">        ...</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if (!t)</div><div class="line">            continue;</div><div class="line"></div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">    // 更新bwr.read_consumed的值</div><div class="line">    *consumed = ptr - buffer;</div><div class="line"></div><div class="line">    ...</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>当前的consumed=0表示反馈的数据还没有被读取。那么就拷贝BR_NOOP到用户空间。</li>
+<li>binder_has_thread_work(thread)为true，不会进入中断函数，继续往下执行</li>
+<li>接着进入循环从带完成队列中取出任务t,待完成的事务处理完毕就会去释放内存删除工作</li>
+<li>跳出循环更新consumed值 == 8</li>
+</ol>
+<p>接着看经过读写之后的talkWithDriver方法调用waitForResponse</p>
+<h4 id="IPCThreadState-waitForResponse-1"><a href="#IPCThreadState-waitForResponse-1" class="headerlink" title="IPCThreadState::waitForResponse()"></a><a href="#IPCThreadState_3A_3AwaitForResponse_28_29-1" title="IPCThreadState::waitForResponse()"></a>IPCThreadState::waitForResponse()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">status_t IPCThreadState::waitForResponse(Parcel *reply, status_t *acquireResult)</div><div class="line">&#123;       </div><div class="line">    int32_t cmd;</div><div class="line">    int32_t err;</div><div class="line"></div><div class="line">    while (1) &#123;</div><div class="line">        // 先通过talkWithDriver()和Binder驱动交互</div><div class="line">        if ((err=talkWithDriver()) &lt; NO_ERROR) break;</div><div class="line">        err = mIn.errorCheck();</div><div class="line">        if (err &lt; NO_ERROR) break;</div><div class="line">        if (mIn.dataAvail() == 0) continue;</div><div class="line"></div><div class="line">        // 然后读取返回结果，再根据结果进行处理</div><div class="line">        cmd = mIn.readInt32();</div><div class="line"></div><div class="line">        switch (cmd) &#123;</div><div class="line">        case BR_TRANSACTION_COMPLETE:</div><div class="line">            ...</div><div class="line">        case BR_DEAD_REPLY:</div><div class="line">            ...</div><div class="line">        case BR_FAILED_REPLY:</div><div class="line">            ...</div><div class="line">        case BR_ACQUIRE_RESULT:</div><div class="line">            ...</div><div class="line">        case BR_REPLY:</div><div class="line">            ...</div><div class="line">        default:</div><div class="line">            err = executeCommand(cmd);</div><div class="line">            if (err != NO_ERROR) goto finish;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">finish:</div><div class="line">    ...</div><div class="line"></div><div class="line">    return err;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>talkWithDrive方法之后就会去解析返回过来保存在mIn中的数据，而mIn中的数据是Binder驱动回的”BR_NOOP”和“BR_TRANSACTION_COMPLETE”两个命令。先读取的是BR_NOOP命令，因此执行executeCommand(cmd)</p>
+<h4 id="IPCThreadState-executeCommand"><a href="#IPCThreadState-executeCommand" class="headerlink" title="IPCThreadState::executeCommand()"></a><a href="#IPCThreadState_3A_3AexecuteCommand_28_29" title="IPCThreadState::executeCommand()"></a>IPCThreadState::executeCommand()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">status_t IPCThreadState::executeCommand(int32_t cmd)</div><div class="line">&#123;</div><div class="line">    BBinder* obj;</div><div class="line">    RefBase::weakref_type* refs;</div><div class="line">    status_t result = NO_ERROR;</div><div class="line"></div><div class="line">    switch (cmd) &#123;</div><div class="line">    case BR_ERROR:</div><div class="line">        ...</div><div class="line">    case BR_OK:</div><div class="line">        ...</div><div class="line">    case BR_NOOP:</div><div class="line">        break;</div><div class="line">    default:</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (result != NO_ERROR) &#123;</div><div class="line">        mLastError = result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>BR_NOOP指令没有进行任何操作直接break<br>从新开始While循环 执行talkWithDriver()</p>
+<ol>
+<li>此时在上次的读取中已经读取过一次BR_NOOP所以mIn.dataPosition=4,而mIn的dataSize=8；所以needRead = false.</li>
+<li>needRead=false，doReceive = true。bwr.read_size = 0;bwr.read_buffer = 0;直接return NO_ERROR<br>直接调用waitForResponse，此时的cmd为BR_TRANSACTION_COMPLETE。此时的reply不为空，因此再次执行while循环调用talkWithDriver<br>此时已经取得玩mIn中的数据</li>
+</ol>
+<p>MediaPlayerService已经处理完addService这个请求，包括处理完了请求的反馈。对于MediaPlayerService而已已经完成了注册，可以等待Client端来请求。MediaPlayerService通过读取待处理事务队列中的任务，如果有就执行Client的请求，没有就进入中断。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/26/Android-Binder技术之ServiceManager获取/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          Android-Binder技术之ServiceManager获取
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/26/Fragment弃坑之旅/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Fragment弃坑之旅</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="Android-Binder技术ServiceManager之服务注册请求的发送" data-title="Android-Binder技术ServiceManager之服务注册请求的发送" data-url="http://yoursite.com/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="Android-Binder技术ServiceManager之服务注册请求的发送">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2017 John Doe
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>

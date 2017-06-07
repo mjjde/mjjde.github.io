@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android事件分发机制 | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Android事件分发机制是我们学习Android必须要面临的问题，通常会涉及到事件冲突等问题，这也是对于新手来说比较复杂的学习过程。Android事件处理和Java类似，都是向上冒泡。一组事件序列包括down move move… up ,是以按下为开始，经历0或多个移动，最后以抬起结束。  在Android事件分发中共涉及到三个函数。 12345public boolean dispatch">
+<meta name="keywords" content="事件,Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android事件分发机制">
+<meta property="og:url" content="http://yoursite.com/2016/01/15/android事件分发机制/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Android事件分发机制是我们学习Android必须要面临的问题，通常会涉及到事件冲突等问题，这也是对于新手来说比较复杂的学习过程。Android事件处理和Java类似，都是向上冒泡。一组事件序列包括down move move… up ,是以按下为开始，经历0或多个移动，最后以抬起结束。  在Android事件分发中共涉及到三个函数。 12345public boolean dispatch">
+<meta property="og:updated_time" content="2017-06-07T07:15:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android事件分发机制">
+<meta name="twitter:description" content="Android事件分发机制是我们学习Android必须要面临的问题，通常会涉及到事件冲突等问题，这也是对于新手来说比较复杂的学习过程。Android事件处理和Java类似，都是向上冒泡。一组事件序列包括down move move… up ,是以按下为开始，经历0或多个移动，最后以抬起结束。  在Android事件分发中共涉及到三个函数。 12345public boolean dispatch">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-android事件分发机制" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/15/android事件分发机制/" class="article-date">
+  	<time datetime="2016-01-15T07:11:52.000Z" itemprop="datePublished">2016-01-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      android事件分发机制
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事件/">事件</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Android事件分发机制是我们学习Android必须要面临的问题，通常会涉及到事件冲突等问题，这也是对于新手来说比较复杂的学习过程。Android事件处理和Java类似，都是向上冒泡。一组事件序列包括down move move… up ,是以按下为开始，经历0或多个移动，最后以抬起结束。</p>
+</blockquote>
+<p>在Android事件分发中共涉及到三个函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public boolean dispatchTouchEvent(MotionEvent ev)处理事件的分发</div><div class="line"></div><div class="line">public boolean onInterceptTouchEvent(MotionEvent ev) 处理事件的拦截</div><div class="line"></div><div class="line">public boolean onTouchEvent(MotionEvent event)处理事件的消费</div></pre></td></tr></table></figure>
+<p>这三个函数都是有自己的职能，当我们点击到屏幕的开始，一个事件序列就开始产生，在序列产生的过程里我们最关心的其实是move，比如我们事件的冲突都是依靠move是的条件判断来解决。</p>
+<p>我们可以通过一段伪代码来解释这三者的关系。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public boolean dispatchTouchEvent(MotionEvent ev)&#123;</div><div class="line">    boolean flag = false;</div><div class="line">    if(onInterceptTouchEvent(ev))&#123;</div><div class="line">        flag = onTouchEvent(ev)</div><div class="line">    &#125;else&#123;</div><div class="line">        flag = child.dispatchTouchEvent(ev)</div><div class="line">    &#125;</div><div class="line">    return flag;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>针对于这段ViewGroup的事件，首先会调用dispatchTouchEvent方法，如果onInterceptTouchEvent返回为true的话，表示该ViewGroup对事件拦截，那么就会调用该ViewGroup的onTouchEvent方法，如果onInterceptTouchEvent返回false，那么表示该ViewGroup不去拦截事件，就会传递到下个子view去处理，dispatchTouchEvent返回的结果依赖于onInterceptTouchEvent和onTouchEvent以及child.dispatchTouchEvent(ev)。</p>
+<p>我们来假设当前的ViewGroupon的InterceptTouchEvent返回false，那么就会去执行child.dispatchTouchEvent(ev)，如果所有的子View的dispatchTouchEvent都为false，那么该事件表示没有关心的子View去消费，最后事件会返回到Activity中的dispatchTouchEvent（），调用自己的OnTouch方法消费。如果后面的子View有去消费，那么该ViewGroup和该子View之间的所有View的dispatchTouchEvent都将放回true。我们可以看出在这种条件下dispatchTouchEvent的返回都是被动的，都是靠子View的返回来返回的。</p>
+<p>事件的传递开始于Activity的dispatchTouchEvent方法，我们来看源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public boolean dispatchTouchEvent(MotionEvent ev) &#123;</div><div class="line">    if (ev.getAction() == MotionEvent.ACTION_DOWN) &#123;</div><div class="line">        onUserInteraction();</div><div class="line">    &#125;</div><div class="line">    if (getWindow().superDispatchTouchEvent(ev)) &#123;</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line">    return onTouchEvent(ev);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="dispatchTouchEvent"><a href="#dispatchTouchEvent" class="headerlink" title="dispatchTouchEvent"></a><a href="#dispatchTouchEvent" title="dispatchTouchEvent"></a>dispatchTouchEvent</h4><p>我们看到第二个判断条件是调用了window的dispatchTouchEvent，window的唯一实现子类是PhoneWindow。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> public boolean superDispatchTouchEvent(MotionEvent event) &#123;</div><div class="line">    return mDecor.superDispatchTouchEvent(event);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这是PhoneWindow中的DispatchTouchEvent调用，mDecor是window的顶层ViewGroup,接着我们来看ViewGroup中得DispatchTouchEvent。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public boolean dispatchTouchEvent(MotionEvent ev) &#123;</div><div class="line"></div><div class="line">        ......</div><div class="line"></div><div class="line">         if (mFirstTouchTarget == null) &#123;</div><div class="line">            // No touch targets so treat this as an ordinary view.</div><div class="line">            handled = dispatchTransformedTouchEvent(ev, canceled, null,</div><div class="line">                    TouchTarget.ALL_POINTER_IDS);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        ......</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码我们先假设onInterceptTouchEvent默认的不去拦截，那么mFirstTouchTarget的值是什么呢，它代表的是如果有子类处理的事件，那么这个对象就指向那个子View,我们看到当当前的ViewGroup不去拦截，分发到下个View，这个view也不去分发，那么mFirstTouchTarget == null成立。就会去去执行dispatchTransformedTouchEvent方法，传过去的view是null。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,</div><div class="line">    View child, int desiredPointerIdBits)&#123;</div><div class="line"></div><div class="line">    。。。。。</div><div class="line"></div><div class="line">     if (child == null) &#123;</div><div class="line">        handled = super.dispatchTouchEvent(event);</div><div class="line">    &#125; else &#123;</div><div class="line">        handled = child.dispatchTouchEvent(event);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    。。。。。</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>我们在源码里看到child为空得话就不会在去调用子view的dispatchTouchEvent方法，这意味着，如果在一串事件中，不去子view不去分发down事件，那么接下来的move和up都将不会去传递，那么如果子view分发down不分发其他事件，子view仍然会被执行dispatchTouchEvent，但是如果返回false，那么就会调用自己的onTouch方法消费事件，因为子为在分发的时候表达自己不去分发。</p>
+<h4 id="onInterceptTouchEvent"><a href="#onInterceptTouchEvent" class="headerlink" title="onInterceptTouchEvent"></a><a href="#onInterceptTouchEvent" title="onInterceptTouchEvent"></a>onInterceptTouchEvent</h4><p>这个事件的处理依然在dispatchTouchEvent中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">    ......</div><div class="line"></div><div class="line">     // Handle an initial down.</div><div class="line">    if (actionMasked == MotionEvent.ACTION_DOWN) &#123;</div><div class="line">        // Throw away all previous state when starting a new touch gesture.</div><div class="line">        // The framework may have dropped the up or cancel event for the previous gesture</div><div class="line">        // due to an app switch, ANR, or some other state change.</div><div class="line">        cancelAndClearTouchTargets(ev);</div><div class="line">        resetTouchState();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">// Check for interception.        </div><div class="line">    final boolean intercepted;</div><div class="line">    if (actionMasked == MotionEvent.ACTION_DOWN</div><div class="line">            || mFirstTouchTarget != null) &#123;</div><div class="line">        final boolean disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;</div><div class="line">        if (!disallowIntercept) &#123;</div><div class="line">            intercepted = onInterceptTouchEvent(ev);</div><div class="line">            ev.setAction(action); // restore action in case it was changed</div><div class="line">        &#125; else &#123;</div><div class="line">            intercepted = false;</div><div class="line">        &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">        // There are no touch targets and this action is not an initial down</div><div class="line">        // so this view group continues to intercept touches.</div><div class="line">        intercepted = true;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ......</div></pre></td></tr></table></figure>
+<p>onInterceptTouchEvent的被处理和子View的dispatchTouchEvent处理有相似之处，我们看到有个 if (actionMasked == MotionEvent.ACTION_DOWN||mFirstTouchTarget != null)，首先我们要理解事件的DOWN肯定会走进来的，接下来FLAG_DISALLOW_INTERCEPT属性是个标志位，我们可以通过在子类中调用getparent（）.requestDisallowInterceptTouchEvent来改变它的值。用来阻止父控件对除DOWN事件的处理，为什么要出去Down呢，我们看到上面的代码，在执行Down的时候会重置这个标志位。</p>
+<p>假设我们父控件的onInterceptTouchEvent直接拦截了Down方法，那么我们就可以看到之后的事件对于条件actionMasked == MotionEvent.ACTION_DOWN|| mFirstTouchTarget != null永远就不会成立，那么我们调整FLAG_DISALLOW_INTERCEPT也就没有任何作用，如果我们不拦截Down的话，我们的子View就可以控制FLAG_DISALLOW_INTERCEPT来进行对父控件的onInterceptTouchEvent的调用情况。这是一个解决事件冲突的一个手段。</p>
+<h4 id="onTouchEvent"><a href="#onTouchEvent" class="headerlink" title="onTouchEvent"></a><a href="#onTouchEvent" title="onTouchEvent"></a>onTouchEvent</h4><p>我们重上面的伪代码中可以看到，一旦事件被拦截了就会调用onTouchEvent去消费事件，事件只能被消费一次，它的返回值会直接作用到dispatchTouchEvent的返回值的。OnTouchListener和OnTouchEvent之间的调用是由一定关系的，OnTouchListener是在OnTouchEvent之前被调用，如果OnTouchListener返回true消费事件的话，那么onTouchEvent就不会被调用，我们知道onClickLinstener是在onTouchEvent中被执行的，那么如果OnTouchListener消费事件的话，onClickLinstener就不会被触发。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/16/widget和Notification上的RemoteView/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          widget和Notification上的RemoteView
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/05/Android-IPC通讯Binder和Service的关系/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android-IPC通讯Binder和Service的关系</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="android事件分发机制" data-title="android事件分发机制" data-url="http://yoursite.com/2016/01/15/android事件分发机制/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="android事件分发机制">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2017 John Doe
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>

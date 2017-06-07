@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>DiskLruCache Java实现基于LRU的磁盘缓存 | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。  G">
+<meta name="keywords" content="DiskLruCache,Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DiskLruCache Java实现基于LRU的磁盘缓存">
+<meta property="og:url" content="http://yoursite.com/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。  G">
+<meta property="og:updated_time" content="2017-06-07T07:21:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DiskLruCache Java实现基于LRU的磁盘缓存">
+<meta name="twitter:description" content="DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。  G">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-DiskLruCache-Java实现基于LRU的磁盘缓存" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/" class="article-date">
+  	<time datetime="2016-06-15T07:18:20.000Z" itemprop="datePublished">2016-06-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      DiskLruCache Java实现基于LRU的磁盘缓存
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DiskLruCache/">DiskLruCache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。</p>
+</blockquote>
+<p>Github地址 <a href="https://github.com/JakeWharton/DiskLruCache" target="_blank" rel="external">https://github.com/JakeWharton/DiskLruCache</a></p>
+<p>DiskLruCache还是比较简单的，总计也只有3个类。我们来分析下源码。</p>
+<h5 id="Util-java"><a href="#Util-java" class="headerlink" title="Util.java"></a><a href="#Util-java" title="Util.java"></a>Util.java</h5><p>我们先从简单的工具类开始，这个类主要是提供工具方法，</p>
+<ul>
+<li>readFully(Reader reader)：String</li>
+</ul>
+<p>这个方法是将Reader中的数据转换成String，现将Reader中的数据读入Buffer数组中，然后写入StringWriter，调用toString方法，返回数据。</p>
+<ul>
+<li>deleteContents(File): void</li>
+</ul>
+<p>删除文件夹中的所有文件</p>
+<ul>
+<li>closeQuietly(Closeable): void</li>
+</ul>
+<p>关闭Closeable接口。</p>
+<h4 id="StrictLineReader-java"><a href="#StrictLineReader-java" class="headerlink" title="StrictLineReader.java"></a><a href="#StrictLineReader-java" title="StrictLineReader.java"></a>StrictLineReader.java</h4><p>用来读取特殊的一行数据</p>
+<ul>
+<li>fillBuf(): void</li>
+</ul>
+<p><strong>in.read(buf, 0, buf.length)</strong>正常的读取一个buf.length长度的数据，但是并不能保证读到的数据就是该长度的数据，有可能只读到了1byte的数据。</p>
+<ul>
+<li>readLine(): String</li>
+</ul>
+<p>一开始pos == end == 0,通过判断调用fillBuf() 读取数据，pos =0; end = 读到的数据长度。接着查找读到的数据中是否有换行符，如果有，就表示我们读到了至少是一个完整的一行（可能会多余一行的数据），那么我们截取一行数据返回，第二次调到readLine(),此时的pos = 第二行的起始位置，在判断pos和end如果第一次读到了第二行的数据 就不在调用fillBuff(),接下来继续对读到的数据遍历查找第二行的回车键，如果存在就返回，不存在就创建一个内容大小是输出流原来读到数据长度+80。用来写入第二行数据。接下来进入死循环，首先用创建的输出流接受第一次读到的出去第一行的数据（也就是不完整的第二行数据），调用fillBuff().读取一次数据，判断是否有回车符(即第二行是否完整),如果存在，就将剩下的第二行数据也写入输出流中，返回，如果没有，继续写入，再次读取数据。</p>
+<p>####DiskLruCache.java</p>
+<p>这个类是库的使用类，入口类，包括3个内部类Snapshot,Editor,Entry。</p>
+<p>Snapshot，包括属性：长度，key，数据，sequenceNumber</p>
+<p>Entry,包括属性：长度，key，sequenceNumber.这个对象是用来存储在内存中的，因为不包括数据，属于占用内存不大</p>
+<p>Editor，用来编辑Entry的，包括属性：Entry，hasErrors(编辑Entry时是否发生错误)，committed是否提交。<br>这个类是用来set缓存的，我们可以调用<strong>newOutputStream(int): OutputStream</strong>来返回一个输出流，写入我们将要缓存的对象。之后调用<strong>commit(): void</strong>,接着调用<strong>completeEdite(Editor,boolean): void</strong>,这个方法是讲保存在dirty的内容移动到clean文件里</p>
+<ul>
+<li>open(File,int,int,long): DiskLruCache</li>
+</ul>
+<p>这方法是库的初始化方法，参数：文件保存路径，app版本，可以保存几分相同文件，最大内存。如果存在备份文件，就用备份文件代替日志文件。第二步创建DiskLruCache实例。第三步读取日志文件。</p>
+<ul>
+<li>readJournal(): void</li>
+</ul>
+<p>通过StrictLineReader读取日志的每一行文件。</p>
+<ul>
+<li>readJournalLine(String): void</li>
+</ul>
+<p>lruEntries集合根据日志中的状态放入或者删除一个Entry实例。状态有3种，remove表示移除，相应的也要在集合里移除，clean，dirty，read。都表示数据存在可以获取。</p>
+<ul>
+<li>processJournal(): void</li>
+</ul>
+<p>清楚不正确的日志，比如只有clean日志在的Entry。</p>
+<ul>
+<li>rebuildJournal(): void</li>
+</ul>
+<p>创建新的日志文件，根据lruEntries集合里的Entry。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/25/Android-Binder技术之ServiceManager启动/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          Android-Binder技术之ServiceManager启动
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/16/widget和Notification上的RemoteView/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">widget和Notification上的RemoteView</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="DiskLruCache-Java实现基于LRU的磁盘缓存" data-title="DiskLruCache Java实现基于LRU的磁盘缓存" data-url="http://yoursite.com/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="DiskLruCache Java实现基于LRU的磁盘缓存">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2017 John Doe
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>

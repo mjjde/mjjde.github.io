@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android-IPC通讯Binder和Service的关系 | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="任何系统都有自己的跨进程通讯，Android是基于Linux，所以都会兼容Linux的通讯机制，包括有管道，信号，socket等等。基于Android自身的特点，有提出了自己的通讯方式Binder机制。接下来就来具体的介绍。  Binder机制Android中系统的服务基本都是基于Binder，我们在应用层使用的getService()方法调用系统服务。那么这一切是如何进行的呢。 Binder是">
+<meta name="keywords" content="Binder,Android-IPC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-IPC通讯Binder和Service的关系">
+<meta property="og:url" content="http://yoursite.com/2016/01/05/Android-IPC通讯Binder和Service的关系/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="任何系统都有自己的跨进程通讯，Android是基于Linux，所以都会兼容Linux的通讯机制，包括有管道，信号，socket等等。基于Android自身的特点，有提出了自己的通讯方式Binder机制。接下来就来具体的介绍。  Binder机制Android中系统的服务基本都是基于Binder，我们在应用层使用的getService()方法调用系统服务。那么这一切是如何进行的呢。 Binder是">
+<meta property="og:updated_time" content="2017-06-07T07:13:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-IPC通讯Binder和Service的关系">
+<meta name="twitter:description" content="任何系统都有自己的跨进程通讯，Android是基于Linux，所以都会兼容Linux的通讯机制，包括有管道，信号，socket等等。基于Android自身的特点，有提出了自己的通讯方式Binder机制。接下来就来具体的介绍。  Binder机制Android中系统的服务基本都是基于Binder，我们在应用层使用的getService()方法调用系统服务。那么这一切是如何进行的呢。 Binder是">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Android-IPC通讯Binder和Service的关系" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/05/Android-IPC通讯Binder和Service的关系/" class="article-date">
+  	<time datetime="2016-01-05T07:11:52.000Z" itemprop="datePublished">2016-01-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android-IPC通讯Binder和Service的关系
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-IPC/">Android-IPC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Binder/">Binder</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>任何系统都有自己的跨进程通讯，Android是基于Linux，所以都会兼容Linux的通讯机制，包括有管道，信号，socket等等。基于Android自身的特点，有提出了自己的通讯方式Binder机制。接下来就来具体的介绍。</p>
+</blockquote>
+<h4 id="Binder机制"><a href="#Binder机制" class="headerlink" title="Binder机制"></a><a href="#Binder_u673A_u5236" title="Binder机制"></a>Binder机制</h4><p>Android中系统的服务基本都是基于Binder，我们在应用层使用的getService()方法调用系统服务。那么这一切是如何进行的呢。</p>
+<p>Binder是一种架构，涉及到客户端，服务端，Binder驱动。系统有一个Binder类它将这三个模块连接在一起。Android系统已经帮我们实现了Binder驱动，ServiceManager和系统相关的Service。对于我们开发者来说，我们需要自己去实现需要的Service和Client就可以进行IPC通讯了。</p>
+<p>一个Binder服务端就相当于一个Binder对象，一旦被创建，就会在开启一个隐藏线程用来接受client的请求，接受到消息之后就会回调onTransact方法。onTransact方法会根据条件实现不同的服务，那么要使用一个Binder服务就必须要重写onTransact方法。</p>
+<p>既然服务端已经具备了接受消息的能力，那么服务端就可以调用transact方法发送消息给服务端，这两个方法是相对应的，我们看下这两个方法的API.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">protected boolean onTransact(int code, Parcel data, Parcel reply,</div><div class="line">    int flags) throws RemoteException</div><div class="line"></div><div class="line">public boolean transact(int code, Parcel data, Parcel reply,</div><div class="line">    int flags)throws RemoteException</div></pre></td></tr></table></figure>
+<p>从方法参数中我们就可以知道对应关系。code表示要调用的方法的id,data是调用方法的参数，reply是方法的返回。flags为标记，一般为0.</p>
+<p>在Binder驱动中，任意一个服务端Binder被创建后，都在会在驱动中也会创建一个mRemote对象，该对象也是类型也是Binder类。要使用服务端的服务都是通过mRemote来完成的。</p>
+<p>在客户端中要使用服务端服务，我们就要获取mRemote的引用，调用transact来发送给服务端消息，服务端接受到我们需要它完成的任务就会运作起来。</p>
+<p>在这样的架构里，我们产生了2个Binder对象，一个在服务端，一个在Binder驱动中。对于远程调用来说，我们都是直接调用的是Binder驱动中的mRemote对象。该对象在去调用服务端的Binder对象。</p>
+<h4 id="基于Binder架构的代码设计"><a href="#基于Binder架构的代码设计" class="headerlink" title="基于Binder架构的代码设计"></a><a href="#u57FA_u4E8EBinder_u67B6_u6784_u7684_u4EE3_u7801_u8BBE_u8BA1" title="基于Binder架构的代码设计"></a>基于Binder架构的代码设计</h4><p>上面说过了，系统已经为我们完成了很多任务了，我们开发者只需要进行两个端的设计就可以实现Binder通信了。</p>
+<h5 id="Service端设计"><a href="#Service端设计" class="headerlink" title="Service端设计"></a><a href="#Service_u7AEF_u8BBE_u8BA1" title="Service端设计"></a>Service端设计</h5><p>在服务端的设计有2点，第一点是服务端需要提高的服务，这个要根据不同业务有开发者设计。第二点是我们上面说过的必须实现onTransact方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class BookSerivce extends Binder &#123;</div><div class="line"></div><div class="line">List&lt;String&gt; books ;</div><div class="line"></div><div class="line">public BookSerivce()&#123;</div><div class="line">    books = new ArrayList&lt;String&gt;();</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException &#123;</div><div class="line">    return super.onTransact(code, data, reply, flags);</div><div class="line">&#125;</div><div class="line"></div><div class="line">public int getBookSize()&#123;</div><div class="line">    return books.size();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public void addBook(String book)&#123;</div><div class="line">        books.add(book);</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在OnTransact方法里我们需要根据code的不同去调用不同的方法，这个是需要服务端和客户端约定好的。比如我们这里这样的约定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">   data.enforceInterface(&quot;BookSerivce&quot;);</div><div class="line">switch (code)&#123;</div><div class="line">    case 1000:</div><div class="line">        int size = getBookSize();</div><div class="line">        reply.writeInt(size);</div><div class="line">        break;</div><div class="line">    case 2000:</div><div class="line">        String name = data.readString();</div><div class="line">        addBook(name);</div><div class="line">        break;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>发送消息code为1000我们就调用getBookSize(),code为2000，我们调用addBook(String name)方法。</p>
+<h5 id="Client端设计"><a href="#Client端设计" class="headerlink" title="Client端设计"></a><a href="#Client_u7AEF_u8BBE_u8BA1" title="Client端设计"></a>Client端设计</h5><p>客户端我们要做两件事，第一是要获取到Binder驱动里的mRemote。第二是要调用mRemote方法transact通知到服务端。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">IBinder mRemote = null;</div><div class="line">int code = 2000;</div><div class="line">android.os.Parcel _data = android.os.Parcel.obtain();</div><div class="line">android.os.Parcel _reply = android.os.Parcel.obtain();</div><div class="line">_data.writeInterfaceToken(DESCRIPTOR);</div><div class="line">_data.writeString(&quot;aa&quot;);</div><div class="line">mRemote.transact(code, _data, _reply, 0);</div><div class="line">_data.recycle();</div><div class="line">_reply.recycle();</div></pre></td></tr></table></figure>
+<p>client端将data 和 reply打包发送给Binder驱动，Binder驱动将会挂起当前线程，并将请求交给服务端onTransact方法，服务端处理完后通知Binder驱动取消挂起，client端就可以得要数据了。这里服务端和Binder驱动是共享内存的，不然系统会将数据内存拷贝在Binder驱动层一次，服务端处理的时候又会将数据内存拷贝到服务端，这样会copy两次，是不适合的。</p>
+<p>接下来我们看如何获取Binder驱动中的mRemote，系统为我们提供的方法是Service。</p>
+<h5 id="Service"><a href="#Service" class="headerlink" title="Service"></a><a href="#Service" title="Service"></a>Service</h5><p>我们可以利用Android给我们提供的Service来获取到Binder驱动的mRemote。系统给我们提供了两个方法来起开服务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public ComponentName startService(Intent service)</div></pre></td></tr></table></figure>
+<p>该方法开启服务端后，客户端没有立马获得服务端的Binder</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public boolean bindService(Intent service, ServiceConnection conn,</div><div class="line">   int flags)</div></pre></td></tr></table></figure>
+<p>这个方法在启动服务端后，在启动成功后会回调参数中的ServiceConnection conn。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface ServiceConnection &#123;    </div><div class="line">     public void onServiceConnected(ComponentName name, IBinder service);</div><div class="line">      public void onServiceDisconnected(ComponentName name);</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
+<p>其中onServiceConnected方法的参数Service就是我们所需要的Binder驱动中得mRemote.</p>
+<p>我们在编写Service是需要重写onBind(Intent intent) 方法要求放回一个Binder类型的对象。这里也就是服务端的Binder。</p>
+<h4 id="AIDL编写IPC通信"><a href="#AIDL编写IPC通信" class="headerlink" title="AIDL编写IPC通信"></a><a href="#AIDL_u7F16_u5199IPC_u901A_u4FE1" title="AIDL编写IPC通信"></a>AIDL编写IPC通信</h4><p>以上我们已经零碎的了解了如何完成Binder通信了。接下来我们就是呀AIDL来实现一个完整的程序。</p>
+<p>AIDL是Android接口定义语言。可以帮我们创建一个完整的客户端Binder.下面我们在AndroidStudio上完成AIDL开发</p>
+<ol>
+<li>新建项目test,new 一个AIDL文件，其命名都是以I开头的，这不是必须得，但是都遵循这样的规范。</li>
+<li><p>我们发现在AS自动给我们创建了一个aidl目录，里面是一项目包名为名建立的文件目录，该目录下面就是我们刚刚建立的aidl文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// IBookAidlInterface.aidl</div><div class="line">package com.location.joker.deft.aidl;</div><div class="line">// Declare any non-default types here with import statements</div><div class="line"></div><div class="line">interface IBookAidlInterface &#123;</div><div class="line"></div><div class="line">            &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>3.对于基本类型Andorid是可以知道传输的，而其他的对象需要实现Parcelable接口。<br>public class Book implements Parcelable {<br>public int bookId;<br>public String bookName;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public int describeContents() &#123;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void writeToParcel(Parcel dest, int flags) &#123;</div><div class="line">    dest.writeInt(this.bookId);</div><div class="line">    dest.writeString(this.bookName);</div><div class="line">&#125;</div><div class="line"></div><div class="line">public Book(int bookId ,String bookName) &#123;</div><div class="line">    this.bookId = bookId;</div><div class="line">    this.bookName= bookName;</div><div class="line">&#125;</div><div class="line"></div><div class="line">protected Book(Parcel in) &#123;</div><div class="line">    this.bookId = in.readInt();</div><div class="line">    this.bookName = in.readString();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public static final Parcelable.Creator&lt;Book&gt; CREATOR = new Parcelable.Creator&lt;Book&gt;() &#123;</div><div class="line">    public Book createFromParcel(Parcel source) &#123;</div><div class="line">        return new Book(source);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Book[] newArray(int size) &#123;</div><div class="line">        return new Book[size];</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在AS中我们可以自动生成上面代码。</p>
+<ol>
+<li>建立好实体类后我们需要在aidl中声明：新建aidl文件命名Book.aidl</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// Book.aidl</div><div class="line">package com.location.joker.deft.aidl;</div><div class="line">parcelable  Book;</div></pre></td></tr></table></figure>
+<ol>
+<li>我们在第二步中编写服务端需要提供的服务函数。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// IBookAidlInterface.aidl</div><div class="line">package com.location.joker.deft.aidl;</div><div class="line">import com.location.joker.deft.aidl.Book;</div><div class="line">// Declare any non-default types here with import statements</div><div class="line"></div><div class="line">interface IBookAidlInterface &#123;</div><div class="line">    void addBook(in Book book);</div><div class="line">    List&lt;Book&gt; getBooks();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意：</p>
+<p>1.我们需要导入包，即使Book和我们是同一个文件下面，依然要导入包。</p>
+<p>2.我们在build.gradle中是否有以下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">     sourceSets &#123;</div><div class="line">main &#123;</div><div class="line">    java.srcDirs = [&apos;src/main/java&apos;, &apos;src/main/aidl&apos;]</div><div class="line">    resources.srcDirs = [&apos;src/main/java&apos;, &apos;src/main/aidl&apos;]</div><div class="line">    aidl.srcDirs = [&apos;src/main/aidl&apos;]</div><div class="line">    res.srcDirs = [&apos;src/main/res&apos;]</div><div class="line">    assets.srcDirs = [&apos;src/main/assets&apos;]</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上都确认好了我们rebuild下项目，就会在build/generated/source/aidl下面生成文件IBookAidlInterface.java<br>这个类是一个接口，包括了抽象Stub类和Proxy代理类，Stub继承了Binder，继承了IBookAidlInterface接口，但是并没有去实现我们的服务方法，这是要留给去创建服务Binder再实现的。Stub中有一个方法asInterface,这个方法是用来分辨远程调用还是本地调用的，如果是本地调用就知道调用服务端的服务方法就可以，如果是远程调用的，就要使用proxy代理类了。</p>
+<p>我们可以看到在proxy类里面实现了接口的两个方法，这两个方法的实现相当于client要调用mRemote的过程，打包相关数据调用transact方法发给服务端。</p>
+<p>IBookAidlInterface定义好了我们就要使用Service了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"> public class BookService extends Service &#123;</div><div class="line"></div><div class="line">    private List&lt;Book&gt; bookList = new ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onCreate() &#123;</div><div class="line">        super.onCreate();</div><div class="line">        Log.d(&quot;aidl&quot;, &quot;BookService--------------onCreate&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Nullable</div><div class="line">    @Override</div><div class="line">    public IBinder onBind(Intent intent) &#123;</div><div class="line">        return mBinder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private final IBookAidlInterface.Stub mBinder = new IBookAidlInterface.Stub()&#123;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void addBook(Book book) throws RemoteException &#123;</div><div class="line">    synchronized (bookList) &#123;</div><div class="line">        bookList.add(book);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public List&lt;Book&gt; getBooks() throws RemoteException &#123;</div><div class="line">    synchronized (bookList) &#123;</div><div class="line">        return bookList;</div><div class="line">    &#125;</div><div class="line">    &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个Service实现了接口里的Stub类，并且将该对象通过方法onBind返回。这样Service一旦启动成功，就会返回一个Binder驱动层的mRemote来提供给客户端使用。就可以完成基于Binder的IPC通讯了。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/15/android事件分发机制/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          android事件分发机制
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/12/28/Activity的进阶/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Activity的进阶</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="Android-IPC通讯Binder和Service的关系" data-title="Android-IPC通讯Binder和Service的关系" data-url="http://yoursite.com/2016/01/05/Android-IPC通讯Binder和Service的关系/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="Android-IPC通讯Binder和Service的关系">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2017 John Doe
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>

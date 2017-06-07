@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Fragment弃坑之旅 | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Fragment至诞生之日起，就开始饱受争议，很多人都认为Fragment的设计不合理，并提倡放弃Fragment，这种现象产生的原因我觉得大概就是使用了Fragment之后出现了很多Crash，而且这个Bug都似乎不是太能理解，导致不能很好的去解决。当然任何事物都是有两面性，存在即合理，Fragment肯定也是有其使用价值的。   由于在使用Fragment的过程中会产生莫名其妙的Crash，">
+<meta name="keywords" content="Fragment,android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fragment弃坑之旅">
+<meta property="og:url" content="http://yoursite.com/2017/04/26/Fragment弃坑之旅/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Fragment至诞生之日起，就开始饱受争议，很多人都认为Fragment的设计不合理，并提倡放弃Fragment，这种现象产生的原因我觉得大概就是使用了Fragment之后出现了很多Crash，而且这个Bug都似乎不是太能理解，导致不能很好的去解决。当然任何事物都是有两面性，存在即合理，Fragment肯定也是有其使用价值的。   由于在使用Fragment的过程中会产生莫名其妙的Crash，">
+<meta property="og:image" content="http://jokero1o.github.io/images/blog_fragment.jpg">
+<meta property="og:updated_time" content="2017-06-07T07:25:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fragment弃坑之旅">
+<meta name="twitter:description" content="Fragment至诞生之日起，就开始饱受争议，很多人都认为Fragment的设计不合理，并提倡放弃Fragment，这种现象产生的原因我觉得大概就是使用了Fragment之后出现了很多Crash，而且这个Bug都似乎不是太能理解，导致不能很好的去解决。当然任何事物都是有两面性，存在即合理，Fragment肯定也是有其使用价值的。   由于在使用Fragment的过程中会产生莫名其妙的Crash，">
+<meta name="twitter:image" content="http://jokero1o.github.io/images/blog_fragment.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Fragment弃坑之旅" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/26/Fragment弃坑之旅/" class="article-date">
+  	<time datetime="2017-04-26T07:24:30.000Z" itemprop="datePublished">2017-04-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Fragment弃坑之旅
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fragment/">Fragment</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Fragment至诞生之日起，就开始饱受争议，很多人都认为Fragment的设计不合理，并提倡放弃Fragment，这种现象产生的原因我觉得大概就是使用了Fragment之后出现了很多Crash，而且这个Bug都似乎不是太能理解，导致不能很好的去解决。当然任何事物都是有两面性，存在即合理，Fragment肯定也是有其使用价值的。</p>
+</blockquote>
+<p><img src="http://jokero1o.github.io/images/blog_fragment.jpg" alt=""></p>
+<p>由于在使用Fragment的过程中会产生莫名其妙的Crash，这类Crash很隐蔽，一不小心就会出现等特点。我们来总结下具体的Crash来在开发中保证Fragment开发的稳定性，减少Crash的发生率。</p>
+<h2 id="getActivity-方法报NPE"><a href="#getActivity-方法报NPE" class="headerlink" title="getActivity()方法报NPE"></a><a href="#getActivity_28_29_u65B9_u6CD5_u62A5NPE" title="getActivity()方法报NPE"></a>getActivity()方法报NPE</h2><p>一般在应用正常使用这个API时是没有任何问题的,而且在测试的过程中也很难出现，但是在App上线后时不时的就会有这样的Crash产生，那就很奇怪了，也是个头疼的问题，而且这类错误不容易复现，那么这势必会让程序员给Fragment减分。那么我们来看下这个API是怎么调用的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">final public FragmentActivity getActivity() &#123;</div><div class="line">    return mHost == null ? null : (FragmentActivity) mHost.getActivity();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>mHost是Fragment绑定的宿主Activity，那么当这个方法返回为Null,可以看到其实是这个变量mHost为Null。<br>我们来看下这个值是从何而来的，那么又在什么时候失去的。我们将查看源码来解决这个问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">xxxFragment = XXXFragment.newInstance(null);</div><div class="line">getFragmentManager()</div><div class="line">    .beginTransaction()</div><div class="line">    .replace(R.id.container,xxxFragment)</div><div class="line">    .commit();</div></pre></td></tr></table></figure>
+<p>上面的代码是我们将一个Fragment加入到Activity的常用手段。那么Fragment的神奇的生命之旅也开始了。我们主要是找到mHost这个变量是如果产生和消失的，并不打算详细的介绍Fragment的每个生命周期的动作。我们在Fragment源码中并没有找到mHost的赋值过程，那么mHost的赋值肯定是从下面的一段代码开始的了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public FragmentManager getFragmentManager() &#123;</div><div class="line">    return mFragments.getFragmentManager();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们在Activity中找到如上代码，那么mFragments又是什么，在哪里实例化的呢。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">final FragmentController mFragments = FragmentController.createController(new HostCallbacks());</div></pre></td></tr></table></figure>
+<p>原来mFragments是FragmentController实例变量，在Activity初始化的时候就开始实例化的了。好的，我们来看下这段代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//隐藏了构造函数</div><div class="line">public static final FragmentController createController(FragmentHostCallback&lt;?&gt; callbacks) &#123;</div><div class="line">    return new FragmentController(callbacks);</div><div class="line">&#125;</div><div class="line"></div><div class="line">private FragmentController(FragmentHostCallback&lt;?&gt; callbacks) &#123;</div><div class="line">    mHost = callbacks;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//调用父类的构造</div><div class="line">public HostCallbacks() &#123;</div><div class="line">    super(Activity.this /*activity*/);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//父类构造</div><div class="line">FragmentHostCallback(Activity activity, Context context, Handler handler,</div><div class="line">    int windowAnimations) &#123;</div><div class="line">    mActivity = activity;</div><div class="line">    mContext = context;</div><div class="line">    mHandler = handler;</div><div class="line">    mWindowAnimations = windowAnimations;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们可以看到HostCallbacks包含了Activity的引用,并且传给了FragmentHostCallback,FragmentController在构造函数里持有了FragmentHostCallback对象。这样的话FragmentController就可以操作mHost来操作FragmentHostCallback中的FragmentManagerImpl对象了。getFragmentManager()也就拿到了FragmentManagerImpl对象的引用。我们再来看下beginTransaction()方法。<br>//FragmentManagerImpl.java<br>//返回了一个BackStackRecord,同是有把自己作为参数传了过去<br>//BackStackRecord的mManager持有了FragmentManagerImpl的引用<br>public FragmentTransaction beginTransaction() {<br>return new BackStackRecord(this);<br>}</p>
+<p>接下来我们来看下BackStackRecord的replace方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">public FragmentTransaction replace(int containerViewId, Fragment fragment) &#123;</div><div class="line">        return replace(containerViewId, fragment, null);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">public FragmentTransaction replace(int containerViewId, Fragment fragment, String tag) &#123;</div><div class="line">        if (containerViewId == 0) &#123;</div><div class="line">            throw new IllegalArgumentException(&quot;Must use non-zero containerViewId&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        doAddOp(containerViewId, fragment, tag, OP_REPLACE);</div><div class="line">        return this;</div><div class="line">&#125;</div><div class="line"></div><div class="line">将FragmentManagerImpl的引用传给xxxFragment</div><div class="line">private void doAddOp(int containerViewId, Fragment fragment, String tag, int opcmd) &#123;</div><div class="line">    fragment.mFragmentManager = mManager;</div><div class="line">    ...</div><div class="line">    Op op = new Op();</div><div class="line">    op.cmd = opcmd; //这里的opcmd为OP_REPLACE</div><div class="line">    op.fragment = fragment;</div><div class="line">    addOp(op);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//Op为一个链表结构，主要用来记录Fragment的使用链</div><div class="line">void addOp(Op op) &#123;</div><div class="line">    if (mHead == null) &#123;</div><div class="line">        mHead = mTail = op;</div><div class="line">    &#125; else &#123;</div><div class="line">        op.prev = mTail;</div><div class="line">        mTail.next = op;</div><div class="line">        mTail = op;</div><div class="line">    &#125;</div><div class="line">    op.enterAnim = mEnterAnim;</div><div class="line">    op.exitAnim = mExitAnim;</div><div class="line">    op.popEnterAnim = mPopEnterAnim;</div><div class="line">    op.popExitAnim = mPopExitAnim;</div><div class="line">    mNumOp++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么到现在为止，好像并没有什么实质的变化，Activity依然是个空的Activity，Fragment依然是个没有展示的Fragment。那么重量级的方法来了commit()方法。这个方法对有些刚刚使用Fragment的开发者来说容易忘记的方法。常常写完发现并没有什么XX用。我看看到commit()依然是BackStackRecord的方法.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//allowStateLoss=false</div><div class="line">//mAddToBackStack默认为false</div><div class="line">int commitInternal(boolean allowStateLoss) &#123;</div><div class="line">    if (mCommitted) throw new IllegalStateException(&quot;commit already called&quot;);</div><div class="line">    if (FragmentManagerImpl.DEBUG) &#123;</div><div class="line">        Log.v(TAG, &quot;Commit: &quot; + this);</div><div class="line">        LogWriter logw = new LogWriter(TAG);</div><div class="line">        PrintWriter pw = new PrintWriter(logw);</div><div class="line">        dump(&quot;  &quot;, null, pw, null);</div><div class="line">    &#125;</div><div class="line">    mCommitted = true;</div><div class="line">    if (mAddToBackStack) &#123;</div><div class="line">        mIndex = mManager.allocBackStackIndex(this);</div><div class="line">    &#125; else &#123;</div><div class="line">        mIndex = -1;</div><div class="line">    &#125;</div><div class="line">    mManager.enqueueAction(this, allowStateLoss);//mManager为FragmentManagerImpl</div><div class="line">    return mIndex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们来看FragmentManagerImpl的enqueueAction方法:<br>//action 为BackStackRecord对象<br>public void enqueueAction(Runnable action, boolean allowStateLoss) {<br>if (!allowStateLoss) {<br>checkStateLoss();<br>}<br>synchronized (this) {<br>if (mDestroyed || mHost == null) {<br>throw new IllegalStateException(“Activity has been destroyed”);<br>}<br>if (mPendingActions == null) {<br>mPendingActions = new ArrayList<runnable>();<br>}<br>mPendingActions.add(action);<br>if (mPendingActions.size() == 1) {<br>mHost.getHandler().removeCallbacks(mExecCommit);<br>mHost.getHandler().post(mExecCommit);<br>}<br>}<br>}<br>这段代码主要是去执行传进来的Runable的run方法。</runnable></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">public void run() &#123;</div><div class="line">   ...</div><div class="line">    Op op = mHead;</div><div class="line">    while (op != null) &#123;</div><div class="line">        ...</div><div class="line">            case OP_REPLACE: &#123;</div><div class="line">                Fragment f = op.fragment;</div><div class="line">                int containerId = f.mContainerId;</div><div class="line">                if (mManager.mAdded != null) &#123;</div><div class="line">                    for (int i = mManager.mAdded.size() - 1; i &gt;= 0; i--) &#123;</div><div class="line">                        Fragment old = mManager.mAdded.get(i);</div><div class="line">                        if (FragmentManagerImpl.DEBUG) Log.v(TAG,</div><div class="line">                                &quot;OP_REPLACE: adding=&quot; + f + &quot; old=&quot; + old);</div><div class="line">                        if (old.mContainerId == containerId) &#123;</div><div class="line">                            if (old == f) &#123;</div><div class="line">                                op.fragment = f = null;</div><div class="line">                            &#125; else &#123;</div><div class="line">                                if (op.removed == null) &#123;</div><div class="line">                                    op.removed = new ArrayList&lt;Fragment&gt;();</div><div class="line">                                &#125;</div><div class="line">                                op.removed.add(old);</div><div class="line">                                old.mNextAnim = exitAnim;</div><div class="line">                                if (mAddToBackStack) &#123;</div><div class="line">                                    old.mBackStackNesting += 1;</div><div class="line">                                    if (FragmentManagerImpl.DEBUG) Log.v(TAG, &quot;Bump nesting of &quot;</div><div class="line">                                            + old + &quot; to &quot; + old.mBackStackNesting);</div><div class="line">                                &#125;</div><div class="line">                                mManager.removeFragment(old, transition, transitionStyle);</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                if (f != null) &#123;</div><div class="line">                    f.mNextAnim = enterAnim;</div><div class="line">                    mManager.addFragment(f, false);</div><div class="line">                &#125;</div><div class="line">            &#125; break;</div><div class="line">            ...</div><div class="line">            mManager.moveToState(mManager.mCurState, transition, transitionStyle, true);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这段代码很长，但是我们只关心OP_REPLACE的操作符。我们看到上面的代码主要是通过操作FragmentManagerImpl来remove老的Fragment，add新的Fragment。好的，我们把重点给到addFragment这个方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public void addFragment(Fragment fragment, boolean moveToStateNow) &#123;</div><div class="line">    if(this.mAdded == null) &#123;</div><div class="line">        this.mAdded = new ArrayList();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if(DEBUG) &#123;</div><div class="line">        Log.v(&quot;FragmentManager&quot;, &quot;add: &quot; + fragment);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    this.makeActive(fragment); // 将Fragment放入mActive集合中待显示</div><div class="line">    if(!fragment.mDetached) &#123;</div><div class="line">        if(this.mAdded.contains(fragment)) &#123;</div><div class="line">            throw new IllegalStateException(&quot;Fragment already added: &quot; + fragment);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        this.mAdded.add(fragment);</div><div class="line">        fragment.mAdded = true;</div><div class="line">        fragment.mRemoving = false;</div><div class="line">        if(fragment.mHasMenu &amp;&amp; fragment.mMenuVisible) &#123;</div><div class="line">            this.mNeedMenuInvalidate = true;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        moveToStateNow == false</div><div class="line">        if(moveToStateNow) &#123;</div><div class="line">            this.moveToState(fragment);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里最关键的代码是makeActive(fragment)。我们在回到BackStackRecord的run方法中，走过一系列的case后走到最后的方法moveToState。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">void moveToState(int newState, int transit, int transitStyle, boolean always) &#123;</div><div class="line">    if(this.mHost == null &amp;&amp; newState != 0) &#123;</div><div class="line">        throw new IllegalStateException(&quot;No host&quot;);</div><div class="line">    &#125; else if(always || this.mCurState != newState) &#123;</div><div class="line">       ...</div><div class="line">            for(int i = 0; i &lt; this.mActive.size(); ++i) &#123;</div><div class="line">                Fragment f = (Fragment)this.mActive.get(i);</div><div class="line">                if(f != null) &#123;</div><div class="line">                    this.moveToState(f, newState, transit, transitStyle, false);</div><div class="line">                    if(f.mLoaderManager != null) &#123;</div><div class="line">                        loadersRunning |= f.mLoaderManager.hasRunningLoaders();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">       ...</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法是在mActive中取出刚刚放入的Fragment。最后调用moveToState（Fragment…）方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">void moveToState(Fragment f, int newState, int transit, int transitionStyle,</div><div class="line">        boolean keepActive) &#123;</div><div class="line">    //...</div><div class="line">    if (f.mState &lt; newState) &#123;</div><div class="line">        //...</div><div class="line">        switch (f.mState) &#123;</div><div class="line">            case Fragment.INITIALIZING:</div><div class="line">                //...</div><div class="line">                f.mHost = mHost;</div><div class="line">                f.mParentFragment = mParent;</div><div class="line">                f.mFragmentManager = mParent != null</div><div class="line">                        ? mParent.mChildFragmentManager : mHost.getFragmentManagerImpl();</div><div class="line">                f.mCalled = false;</div><div class="line">                f.onAttach(mHost.getContext());</div><div class="line">                //...</div><div class="line">                if (f.mParentFragment == null) &#123;</div><div class="line">                    mHost.onAttachFragment(f);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                if (!f.mRetaining) &#123;</div><div class="line">                    f.performCreate(f.mSavedFragmentState);</div><div class="line">                &#125;</div><div class="line">                f.mRetaining = false;</div><div class="line">                if (f.mFromLayout) &#123;</div><div class="line">                    //...</div><div class="line">                &#125;</div><div class="line">            //...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    f.mState = newState;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当Fragment走到了现在，我们终于看到了mHost的赋值，同时给Fragment的创建流程也有了一定的了解了。也就是说Fragment在Attach到宿主Activity是mHost进行赋值。那么我们又回到上面说的Bug上，这里mHost运行了一段时间后，突然为空了。这让我们联想到是由于宿主Activity和Fragment失去的连接，导致了Fragment的mHost为Null。那么在开发的时候不是必现的，那么排除了这种情况是代码上的问题。还有没有其他的Activity于Fragment失联的情况了，猜想是App处在后台时，在系统内存紧张后回收掉了Activity，但是同时Fragment在做耗时操作刚好又用到了getActivity().那么悲剧就这样产生了。</p>
+<p>我们来看下Activity在销毁是的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">final void performDestroy() &#123;</div><div class="line">    mDestroyed = true;</div><div class="line">    mWindow.destroy();</div><div class="line">    mFragments.dispatchDestroy();</div><div class="line">    onDestroy();</div><div class="line">    mFragments.doLoaderDestroy();</div><div class="line">    if (mVoiceInteractor != null) &#123;</div><div class="line">        mVoiceInteractor.detachActivity();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们看到了mFragments.dispatchDestroy()方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">    public void dispatchDestroy() &#123;</div><div class="line">        mDestroyed = true;</div><div class="line">        execPendingActions();</div><div class="line">        moveToState(Fragment.INITIALIZING, false);</div><div class="line">        mHost = null;</div><div class="line">        mContainer = null;</div><div class="line">        mParent = null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">void moveToState(Fragment f, int newState, int transit, int transitionStyle,</div><div class="line">        boolean keepActive) &#123;</div><div class="line">    if (f.mState &lt; newState) &#123;</div><div class="line">        ...</div><div class="line">    &#125; else if (f.mState &gt; newState) &#123;</div><div class="line">        switch (f.mState) &#123;</div><div class="line">            ...</div><div class="line">            case Fragment.CREATED:</div><div class="line">                if (newState &lt; Fragment.CREATED) &#123;</div><div class="line">                    if (mDestroyed) &#123;</div><div class="line">                        ...</div><div class="line">                    &#125;</div><div class="line">                    if (f.mAnimatingAway != null) &#123;</div><div class="line">                        ...</div><div class="line">                    &#125; else &#123;</div><div class="line">                        if (DEBUG) Log.v(TAG, &quot;movefrom CREATED: &quot; + f);</div><div class="line">                        if (!f.mRetaining) &#123;</div><div class="line">                            f.performDestroy();</div><div class="line">                        &#125; else &#123;</div><div class="line">                            f.mState = Fragment.INITIALIZING;</div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        f.performDetach();</div><div class="line">                        if (!keepActive) &#123;</div><div class="line">                            if (!f.mRetaining) &#123;</div><div class="line">                                makeInactive(f);</div><div class="line">                            &#125; else &#123;</div><div class="line">                                f.mHost = null;</div><div class="line">                                f.mParentFragment = null;</div><div class="line">                                f.mFragmentManager = null;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后会走到else分支中,将Fragment的mHost置空，这就导致了getActivity()NPE的出现。<br>对于这类问题是因为没有控制好Fragment于Activity失联后没有正确的取消耗时的操作，那么需要开发者在onDetach的时候及时取消掉耗时的操作。</p>
+<h2 id="Fragment之replace和add的区别"><a href="#Fragment之replace和add的区别" class="headerlink" title="Fragment之replace和add的区别"></a><a href="#Fragment_u4E4Breplace_u548Cadd_u7684_u533A_u522B" title="Fragment之replace和add的区别"></a>Fragment之replace和add的区别</h2><p>Fragment的replace和add在一般情况下展现的效果是一致的,不经历一些Bug 可能用replace的人一直用replace，用add的人一直用add，那么这个Bug究竟是什么呢。其实也是在特殊时期发生的事，那就是在Activity回收后恢复时,出现了多个Fragment,当然这个Bug官方在v4-24.0.0+ 开始已经解决了，后续将不会出现这个问题。这个Bug主要产生点就是Activity销毁和恢复是状态保存机制造成的。系统在回收Activity的时候会保存Fragment的状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">final String mClassName;</div><div class="line">final int mIndex;</div><div class="line">final boolean mFromLayout;</div><div class="line">final int mFragmentId;</div><div class="line">final int mContainerId;</div><div class="line">final String mTag;</div><div class="line">final boolean mRetainInstance;</div><div class="line">final boolean mDetached;</div><div class="line">final Bundle mArguments;</div></pre></td></tr></table></figure>
+<p>24.0.0之前保存的变量如上。但是在使用addAPI是经常需要使用Hide和Show的操作，这些操作都是根据mHidden变量来控制的，在来看下以前的版本，压根就没有保存这个变量，所以在使用add去操作Fragment时会将add的多个Fragment同时显示出来，或者在onCreate里再次创建了同一个Fragment，Fragment默认的mHidden = false，这样就会造成重影的问题。在24.0.0之后，官方加入了mHidden字段。来保存Fragment显隐问题。</p>
+<p>那么replace为啥没有这样的问题出现呢，而add的操作就会存在。我们来看下源码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public FragmentTransaction add(Fragment fragment, String tag) &#123;</div><div class="line">    doAddOp(0, fragment, tag, OP_ADD);</div><div class="line">    return this;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public FragmentTransaction replace(int containerViewId, Fragment fragment, String tag) &#123;</div><div class="line">    if (containerViewId == 0) &#123;</div><div class="line">        throw new IllegalArgumentException(&quot;Must use non-zero containerViewId&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    doAddOp(containerViewId, fragment, tag, OP_REPLACE);</div><div class="line">    return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>add和replace的不同点只是在构造Op是的cmd不一样，一个是OP_ADD，一个OP_REPLACE。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">public void run() &#123;</div><div class="line">        ...</div><div class="line">        while (op != null) &#123;</div><div class="line">            int enterAnim = state != null ? 0 : op.enterAnim;</div><div class="line">            int exitAnim = state != null ? 0 : op.exitAnim;</div><div class="line">            switch (op.cmd) &#123;</div><div class="line">                case OP_ADD: &#123;</div><div class="line">                    Fragment f = op.fragment;</div><div class="line">                    f.mNextAnim = enterAnim;</div><div class="line">                    mManager.addFragment(f, false);</div><div class="line">                &#125; break;</div><div class="line">                case OP_REPLACE: &#123;</div><div class="line">                    Fragment f = op.fragment;</div><div class="line">                    int containerId = f.mContainerId;</div><div class="line">                    if (mManager.mAdded != null) &#123;</div><div class="line">                        for (int i = mManager.mAdded.size() - 1; i &gt;= 0; i--) &#123;</div><div class="line">                            Fragment old = mManager.mAdded.get(i);</div><div class="line">                            if (FragmentManagerImpl.DEBUG) Log.v(TAG,</div><div class="line">                                    &quot;OP_REPLACE: adding=&quot; + f + &quot; old=&quot; + old);</div><div class="line">                            if (old.mContainerId == containerId) &#123;</div><div class="line">                                if (old == f) &#123;</div><div class="line">                                    op.fragment = f = null;</div><div class="line">                                &#125; else &#123;</div><div class="line">                                    if (op.removed == null) &#123;</div><div class="line">                                        op.removed = new ArrayList&lt;Fragment&gt;();</div><div class="line">                                    &#125;</div><div class="line">                                    op.removed.add(old);</div><div class="line">                                    old.mNextAnim = exitAnim;</div><div class="line">                                    if (mAddToBackStack) &#123;</div><div class="line">                                        old.mBackStackNesting += 1;</div><div class="line">                                        if (FragmentManagerImpl.DEBUG) Log.v(TAG, &quot;Bump nesting of &quot;</div><div class="line">                                                + old + &quot; to &quot; + old.mBackStackNesting);</div><div class="line">                                    &#125;</div><div class="line">                                    mManager.removeFragment(old, transition, transitionStyle);</div><div class="line">                                &#125;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    if (f != null) &#123;</div><div class="line">                        f.mNextAnim = enterAnim;</div><div class="line">                        mManager.addFragment(f, false);</div><div class="line">                    &#125;</div><div class="line">                &#125; break;</div><div class="line">               ...</div><div class="line"></div><div class="line">        mManager.moveToState(mManager.mCurState, transition, transitionStyle, true);</div><div class="line"></div><div class="line">        ...</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>这里分别对cmd的操作可以看出来add是直接添加一个Fragment，可以多个Fragment一起存在，而replace则是先remove其他Fragment在add新的Fragment。这两个API使用场景就发生了变化。<br>对于在一个Fragment只存在一个或者存在多个不易切换的Fragment适合使用replace，毕竟replace不需要耗费其他的内存来保存多个Fragment。在使用多个Fragment频繁切换时更适合add，Fragment的切换使用Hide和show来实现，这样数据不需要再次加载，即是一种空间换速度的方式，这里也可以看出来replace的时候是remove了其他的Fragment所以一般不会产生多个Fragment的同时展现。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          Android-Binder技术ServiceManager之服务注册请求的发送
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/25/Android-Binder技术之ServiceManager启动/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android-Binder技术之ServiceManager启动</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="Fragment弃坑之旅" data-title="Fragment弃坑之旅" data-url="http://yoursite.com/2017/04/26/Fragment弃坑之旅/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="Fragment弃坑之旅">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2017 John Doe
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>

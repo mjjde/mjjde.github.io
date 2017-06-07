@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>EventBus2-4-0源码分析之Post | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="上篇我们介绍了EventBus的注册，这篇我们主要介绍注册之后，EventBus是如何触发事件，传递事件，最后让注册者接受到事件。  EventBust.java事件的发起函数我们可以在EventBus类里可以看到。就是 post(Object event) 方法。 123456789101112131415161718192021        public void post(Object">
+<meta name="keywords" content="Rxjava">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EventBus2-4-0源码分析之Post">
+<meta property="og:url" content="http://yoursite.com/2015/12/25/EventBus2-4-0源码分析之Post/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="上篇我们介绍了EventBus的注册，这篇我们主要介绍注册之后，EventBus是如何触发事件，传递事件，最后让注册者接受到事件。  EventBust.java事件的发起函数我们可以在EventBus类里可以看到。就是 post(Object event) 方法。 123456789101112131415161718192021        public void post(Object">
+<meta property="og:updated_time" content="2017-06-07T07:09:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="EventBus2-4-0源码分析之Post">
+<meta name="twitter:description" content="上篇我们介绍了EventBus的注册，这篇我们主要介绍注册之后，EventBus是如何触发事件，传递事件，最后让注册者接受到事件。  EventBust.java事件的发起函数我们可以在EventBus类里可以看到。就是 post(Object event) 方法。 123456789101112131415161718192021        public void post(Object">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-EventBus2-4-0源码分析之Post" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/25/EventBus2-4-0源码分析之Post/" class="article-date">
+  	<time datetime="2015-12-25T07:07:58.000Z" itemprop="datePublished">2015-12-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      EventBus2-4-0源码分析之Post
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Rxjava/">Rxjava</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>上篇我们介绍了EventBus的注册，这篇我们主要介绍注册之后，EventBus是如何触发事件，传递事件，最后让注册者接受到事件。</p>
+</blockquote>
+<h4 id="EventBust-java"><a href="#EventBust-java" class="headerlink" title="EventBust.java"></a><a href="#EventBust-java" title="EventBust.java"></a>EventBust.java</h4><p>事件的发起函数我们可以在EventBus类里可以看到。就是 <em>post(Object event)</em> 方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">        public void post(Object event) &#123;</div><div class="line">    PostingThreadState postingState = currentPostingThreadState.get();</div><div class="line">    List&lt;Object&gt; eventQueue = postingState.eventQueue;</div><div class="line">    eventQueue.add(event);</div><div class="line"></div><div class="line">    if (!postingState.isPosting) &#123;</div><div class="line">        postingState.isMainThread = Looper.getMainLooper() == Looper.myLooper();</div><div class="line">        postingState.isPosting = true;</div><div class="line">        if (postingState.canceled) &#123;</div><div class="line">            throw new EventBusException(&quot;Internal error. Abort state was not reset&quot;);</div><div class="line">        &#125;</div><div class="line">        try &#123;</div><div class="line">            while (!eventQueue.isEmpty()) &#123;</div><div class="line">                postSingleEvent(eventQueue.remove(0), postingState);</div><div class="line">            &#125;</div><div class="line">        &#125; finally &#123;</div><div class="line">            postingState.isPosting = false;</div><div class="line">            postingState.isMainThread = false;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该方法的参数是我们之前定义的事件类。往下看我们看到一个类PostingThreadState。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">final static class PostingThreadState &#123;</div><div class="line">    final List&lt;Object&gt; eventQueue = new ArrayList&lt;Object&gt;();</div><div class="line">    boolean isPosting;</div><div class="line">    boolean isMainThread;</div><div class="line">    Subscription subscription;</div><div class="line">    Object event;</div><div class="line">    boolean canceled;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个类里面保存了事件队列eventQueue，是否正在发送，是否是主线程，订阅者，当前的事件，是否取消，那么这个对象是保存在哪里的呢。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">       private final ThreadLocal&lt;PostingThreadState&gt; currentPostingThreadState = new ThreadLocal&lt;PostingThreadState&gt;() &#123;</div><div class="line">    @Override</div><div class="line">    protected PostingThreadState initialValue() &#123;</div><div class="line">        return new PostingThreadState();</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这个对象实例保存在ThreadLocal中，ThreadLocal是用于保存一个线程共用信息，比如子啊主线程中调用的Post方法，那么就会在主线程中保存一个PostingThreadState对象，里面放置发送事件的相关信息。如果是线程池里的一个线程，那么就是该线程保存PostingThreadState。ThreadLocal很好的保存和共享一个线程特有得信息。</p>
+<p>好了，我们从当前线程里去除PostingThreadState对象后就把post的event保存在里该对象的list集合里，判断该线程是否还没发送过事件，如果是，就设置postingState.isMainThread和postingState.isPosting = true;然后开启无限循环取出eventQueue里的事件调用 <em>postSingleEvent(eventQueue.remove(0), postingState);</em> 方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">        private void postSingleEvent(Object event, PostingThreadState postingState) throws Error &#123;</div><div class="line">    Class&lt;?&gt; eventClass = event.getClass();</div><div class="line">    boolean subscriptionFound = false;</div><div class="line">    if (eventInheritance) &#123;</div><div class="line">        List&lt;Class&lt;?&gt;&gt; eventTypes = lookupAllEventTypes(eventClass);</div><div class="line">        int countTypes = eventTypes.size();</div><div class="line">        for (int h = 0; h &lt; countTypes; h++) &#123;</div><div class="line">            Class&lt;?&gt; clazz = eventTypes.get(h);</div><div class="line">            subscriptionFound |= postSingleEventForEventType(event, postingState, clazz);</div><div class="line">        &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">        subscriptionFound = postSingleEventForEventType(event, postingState, eventClass);</div><div class="line">    &#125;</div><div class="line">    if (!subscriptionFound) &#123;</div><div class="line">        if (logNoSubscriberMessages) &#123;</div><div class="line">            Log.d(TAG, &quot;No subscribers registered for event &quot; + eventClass);</div><div class="line">        &#125;</div><div class="line">        if (sendNoSubscriberEvent &amp;&amp; eventClass != NoSubscriberEvent.class &amp;&amp;</div><div class="line">                eventClass != SubscriberExceptionEvent.class) &#123;</div><div class="line">            post(new NoSubscriberEvent(this, event));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>方法里的一个eventInheritance是否支持发送该事件类的父类或者接口类的事件。如果是，就会将事件的父类和接口类都加入到list中准备发送。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">private boolean postSingleEventForEventType(Object event, PostingThreadState postingState, Class&lt;?&gt; eventClass) &#123;</div><div class="line">    CopyOnWriteArrayList&lt;Subscription&gt; subscriptions;</div><div class="line">    synchronized (this) &#123;</div><div class="line">        subscriptions = subscriptionsByEventType.get(eventClass);</div><div class="line">    &#125;</div><div class="line">    if (subscriptions != null &amp;&amp; !subscriptions.isEmpty()) &#123;</div><div class="line">        for (Subscription subscription : subscriptions) &#123;</div><div class="line">            postingState.event = event;</div><div class="line">            postingState.subscription = subscription;</div><div class="line">            boolean aborted = false;</div><div class="line">            try &#123;</div><div class="line">                postToSubscription(subscription, event, postingState.isMainThread);</div><div class="line">                aborted = postingState.canceled;</div><div class="line">            &#125; finally &#123;</div><div class="line">                postingState.event = null;</div><div class="line">                postingState.subscription = null;</div><div class="line">                postingState.canceled = false;</div><div class="line">            &#125;</div><div class="line">            if (aborted) &#123;</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法首先去集合里拿有注册这个事件类型的Subscription。这个集合的添加是在register的时候根据onEvent收集的。如果事件被注册过。取出Subscription对象设置postingState.event和postingState.subscription。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) &#123;</div><div class="line">    switch (subscription.subscriberMethod.threadMode) &#123;</div><div class="line">        case PostThread:</div><div class="line">            invokeSubscriber(subscription, event);</div><div class="line">            break;</div><div class="line">        case MainThread:</div><div class="line">            if (isMainThread) &#123;</div><div class="line">                invokeSubscriber(subscription, event);</div><div class="line">            &#125; else &#123;</div><div class="line">                mainThreadPoster.enqueue(subscription, event);</div><div class="line">            &#125;</div><div class="line">            break;</div><div class="line">        case BackgroundThread:</div><div class="line">            if (isMainThread) &#123;</div><div class="line">                backgroundPoster.enqueue(subscription, event);</div><div class="line">            &#125; else &#123;</div><div class="line">                invokeSubscriber(subscription, event);</div><div class="line">            &#125;</div><div class="line">            break;</div><div class="line">        case Async:</div><div class="line">            asyncPoster.enqueue(subscription, event);</div><div class="line">            break;</div><div class="line">        default:</div><div class="line">            throw new IllegalStateException(&quot;Unknown thread mode: &quot; + subscription.subscriberMethod.threadMode);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法我们在上篇已经接触过，是在注册sticky事件的时候主动去调用的。而对于普通的事件是在post的时候调用的。我们来具体的看下这个主要方法。首先判断threadMode。如果当前的线程状态符合onEvent事件触发的要求，那么就会立刻执行 <em>invokeSubscriber(subscription, event)</em> 的方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">    void invokeSubscriber(Subscription subscription, Object event) &#123;</div><div class="line">    try &#123;</div><div class="line">        subscription.subscriberMethod.method.invoke(subscription.subscriber, event);</div><div class="line">    &#125; catch (InvocationTargetException e) &#123;</div><div class="line">        handleSubscriberException(subscription, event, e.getCause());</div><div class="line">    &#125; catch (IllegalAccessException e) &#123;</div><div class="line">        throw new IllegalStateException(&quot;Unexpected exception&quot;, e);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该方法就是执行method.invoke的方法很简单。<br>那么不是适合的线程我们会根据要求的ThreadMode. 分别调用mainThreadPoster.enqueue，backgroundPoster.enqueue，asyncPoster.enqueue的方法。</p>
+<p>我们先来看下这几个Poster.</p>
+<h4 id="HandlerPoster-java"><a href="#HandlerPoster-java" class="headerlink" title="HandlerPoster.java"></a><a href="#HandlerPoster-java" title="HandlerPoster.java"></a>HandlerPoster.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">        void enqueue(Subscription subscription, Object event) &#123;</div><div class="line">    PendingPost pendingPost = PendingPost.obtainPendingPost(subscription, event);</div><div class="line">    synchronized (this) &#123;</div><div class="line">        queue.enqueue(pendingPost);</div><div class="line">        if (!handlerActive) &#123;</div><div class="line">            handlerActive = true;</div><div class="line">            if (!sendMessage(obtainMessage())) &#123;</div><div class="line">                throw new EventBusException(&quot;Could not send handler message&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>PendingPost类是一个拥有next属性的类，next是用来指向下一个PendingPost的，里面有ArrayList集合保存PendingPost。相当于一个缓存池，将用过的PendingPost，保存在集合里，等到下一个需要构建PendingPost的时候不是去new，而是从集合中取出一个来改变里面的event和subscription，这样的优化很常见，就是利用损失一定的内存来换取new的花销。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Object event;</div><div class="line">Subscription subscription;</div><div class="line">PendingPost next;</div><div class="line"></div><div class="line">private PendingPost(Object event, Subscription subscription) &#123;</div><div class="line">    this.event = event;</div><div class="line">    this.subscription = subscription;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>构造方法里封装了Subscription和event，类中有两个方法，一个是obtainPendingPost，获取一个PendingPost。一个是releasePendingPost。用来释放PendingPost。伴随的是List的remove和add方法。</p>
+<p>PendingPostQueue类中保存两个PendingPost，head，tail。当调用enqueue的时候。我们会将要加tail的next指向该pendingPost。同时将tail赋值为该pendingPost。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">        synchronized void enqueue(PendingPost pendingPost) &#123;</div><div class="line">    if (pendingPost == null) &#123;</div><div class="line">        throw new NullPointerException(&quot;null cannot be enqueued&quot;);</div><div class="line">    &#125;</div><div class="line">    if (tail != null) &#123;</div><div class="line">        tail.next = pendingPost;</div><div class="line">        tail = pendingPost;</div><div class="line">    &#125; else if (head == null) &#123;</div><div class="line">        head = tail = pendingPost;</div><div class="line">    &#125; else &#123;</div><div class="line">        throw new IllegalStateException(&quot;Head present, but no tail&quot;);</div><div class="line">    &#125;</div><div class="line">    notifyAll();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当调用poll()方法的时候，将head返回，并将head赋值给head指向的PendingPost。<br>这样的数据结构和LinkedList相似。</p>
+<p>我们在来看下HandlerPoster的enqueue方法。 调用PendingPost.obtainPendingPost获取一个PendingPost。判断是否已经启动无限循环处理数据，如果没有，就发送一个空消息sendMessage(obtainMessage()），当handler收到消息后就开始无限循环poll数据。应为HandlerPoster是用来处理MainThread上的操作，所以就要在handler里去执行方法。我们看到获取到pendingPost后就去执行 <em>eventBus.invokeSubscriber(pendingPost);</em> 方法了。这样就实现的线程的切换。</p>
+<h4 id="AsyncPoster，BackgroundPoster"><a href="#AsyncPoster，BackgroundPoster" class="headerlink" title="AsyncPoster，BackgroundPoster"></a><a href="#AsyncPoster_uFF0CBackgroundPoster" title="AsyncPoster，BackgroundPoster"></a>AsyncPoster，BackgroundPoster</h4><p>这两个Poster和之前的处理方式差不多，差别是要切换的线程不同，一个是UI主线程，所以要使用handler，这两个是要在子线程里去执行，所以都是继承Runnable的，我们在他们的run方法里去处理invokeSubscriber方法，他们之间的区别是BackgroundPoster是有一个队列的，属于并行执行，使用的时候不能有太耗时的操作，这样会使后面的任务一直堵塞。而AsyncPoster，是直接新开启线程去处理，所以不存在阻塞的问题。</p>
+<p>下面我们来看下sticky事件的Post.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public void postSticky(Object event) &#123;</div><div class="line">    synchronized (stickyEvents) &#123;</div><div class="line">        stickyEvents.put(event.getClass(), event);</div><div class="line">    &#125;</div><div class="line">    // Should be posted after it is putted, in case the subscriber wants to remove immediately</div><div class="line">    post(event);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该方法主要的是将事件存入了stickyEvents集合里，在registerSticky方法注册的时候取出来去执行。我们看到他依然是调用了post方法，这是为了万一使用者希望也能想普通事件一样的触发，当然，如果使用者的registerSticky在别的地方，这里post显然是找不到Subscription的所以就无法执行的。</p>
+<p>好了我们关于EventBusde的Post分析就到这了。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/28/Activity的进阶/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          Activity的进阶
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/12/23/EventBus2-4-0源码分析之订阅/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">EventBus2-4-0源码分析之订阅</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="EventBus2-4-0源码分析之Post" data-title="EventBus2-4-0源码分析之Post" data-url="http://yoursite.com/2015/12/25/EventBus2-4-0源码分析之Post/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="EventBus2-4-0源码分析之Post">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2017 John Doe
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>

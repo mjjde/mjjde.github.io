@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>图解Http五与HTTP协作的Web服务器 | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一台服务器可以搭载多个不同独立域名的Web网站，也可以作为通信路径上的中转服务器提升传输效率  用单台虚拟主机实现多个域名即使物理层面上只有一台服务端，但是使用了虚拟主机的功能就可以假象成多台服务器，提供给多个客户服务，可以以每个客户所持有域名来运行各自不同的网站 通信数据转发程序：代理，网关，隧道HTTP通信数，不止是服务端和客户端，还有一些用于通信数据转发的应用程序，如代理，网关，隧道。">
+<meta name="keywords" content="HTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解Http五与HTTP协作的Web服务器">
+<meta property="og:url" content="http://yoursite.com/2017/05/05/图解Http五与HTTP协作的Web服务器/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一台服务器可以搭载多个不同独立域名的Web网站，也可以作为通信路径上的中转服务器提升传输效率  用单台虚拟主机实现多个域名即使物理层面上只有一台服务端，但是使用了虚拟主机的功能就可以假象成多台服务器，提供给多个客户服务，可以以每个客户所持有域名来运行各自不同的网站 通信数据转发程序：代理，网关，隧道HTTP通信数，不止是服务端和客户端，还有一些用于通信数据转发的应用程序，如代理，网关，隧道。">
+<meta property="og:updated_time" content="2017-06-07T07:35:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图解Http五与HTTP协作的Web服务器">
+<meta name="twitter:description" content="一台服务器可以搭载多个不同独立域名的Web网站，也可以作为通信路径上的中转服务器提升传输效率  用单台虚拟主机实现多个域名即使物理层面上只有一台服务端，但是使用了虚拟主机的功能就可以假象成多台服务器，提供给多个客户服务，可以以每个客户所持有域名来运行各自不同的网站 通信数据转发程序：代理，网关，隧道HTTP通信数，不止是服务端和客户端，还有一些用于通信数据转发的应用程序，如代理，网关，隧道。">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-图解Http五与HTTP协作的Web服务器" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/05/图解Http五与HTTP协作的Web服务器/" class="article-date">
+  	<time datetime="2017-05-05T07:28:43.000Z" itemprop="datePublished">2017-05-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      图解Http五与HTTP协作的Web服务器
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>一台服务器可以搭载多个不同独立域名的Web网站，也可以作为通信路径上的中转服务器提升传输效率</p>
+</blockquote>
+<h3 id="用单台虚拟主机实现多个域名"><a href="#用单台虚拟主机实现多个域名" class="headerlink" title="用单台虚拟主机实现多个域名"></a><a href="#u7528_u5355_u53F0_u865A_u62DF_u4E3B_u673A_u5B9E_u73B0_u591A_u4E2A_u57DF_u540D" title="用单台虚拟主机实现多个域名"></a>用单台虚拟主机实现多个域名</h3><p>即使物理层面上只有一台服务端，但是使用了虚拟主机的功能就可以假象成多台服务器，提供给多个客户服务，可以以每个客户所持有域名来运行各自不同的网站</p>
+<h3 id="通信数据转发程序：代理，网关，隧道"><a href="#通信数据转发程序：代理，网关，隧道" class="headerlink" title="通信数据转发程序：代理，网关，隧道"></a><a href="#u901A_u4FE1_u6570_u636E_u8F6C_u53D1_u7A0B_u5E8F_uFF1A_u4EE3_u7406_uFF0C_u7F51_u5173_uFF0C_u96A7_u9053" title="通信数据转发程序：代理，网关，隧道"></a>通信数据转发程序：代理，网关，隧道</h3><p>HTTP通信数，不止是服务端和客户端，还有一些用于通信数据转发的应用程序，如代理，网关，隧道。</p>
+<ol>
+<li>代理<br>代理是一种具备转发功能的应用程序，它扮演了服务器和客户端之间的“中间人”的角色，它可以将客户端发出的请求转发给服务端，也可以将服务端的响应转发给客户端。</li>
+<li>网关<br>网关是转发其他服务器通信数据的服务器，接收来自客户端发来的请求。就想自己拥有资源一样的对请求进行处理。有时客户端不会察觉自己是在与网关通信</li>
+<li>隧道<br>隧道是在相隔很远的服务器和客户端之间进行中转，并保持双方连接的应用程序</li>
+</ol>
+<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a><a href="#u4EE3_u7406" title="代理"></a>代理</h3><p>代理服务器的基本行为就是接受客户端发送过来的请求转发给其他的服务器，代理不改变请求的URI，会直接将请求转发给持有资源的服务器，<br>持有资源的服务器叫做源服务器，从源服务器返回的响应信息经过代理服务器转发给客户端</p>
+<p>在HTTP通信过程中可以级联多个代理服务器，请求和响应的转发会经过向锁链一样连接的代理服务器，转发是需要附加Via首部字段。</p>
+<p>使用代理服务器的理由：利用缓存技术较少网络带宽的流量，组织内部针对特定网站的访问控制，以获得访问日志为主要目的，等</p>
+<p>代理的使用方法可以分为两类。一种是是否使用缓存，另一种是是否修改报文</p>
+<ol>
+<li>缓存代理服务器<br>代理在转发响应时，缓存代理会将资源的副本保存在代理服务器上，当再次接收到相同请求时，可以不用从源服务器获取资源，而是将之前的缓存的资源直接返回</li>
+<li>透明代理服务器<br>转发请求或响应时不对报文做任何的加工的代理类型称为透明代理，反之为非透明代理</li>
+</ol>
+<h3 id="网关"><a href="#网关" class="headerlink" title="网关"></a><a href="#u7F51_u5173" title="网关"></a>网关</h3><p>网关的工作机制和代理相似，而网关能使通信路上的服务器提供非HTTP协议服务。<br>利用网关可以提高通信的安全性，因为可以在客户端与网关之间的通信线路上加密以确保连接的安全。</p>
+<h3 id="隧道"><a href="#隧道" class="headerlink" title="隧道"></a><a href="#u96A7_u9053" title="隧道"></a>隧道</h3><p>隧道可以按要求建立起与其他服务器的通信线路。可以使用SSL等加密手段进行通信。隧道是保证服务端和客户端之间进行安全的通信。</p>
+<h3 id="保存资源的缓存"><a href="#保存资源的缓存" class="headerlink" title="保存资源的缓存"></a><a href="#u4FDD_u5B58_u8D44_u6E90_u7684_u7F13_u5B58" title="保存资源的缓存"></a>保存资源的缓存</h3><p>缓存是指代理服务端或者本地客户端磁盘保存的资源副本，理由缓存可以减少对源服务器的访问，减少通信流量和通信时间。</p>
+<h4 id="缓存的有效期限"><a href="#缓存的有效期限" class="headerlink" title="缓存的有效期限"></a><a href="#u7F13_u5B58_u7684_u6709_u6548_u671F_u9650" title="缓存的有效期限"></a>缓存的有效期限</h4><p>即使服务器内有缓存，也不能保证每次都是返回对同资源的请求，因为被缓存的资源有效性问题。<br>即使服务器上有缓存，也会因为客户端的要求，缓存的有效期问题，向源服务器确认自由的额有效性。判断失败则会在源服务器上获取新的资源。</p>
+<h4 id="客户端的缓存"><a href="#客户端的缓存" class="headerlink" title="客户端的缓存"></a><a href="#u5BA2_u6237_u7AEF_u7684_u7F13_u5B58" title="客户端的缓存"></a>客户端的缓存</h4><p>缓存不仅可以缓存在服务器里，也可以缓存在本地浏览器中，如果缓存是有效的，那么就不需要再向服务器发送请求了。直接返回本地的缓存资源。<br>当本地缓存过期是，还是会向源服务器发送请求，以获得最新的资源。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/06/图解Http六HTTP首部/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          图解Http六HTTP首部
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/04/图解Http四返回结果的HTTP状态码/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">图解Http四返回结果的HTTP状态码</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="图解Http五与HTTP协作的Web服务器" data-title="图解Http五与HTTP协作的Web服务器" data-url="http://yoursite.com/2017/05/05/图解Http五与HTTP协作的Web服务器/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="图解Http五与HTTP协作的Web服务器">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2017 John Doe
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>
