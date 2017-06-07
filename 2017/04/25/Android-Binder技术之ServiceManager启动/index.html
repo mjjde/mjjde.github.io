@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Android-Binder技术之ServiceManager启动 | Hexo</title>
+  <title>Android-Binder技术之ServiceManager启动 | 清风向阳</title>
 
   <!-- keywords -->
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="ServiceManager是用户空间的一个守护进程，是用来管理以Binder通讯的Service的大管家。ServiceManager作为Android系统中服务的管理者，具备的功能很明显也会很简单，它的功能主要是当Service启动时将服务注册进来，同时当Client端要获取Service时提供查询和获取的任务,那么作为这样的一个管理者是如何启动的呢，我们接下来说说ServiceManage">
-<meta name="keywords" content="Binder,Android,ServiceManager">
+<meta name="keywords" content="Android,Binder,ServiceManager">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android-Binder技术之ServiceManager启动">
 <meta property="og:url" content="http://yoursite.com/2017/04/25/Android-Binder技术之ServiceManager启动/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="清风向阳">
 <meta property="og:description" content="ServiceManager是用户空间的一个守护进程，是用来管理以Binder通讯的Service的大管家。ServiceManager作为Android系统中服务的管理者，具备的功能很明显也会很简单，它的功能主要是当Service启动时将服务注册进来，同时当Client端要获取Service时提供查询和获取的任务,那么作为这样的一个管理者是如何启动的呢，我们接下来说说ServiceManage">
 <meta property="og:image" content="http://jokero1o.github.io/images/blog_servicemanager_1.png">
 <meta property="og:updated_time" content="2017-06-07T07:23:09.000Z">
@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="ServiceManager是用户空间的一个守护进程，是用来管理以Binder通讯的Service的大管家。ServiceManager作为Android系统中服务的管理者，具备的功能很明显也会很简单，它的功能主要是当Service启动时将服务注册进来，同时当Client端要获取Service时提供查询和获取的任务,那么作为这样的一个管理者是如何启动的呢，我们接下来说说ServiceManage">
 <meta name="twitter:image" content="http://jokero1o.github.io/images/blog_servicemanager_1.png">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="清风向阳" type="application/atom+xml">
   
   
     <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
@@ -51,7 +51,7 @@
 		</a>
 
 		<hgroup>
-		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/">Joker Mei</a></h1>
 		</hgroup>
 
 		
@@ -138,7 +138,7 @@
       <nav id="mobile-nav">
   	<div class="overlay">
   		<div class="slider-trigger"></div>
-  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  		<h1 class="header-author js-mobile-header hide">Joker Mei</h1>
   	</div>
 	<div class="intrude-less">
 		<header id="header" class="inner">
@@ -146,7 +146,7 @@
 				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author">John Doe</h1>
+			  <h1 class="header-author">Joker Mei</h1>
 			</hgroup>
 			
 			<nav class="header-menu">
@@ -335,7 +335,7 @@
   <div class="outer">
     <div id="footer-info">
       <div class="footer-left">
-        &copy; 2017 John Doe
+        &copy; 2017 Joker Mei
       </div>
         <div class="footer-right">
           <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
