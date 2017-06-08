@@ -23,229 +23,61 @@
 <meta name="twitter:description" content="HTTP协议的请求和响应报文必定包含HTTP首部，只是我们平时在使用Web的过程中感受不到它  HTTP首部字段HTTP首部字段是客户端和服务端的请求及相应报文中必不可缺的元素之一。它可以传递重要的信息。HTTP首部的格式为字段名:字段值可以同时有多个字段值，使用逗号分开字段名:字段值,字段值 首部预览 常见首部字段 非HTTP规定的首部字段比如之前提到的Cookie，set-Cookie En">
 <meta name="twitter:image" content="http://jokero1o.github.io/images/blog_http_6-1.png">
   
-    <link rel="alternative" href="/atom.xml" title="清风向阳" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="清风向阳" type="application/atom+xml">
   
   
-    <link rel="icon" href="/img/favicon.png">
+    <link rel="icon" href="/favicon.png">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
-  
-      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  
-  <!-- 加载特效 -->
-    <script src="/js/pace.js"></script>
-    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
-  <script>
-      var yiliaConfig = {
-          rootUrl: '/',
-          fancybox: true,
-          animate: true,
-          isHome: false,
-          isPost: true,
-          isArchive: false,
-          isTag: false,
-          isCategory: false,
-          open_in_new: false
-      }
-  </script>
+
 </head>
+
 <body>
   <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            
-            <img lazy-src="/img/head.jpg" class="js-avatar">
-            
-        </a>
-
-        <hgroup>
-          <h1 class="header-author"><a href="/" title="Hi Mate">Joker Mei</a></h1>
-        </hgroup>
-
-        
-        
-        
-            <div id="switch-btn" class="switch-btn">
-                <div class="icon">
-                    <div class="icon-ctn">
-                        <div class="icon-wrap icon-house" data-idx="0">
-                            <div class="birdhouse"></div>
-                            <div class="birdhouse_holes"></div>
-                        </div>
-                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
-                            <div class="ribbon"></div>
-                        </div>
-                        
-                        <div class="icon-wrap icon-link hide" data-idx="2">
-                            <div class="loopback_l"></div>
-                            <div class="loopback_r"></div>
-                        </div>
-                        
-                        
-                        <div class="icon-wrap icon-me hide" data-idx="3">
-                            <div class="user"></div>
-                            <div class="shoulder"></div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                <div class="tips-box hide">
-                    <div class="tips-arrow"></div>
-                    <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
-                        
-                        <li>友情链接</li>
-                        
-                        
-                        <li>关于我</li>
-                        
-                    </ul>
-                </div>
-            </div>
-        
-
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a href="/archives">博客首页</a></li>
-                        
-                            <li><a href="/works">作品展示</a></li>
-                        
-                            <li><a href="/about">留言打卡</a></li>
-                        
-                            <li><a href="/FrontEndGuide">前端导航</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fl mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PAkNDgsKBQ4MCnxNTRJfU1E" title="mail">mail</a>
-                            
-                                <a class="fl github" target="_blank" href="https://github.com/luuman" title="github">github</a>
-                            
-                                <a class="fl zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
-                            
-                                <a class="fl weibo" target="_blank" href="#" title="weibo">weibo</a>
-                            
-                                <a class="fl google" target="_blank" href="#" title="google">google</a>
-                            
-                                <a class="fl twitter" target="_blank" href="#" title="twitter">twitter</a>
-                            
-                                <a class="fl linkedin" target="_blank" href="#" title="linkedin">linkedin</a>
-                            
-                        </ul>
-                    </nav>
-                </section>
-                
-                
-                <section class="switch-part switch-part2">
-                    <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
-                    </div>
-                </section>
-                
-                
-                
-                <section class="switch-part switch-part3">
-                    <div id="js-friends">
-                    
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
-                    
-                    </div>
-                </section>
-                
-
-                
-                
-                <section class="switch-part switch-part4">
-                
-                    <div id="js-aboutme">纯海迷、爱运动、爱交友、爱旅行、喜欢接触新鲜事物、迎接新的挑战，更爱游离于错综复杂的编码与逻辑中</div>
-                </section>
-                
-            </div>
-        </div>
-    </header>                
-</div>
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">清风向阳</a>
+      </h1>
+      
     </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-      <div class="overlay">
-          <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">Joker Mei</a></h1>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://mjjde.github.io"></form>
       </div>
-    <div class="intrude-less">
-        <header id="header" class="inner">
-            <a href="/" class="profilepic">
-                
-                    <img lazy-src="/img/head.jpg" class="js-avatar">
-                
-            </a>
-            <hgroup>
-              <h1 class="header-author"><a href="/" title="Me">Joker Mei</a></h1>
-            </hgroup>
-            
-            <nav class="header-menu">
-                <ul>
-                
-                    <li><a href="/archives">博客首页</a></li>
-                
-                    <li><a href="/works">作品展示</a></li>
-                
-                    <li><a href="/about">留言打卡</a></li>
-                
-                    <li><a href="/FrontEndGuide">前端导航</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-            <nav class="header-nav">
-                <div class="social">
-                    
-                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PAkNDgsKBQ4MCnxNTRJfU1E" title="mail">mail</a>
-                    
-                        <a class="github" target="_blank" href="https://github.com/luuman" title="github">github</a>
-                    
-                        <a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
-                    
-                        <a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
-                    
-                        <a class="google" target="_blank" href="#" title="google">google</a>
-                    
-                        <a class="twitter" target="_blank" href="#" title="twitter">twitter</a>
-                    
-                        <a class="linkedin" target="_blank" href="#" title="linkedin">linkedin</a>
-                    
-                </div>
-            </nav>
-        </header>                
     </div>
-</nav>
-      <div class="body-wrap"><article id="post-图解Http六HTTP首部" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/06/图解Http六HTTP首部/" class="article-date">
-      <time datetime="2017-05-06T07:28:43.000Z" itemprop="datePublished">2017-05-06</time>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-图解Http六HTTP首部" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/06/图解Http六HTTP首部/" class="article-date">
+  <time datetime="2017-05-06T07:28:43.000Z" itemprop="datePublished">2017-05-06</time>
 </a>
-    </div>
-  
-  <div class="article-inner">
     
-      <input type="hidden" class="isFancy" />
+  </div>
+  <div class="article-inner">
     
     
       <header class="article-header">
@@ -257,22 +89,9 @@
   
 
       </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
     
     <div class="article-entry" itemprop="articleBody">
       
-          
         <blockquote>
 <p>HTTP协议的请求和响应报文必定包含HTTP首部，只是我们平时在使用Web的过程中感受不到它</p>
 </blockquote>
@@ -352,82 +171,23 @@
 <h4 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a><a href="#Last-Modified" title="Last-Modified"></a>Last-Modified</h4><p>该首部会告知客户端资源最后修改的日期</p>
 
       
-      
-        <div class="page-reward">
-          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
-          <div class="hide_box"></div>
-          <div class="shang_box">
-            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
-            <div class="shang_tit">
-              <p>纯属好玩</p>
-            </div>
-            <div class="shang_payimg">
-              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
-            </div>
-              <div class="pay_explain">扫码打赏，你说多少就多少</div>
-            <div class="shang_payselect">
-              
-                <div class="pay_item checked" data-id="alipay">
-                  <span class="radiobox"></span>
-                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
-                </div>
-              
-              
-                <div class="pay_item" data-id="wechat">
-                  <span class="radiobox"></span>
-                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
-                </div>
-              
-            </div>
-            <div class="shang_info">
-              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
-            </div>
-          </div>
-        </div>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
-        <script type="text/javascript">
-          $(".pay_item").click(function(){
-            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
-            var dataid=$(this).attr('data-id');
-            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
-            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
-          });
-          function dashangToggle(){
-            
-            $(".hide_box").fadeToggle();
-            $(".shang_box").fadeToggle();
-          }
-        </script>
-      
     </div>
-    
+    <footer class="article-footer">
+      <a data-url="http://mjjde.github.io/2017/05/06/图解Http六HTTP首部/" data-id="cj3o0rhec0010x5tf0s0ftpwk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+
+    </footer>
   </div>
   
     
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/05/06/图解Http六HTTP首部/">图解Http六HTTP首部</a></p>
-        <p><span>文章作者:</span><a href="/" title="访问 Joker Mei 的个人博客">Joker Mei</a></p>
-        <p><span>发布时间:</span>2017年05月06日 - 15时28分</p>
-        <p><span>最后更新:</span>2017年06月07日 - 15时36分</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/05/06/图解Http六HTTP首部/" title="图解Http六HTTP首部">http://mjjde.github.io/2017/05/06/图解Http六HTTP首部/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://mjjde.github.io/2017/05/06/图解Http六HTTP首部/　　作者: Joker Mei" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
-            <script src="/js/clipboard.min.js"></script>
-            <script> var clipboard = new Clipboard('.copy-path'); </script>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
-        </p>
-    </div>
-
-
-
 <nav id="article-nav">
   
   
     <a href="/2017/05/05/图解Http五与HTTP协作的Web服务器/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">图解Http五与HTTP协作的Web服务器</div>
-      <strong class="article-nav-caption">></strong>
     </a>
   
 </nav>
@@ -435,202 +195,103 @@
   
 </article>
 
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP首部字段"><span class="toc-number">1.</span> <span class="toc-text">HTTP首部字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#首部预览"><span class="toc-number">2.</span> <span class="toc-text">首部预览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-1-1通用首部字段"><span class="toc-number">3.</span> <span class="toc-text">HTTP/1.1通用首部字段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cache-Control"><span class="toc-number">3.1.</span> <span class="toc-text">Cache-Control</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#public"><span class="toc-number">3.1.1.</span> <span class="toc-text">public</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#private"><span class="toc-number">3.1.2.</span> <span class="toc-text">private</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#no-cache"><span class="toc-number">3.1.3.</span> <span class="toc-text">no-cache</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#no-store"><span class="toc-number">3.1.4.</span> <span class="toc-text">no-store</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#s-maxage"><span class="toc-number">3.1.5.</span> <span class="toc-text">s-maxage</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#max-age"><span class="toc-number">3.1.6.</span> <span class="toc-text">max-age</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#min-fresh"><span class="toc-number">3.1.7.</span> <span class="toc-text">min-fresh</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#max-stale"><span class="toc-number">3.1.8.</span> <span class="toc-text">max-stale</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#only-if-cache"><span class="toc-number">3.1.9.</span> <span class="toc-text">only-if-cache</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#must-revalidate"><span class="toc-number">3.1.10.</span> <span class="toc-text">must-revalidate</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#proxy-revalidate"><span class="toc-number">3.1.11.</span> <span class="toc-text">proxy-revalidate</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#no-transform"><span class="toc-number">3.1.12.</span> <span class="toc-text">no-transform</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cache-extension-token"><span class="toc-number">3.1.13.</span> <span class="toc-text">cache-extension token</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Connection"><span class="toc-number">3.2.</span> <span class="toc-text">Connection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Date"><span class="toc-number">3.3.</span> <span class="toc-text">Date</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transfer-Encoding"><span class="toc-number">3.4.</span> <span class="toc-text">Transfer-Encoding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Upgrade"><span class="toc-number">3.5.</span> <span class="toc-text">Upgrade</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Via"><span class="toc-number">3.6.</span> <span class="toc-text">Via</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Warning"><span class="toc-number">3.7.</span> <span class="toc-text">Warning</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求首部字段"><span class="toc-number">4.</span> <span class="toc-text">请求首部字段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept"><span class="toc-number">4.1.</span> <span class="toc-text">Accept</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Charset"><span class="toc-number">4.2.</span> <span class="toc-text">Accept-Charset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Encoding"><span class="toc-number">4.3.</span> <span class="toc-text">Accept-Encoding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Language"><span class="toc-number">4.4.</span> <span class="toc-text">Accept-Language</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Authorization"><span class="toc-number">4.5.</span> <span class="toc-text">Authorization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Expect"><span class="toc-number">4.6.</span> <span class="toc-text">Expect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#From"><span class="toc-number">4.7.</span> <span class="toc-text">From</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Host"><span class="toc-number">4.8.</span> <span class="toc-text">Host</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if-Match"><span class="toc-number">4.9.</span> <span class="toc-text">if-Match</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if-Modified-Since"><span class="toc-number">4.10.</span> <span class="toc-text">if-Modified-Since</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if-None-Match"><span class="toc-number">4.11.</span> <span class="toc-text">if-None-Match</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if-Range"><span class="toc-number">4.12.</span> <span class="toc-text">if-Range</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if-Unmodified-Since"><span class="toc-number">4.13.</span> <span class="toc-text">if-Unmodified-Since</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Max-Forwards"><span class="toc-number">4.14.</span> <span class="toc-text">Max-Forwards</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Proxy-Authorization"><span class="toc-number">4.15.</span> <span class="toc-text">Proxy-Authorization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Range"><span class="toc-number">4.16.</span> <span class="toc-text">Range</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Referer"><span class="toc-number">4.17.</span> <span class="toc-text">Referer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TE"><span class="toc-number">4.18.</span> <span class="toc-text">TE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#User-Agent"><span class="toc-number">4.19.</span> <span class="toc-text">User-Agent</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应首部字段"><span class="toc-number">5.</span> <span class="toc-text">响应首部字段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Ranges"><span class="toc-number">5.1.</span> <span class="toc-text">Accept-Ranges</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Age"><span class="toc-number">5.2.</span> <span class="toc-text">Age</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ETag"><span class="toc-number">5.3.</span> <span class="toc-text">ETag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Location"><span class="toc-number">5.4.</span> <span class="toc-text">Location</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Proxy-Authenticate"><span class="toc-number">5.5.</span> <span class="toc-text">Proxy-Authenticate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Retry-After"><span class="toc-number">5.6.</span> <span class="toc-text">Retry-After</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Server"><span class="toc-number">5.7.</span> <span class="toc-text">Server</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vary"><span class="toc-number">5.8.</span> <span class="toc-text">Vary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WWW-Authenticate"><span class="toc-number">5.9.</span> <span class="toc-text">WWW-Authenticate</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实体首部字段"><span class="toc-number">6.</span> <span class="toc-text">实体首部字段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Allow"><span class="toc-number">6.1.</span> <span class="toc-text">Allow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Encoding"><span class="toc-number">6.2.</span> <span class="toc-text">Content-Encoding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Language"><span class="toc-number">6.3.</span> <span class="toc-text">Content-Language</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Length"><span class="toc-number">6.4.</span> <span class="toc-text">Content-Length</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Location"><span class="toc-number">6.5.</span> <span class="toc-text">Content-Location</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-MD5"><span class="toc-number">6.6.</span> <span class="toc-text">Content-MD5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Range"><span class="toc-number">6.7.</span> <span class="toc-text">Content-Range</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Type"><span class="toc-number">6.8.</span> <span class="toc-text">Content-Type</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Expires"><span class="toc-number">6.9.</span> <span class="toc-text">Expires</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Last-Modified"><span class="toc-number">6.10.</span> <span class="toc-text">Last-Modified</span></a></li></ol></li></ol>
-</div>
-<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-<script>
-    var valueHide = "隐藏目录";
-    var valueShow = "显示目录";
-
-    if ($(".left-col").is(":hidden")) {
-        $("#tocButton").attr("value", valueShow);
-    }
-    $("#tocButton").click(function() {
-        if ($("#toc").is(":hidden")) {
-            $("#tocButton").attr("value", valueHide);
-            $("#toc").slideDown(320);
-        }
-        else {
-            $("#tocButton").attr("value", valueShow);
-            $("#toc").slideUp(350);
-        }
-    })
-    if ($(".toc").length < 1) {
-        $("#toc, #tocButton").hide();
-    }
-</script>
-
-
-
-
-
-<div class="bdsharebuttonbox">
-	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
-	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
-	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
-	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
-	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
-</div>
-<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-
-
-
-
-    
-        <div id="gitments"></div>
-<script src="/js/gitment.browser.js"></script>
-<script>
-    var gitment = new Gitment({
-      id: window.location.pathname,
-      owner: 'luuman',
-      repo: 'luuman.github.io',
-      oauth: {
-        client_id: 'null',
-        client_secret: 'null',
-      },
-    })
-    gitment.render('gitments')
-</script>
+</section>
+        
+          <aside id="sidebar">
+  
     
 
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
-        
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-        
-            <a href="/2017/05/05/图解Http五与HTTP协作的Web服务器/" title="下一篇: 图解Http五与HTTP协作的Web服务器">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-IPC/">Android-IPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DiskLruCache/">DiskLruCache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notification/">Notification</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RemoteView/">RemoteView</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServiceManager/">ServiceManager</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volley/">volley</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/widget/">widget</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事件/">事件</a></li></ul>
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/图解Http六HTTP首部/">图解Http六HTTP首部</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/05/图解Http五与HTTP协作的Web服务器/">图解Http五与HTTP协作的Web服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/04/图解Http四返回结果的HTTP状态码/">图解Http四返回结果的HTTP状态码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/29/图解Http三HTTP报文内的HTTP信息/">图解Http三HTTP报文内的HTTP信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/图解Http一了解Web及网络服务/">图解Http一了解Web及网络服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/图解Http二简单的HTTP协议/">图解Http二简单的HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Android-Binder技术之ServiceManager获取/">Android-Binder技术之ServiceManager获取</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/">Android-Binder技术ServiceManager之服务注册请求的发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Fragment弃坑之旅/">Fragment弃坑之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/25/Android-Binder技术之ServiceManager启动/">Android-Binder技术之ServiceManager启动</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/">DiskLruCache Java实现基于LRU的磁盘缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/16/widget和Notification上的RemoteView/">widget和Notification上的RemoteView</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/android事件分发机制/">android事件分发机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/05/Android-IPC通讯Binder和Service的关系/">Android-IPC通讯Binder和Service的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/28/Activity的进阶/">Activity的进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/25/EventBus2-4-0源码分析之Post/">EventBus2-4-0源码分析之Post</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/23/EventBus2-4-0源码分析之订阅/">EventBus2-4-0源码分析之订阅</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/14/Rxjava-简化你的异步调用/">Rxjava-简化你的异步调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/11/Volley-网络通讯框架二之处理请求/">Volley-网络通讯框架二之处理请求</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/11/Volley-网络通讯框架一之发起请求/">Volley 网络通讯框架一之发起请求</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/09/github-hexo构建自己的博客/">github+hexo构建自己的博客</a></li></ul>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-    <script>
-        $(".post-list").addClass("toc-article");
-        $(".post-list-item a").attr("target","_blank");
-        $("#post-nav-button > a:nth-child(2)").click(function() {
-            $(".fa-bars, .fa-times").toggle();
-            $(".post-list").toggle(300);
-            if ($(".toc").length > 0) {
-                $("#toc, #tocButton").toggle(200, function() {
-                    if ($(".switch-area").is(":visible")) {
-                        $("#tocButton").attr("value", valueHide);
-                        }
-                    })
-            }
-            else {
-            }
-        })
-    </script>
+  </div>
 
 
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+    </div>
+  </div>
 
-    <script>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
         
-    </script>
-</div>
+          <li>
+            <a href="/2017/05/06/图解Http六HTTP首部/">图解Http六HTTP首部</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/05/图解Http五与HTTP协作的Web服务器/">图解Http五与HTTP协作的Web服务器</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/图解Http四返回结果的HTTP状态码/">图解Http四返回结果的HTTP状态码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/29/图解Http三HTTP报文内的HTTP信息/">图解Http三HTTP报文内的HTTP信息</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/28/图解Http一了解Web及网络服务/">图解Http一了解Web及网络服务</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
       <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="footer-left">
-                &copy; 2017 Joker Mei
-            </div>
-            <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
-            </div>
-        </div>
-        
-            <div class="visit">
-                
-                    <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" >海贼到访数: 
-                            <span id="busuanzi_value_site_uv"></span>
-                        </span>
-                    </span>
-                
-                
-                    <span>, </span>
-                
-                
-                    <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit">本页阅读量: 
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    </span>
-                
-            </div>
-        
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Joker Mei<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
+  </div>
 </footer>
-
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-<script src="/js/main.js"></script>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
-    <script>
-        $(document).ready(function() {
-            var backgroundnum = 24;
-            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
-            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
-            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
-        })
-    </script>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<div class="scroll" id="scroll">
-    <a href="#"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
-</div>
-<script>
-    $(document).ready(function() {
-        if ($("#comments").length < 1) {
-            $("#scroll > a:nth-child(2)").hide();
-        };
-    })
-</script>
-
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-
-  <script language="javascript">
-    $(function() {
-        $("a[title]").each(function() {
-            var a = $(this);
-            var title = a.attr('title');
-            if (title == undefined || title == "") return;
-            a.data('title', title).removeAttr('title').hover(
-
-            function() {
-                var offset = a.offset();
-                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
-                    top: offset.top - a.outerHeight() - 15,
-                    left: offset.left + a.outerWidth()/2 + 1
-                }).fadeIn(function() {
-                    var pop = $(this);
-                    setTimeout(function() {
-                        pop.remove();
-                    }, pop.text().length * 800);
-                });
-            }, function() {
-                $("#anchortitlecontainer").remove();
-            });
-        });
-    });
-</script>
-
+<script src="/js/script.js"></script>
 
   </div>
 </body>
