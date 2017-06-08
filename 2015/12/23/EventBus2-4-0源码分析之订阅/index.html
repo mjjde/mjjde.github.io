@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
+  <link rel="dns-prefetch" href="http://mjjde.github.io">
   <title>EventBus2-4-0源码分析之订阅 | 清风向阳</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="EventBus最新的版本是3.0了但是beta版，所有我们还是按2.4分析源码是如何工作的，EventBus是一个简化Activities, Fragments, Threads, Services等等直接通信的框架。GitHub上的原文：Android optimized event bus that simplifies communication between Activities,">
 <meta name="keywords" content="Rxjava">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EventBus2-4-0源码分析之订阅">
-<meta property="og:url" content="http://yoursite.com/2015/12/23/EventBus2-4-0源码分析之订阅/index.html">
+<meta property="og:url" content="http://mjjde.github.io/2015/12/23/EventBus2-4-0源码分析之订阅/index.html">
 <meta property="og:site_name" content="清风向阳">
 <meta property="og:description" content="EventBus最新的版本是3.0了但是beta版，所有我们还是按2.4分析源码是如何工作的，EventBus是一个简化Activities, Fragments, Threads, Services等等直接通信的框架。GitHub上的原文：Android optimized event bus that simplifies communication between Activities,">
 <meta property="og:image" content="http://jokero1o.github.io/images/EventBus-Publish-Subscribe.png">
@@ -194,20 +194,20 @@
 <li>默认的构造，getDefault()正常的单例模式。在构造方法里我们看到了使用了一个默认的EventBusBuilder来构建的。</li>
 <li>那么还有一种就是自己定义EventBusBuilder，来生成一个EventBus,我们可以看到在EventBusBuilder有个方法</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> public EventBus installDefaultEventBus() &#123;</div><div class="line">    synchronized (EventBus.class) &#123;</div><div class="line">    if (EventBus.defaultInstance != null) &#123;</div><div class="line">        throw new EventBusException(&quot;Default instance already exists.&quot; +</div><div class="line">                &quot; It may be only set once before it&apos;s used the first time to ensure consistent behavior.&quot;);</div><div class="line">    &#125;</div><div class="line">    EventBus.defaultInstance = build();</div><div class="line">        return EventBus.defaultInstance;</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">public</span> <span class="function">EventBus <span class="title">installDefaultEventBus</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">synchronized</span> (EventBus.class) &#123;</div><div class="line">    <span class="keyword">if</span> (EventBus.defaultInstance != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> EventBusException(<span class="string">"Default instance already exists."</span> +</div><div class="line">                <span class="string">" It may be only set once before it's used the first time to ensure consistent behavior."</span>);</div><div class="line">    &#125;</div><div class="line">    EventBus.defaultInstance = build();</div><div class="line">        <span class="keyword">return</span> EventBus.defaultInstance;</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>在这个方法里面有个判断，如果EventBus已经存在实例了，那么就会抛出异常。为什么呢，我们下面在来说。</p>
 <p>两种方式都介绍过了，我们一般使用第一种默认的就已经足够了。</p>
 <p>在来看EventBus的register方法，虽然都多个但是最后调用的都是一个 <em>private synchronized void register(Object subscriber, boolean sticky, int priority)</em> 这个方法是用来注册订阅者的,参数subscriber就是订阅者，如果是在Activity中注册的话那就是Activity，sticky为true的话就可以跨界面进行通信，跟广播类似，为false，就是在单个订阅者进行通信，这两种还是有很大的区别的，我们下面会分析。看下具体的实现。</p>
 <p>List <subscribermethod>subscriberMethods = subscriberMethodFinder.findSubscriberMethods(subscriber.getClass());</subscribermethod></p>
 <p>该方法调用的subscriberMethodFinder的方法。我们来看下SubscriberMethodFinder，根据类名我们就大致了解是干嘛的了，他是查找订阅者中订阅的方法的，使用的是反射机制。对于反射来说也是有缺点的，那就是会消耗一部分的时间来完成，那么SubscriberMethodFinder类采用了缓存机制来保证不会重复的做反射耗时操作， <em>Map<class<?>, List<subscribermethod>&gt; methodCache</subscribermethod></class<?></em> 该变量以订阅者Class为key ,SubscriberMethod集合为value的map集合，那么SubscriberMethod类里面保存的是什么呢。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    SubscriberMethod(Method method, ThreadMode threadMode, Class&lt;?&gt; eventType) &#123;</div><div class="line">    this.method = method;</div><div class="line">    this.threadMode = threadMode;</div><div class="line">    this.eventType = eventType;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    SubscriberMethod(<span class="function"><span class="keyword">Method</span> <span class="title">method</span>, <span class="title">ThreadMode</span> <span class="title">threadMode</span>, <span class="title">Class</span>&lt;?&gt; <span class="title">eventType</span>) <span class="comment">&#123;</span></span></div><div class="line">    this.method = method;</div><div class="line">    this.threadMode = threadMode;</div><div class="line">    this.eventType = eventType;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>保存的是方法相关的信息，1.方法对象。2.ThreadMode线程模式这个我们后面会说到。3.参数类型Class.<br>这样就能描述一个订阅方法的所需信息了。</p>
 <p>subscriberMethodFinder方法首先会去查找缓存，如果没有那么就反射获取SubscriberMethod的信息。这个方法里做得另一个优化就是判断订阅者是否是java.，javax，android.开始的类，如果不是才会做接下来的事情。然后反射出所有得方法。调用<em>filterSubscriberMethods(subscriberMethods, eventTypesFound, methodKeyBuilder, methods)</em> 。看名字也知道这个方法是用来筛选符合的Method。</p>
 <p>filterSubscriberMethods方法首先遍历methods，判断方法名是否是onEvent开头的，过滤掉Modifier.ABSTRACT | Modifier.STATIC | BRIDGE | SYNTHETIC方法修饰符，过滤掉方法参数不是一个的。然后将剩下的符合条件的方法用methodName&gt;参数类型为Key,SubscriberMethod对象为value，保存到缓存内。</p>
 <p>我们在subscriberMethodFinder看到有个clazz = clazz.getSuperclass();这样的话我们发现不止是在本对象中找符合条件的onEvent方法，还会在其父类里找，这里有个点就是如果子类覆写了父类的onEvent方法，那么会屏蔽掉父类的onEvent。</p>
 <p>上面的方法统计完该类和其父类的符合条件的onEvent方法后，在从register方法往下看。它接着会遍历我们查找到得SubscriberMethod集合，并调用 <em>subscribe(subscriber, subscriberMethod, sticky, priority)</em> 方法。</p>
 <p>接下来我们来看这个方法做了什么。首先根据订阅方法的参数类型查看是否已经存在对应的Subscription集合。Subscription中保存的是什么，我们来看下构造方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">    Subscription(Object subscriber, SubscriberMethod subscriberMethod, int priority) &#123;</div><div class="line">    this.subscriber = subscriber;</div><div class="line">    this.subscriberMethod = subscriberMethod;</div><div class="line">    this.priority = priority;</div><div class="line">    active = true;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">Subscription(Object </span><span class="keyword">subscriber, </span><span class="keyword">SubscriberMethod </span><span class="keyword">subscriberMethod, </span>int priority) &#123;</div><div class="line">    this.<span class="keyword">subscriber </span>= <span class="keyword">subscriber;</span></div><div class="line">    this.<span class="keyword">subscriberMethod </span>= <span class="keyword">subscriberMethod;</span></div><div class="line">    this.priority = priority<span class="comment">;</span></div><div class="line">    active = true<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>保存了订阅者对象，订阅方法对象，权重。<br>如果不存在对应的Subscription集合那么就创建一个，如果有在判断集合里是否有一样的Subscription，是这抛出异常，不能重复监听同个事件。否，就按照权重将新建的Subscription加入到集合里保存下来。用于Post的时候发起调用。</p>
 <p>接下来又是一个集合，以订阅者subscriber为Key,订阅事件的参数类型为value，这个是用来取消注册时用的。</p>
 <p>我们接下来看到的是sticky的注册，判断是否允许事件影响到其父类，接口等上层类，然后调用<em>checkPostStickyEventToSubscription(newSubscription, stickyEvent);</em> 这个方法调用 <em>postToSubscription(newSubscription, stickyEvent, Looper.getMainLooper() == Looper.myLooper());</em> 这个方法会触发事件的调用分发，这里我们可以看到普通的register和sticky register的区别，普通的注册是没有立刻去触发事件，而是在post的时候才触发，但是sticky register刚好相反，是字注册的时候去触发事件的。事件都会保存在stickyEvents中。当然对于sticky的post也会理解触发事件，这是兼容了普通的事件注册。</p>
@@ -302,7 +302,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2015/12/23/EventBus2-4-0源码分析之订阅/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://mjjde.github.io/2015/12/23/EventBus2-4-0源码分析之订阅/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -451,15 +451,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Android-IPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">DiskLruCache</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android-IPC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -479,6 +479,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">事件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">widget</a>
               </li>
              
@@ -492,10 +496,6 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">事件</a>
               </li>
              
               <li class="article-tag-list-item">

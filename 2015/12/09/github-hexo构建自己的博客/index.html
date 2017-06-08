@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
+  <link rel="dns-prefetch" href="http://mjjde.github.io">
   <title>github+hexo构建自己的博客 | 清风向阳</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="宽敞漂亮的房子是每个人的追求，而对于我们的程序员来说，还需要一个自己的个人空间，那里记录了自己的汗水，记录着折磨过几天的天坑，是我们吃一堑长一智的见证，所有我们要追求一个高大上的地方，来存放自己的一片天地。  接下来我们就来建造一个属于自己的房子：github+hexo 那么我们建造的房子到底如何呢,我们先睹为快吧~ 首先我们要搭建这样的个人博客需要2个材料要准备 Github对于一个码农来说，">
 <meta name="keywords" content="other">
 <meta property="og:type" content="article">
 <meta property="og:title" content="github+hexo构建自己的博客">
-<meta property="og:url" content="http://yoursite.com/2015/12/09/github-hexo构建自己的博客/index.html">
+<meta property="og:url" content="http://mjjde.github.io/2015/12/09/github-hexo构建自己的博客/index.html">
 <meta property="og:site_name" content="清风向阳">
 <meta property="og:description" content="宽敞漂亮的房子是每个人的追求，而对于我们的程序员来说，还需要一个自己的个人空间，那里记录了自己的汗水，记录着折磨过几天的天坑，是我们吃一堑长一智的见证，所有我们要追求一个高大上的地方，来存放自己的一片天地。  接下来我们就来建造一个属于自己的房子：github+hexo 那么我们建造的房子到底如何呢,我们先睹为快吧~ 首先我们要搭建这样的个人博客需要2个材料要准备 Github对于一个码农来说，">
 <meta property="og:updated_time" content="2017-06-07T06:58:08.000Z">
@@ -192,10 +192,10 @@
 <h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a><a href="#Hexo" title="Hexo"></a>Hexo</h3><p>既然我们的房子已经建成，那么我们就要给它添砖加瓦，变得更漂亮，ok！</p>
 <h4 id="hexo的安装"><a href="#hexo的安装" class="headerlink" title="hexo的安装"></a><a href="#hexo_u7684_u5B89_u88C5" title="hexo的安装"></a>hexo的安装</h4><p>首先请出<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">hexo官方文档</a><br>我们可以在这里进行hexo的安装，安装完hexo后你就应该具备git,node环境了，并且根据上个步骤的操作，你的本地已经clone了一份GitHub上的代码了。</p>
 <h4 id="hexo和Github-Page的融合"><a href="#hexo和Github-Page的融合" class="headerlink" title="hexo和Github Page的融合"></a><a href="#hexo_u548CGithub_Page_u7684_u878D_u5408" title="hexo和Github Page的融合"></a>hexo和Github Page的融合</h4><p>首先是hexo的初始化，将hexo的主题导入Github Page中，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init &lt;folder&gt;</div><div class="line">$ cd &lt;folder&gt;</div><div class="line">$ npm install</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> hexo init &lt;folder&gt;</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> &lt;folder&gt;</span></div><div class="line"><span class="meta">$</span><span class="bash"> npm install</span></div></pre></td></tr></table></figure>
 <p>需要注意的是到cd到clone目录下面进行操作。还有就是上面的命令没反应，原因是..长城墙。。可以装cnpm 或者翻墙，下面的命令一样。</p>
 <p>接下来我们可以用Sublime来打开我们的项目，以后方便管理，好了我们的项目的结果基本是下面的样子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── _config.yml</div><div class="line">├── package.json</div><div class="line">├── scaffolds</div><div class="line">├── source</div><div class="line">|   ├── _drafts</div><div class="line">|   └── _posts</div><div class="line">└── themes</div></pre></td></tr></table></figure>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── <span class="variable">_config</span>.yml</div><div class="line">├── package.json</div><div class="line">├── scaffolds</div><div class="line">├── source</div><div class="line">|   ├── <span class="variable">_drafts</span></div><div class="line">|   └── <span class="variable">_posts</span></div><div class="line">└── themes</div></pre></td></tr></table></figure>
 <p>其中_config.yml我们称为站点config，source存放我们草稿，themes存放的是我我们的主题，接下吗我们要git的next的主题将会存放在这里。</p>
 <p>好了，我们大致熟悉了结构后就要开始配置hexo了，地点当然是_config.yml了<br>请出我们文档的相关<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">索引</a>我们要关心的就几个地方</p>
 <ul>
@@ -207,17 +207,17 @@
 </ul>
 <p>上面的地址改为你的地址，好了，我们现在可以测试下了</p>
 <p>执行以下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo s</div></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">hexo g</span></div><div class="line">hexo s</div></pre></td></tr></table></figure>
 <p>这里可能有会有错误提示Error: Deployer not found : git<br>可以在项目目录下执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> hexo-deployer-git <span class="comment">--save</span></div></pre></td></tr></table></figure>
 <p>再来一次!<br>在浏览器上输入</p><p><a href="http://0.0.0.0:4000" target="_blank" rel="external">http://0.0.0.0:4000</a></p>就可以看到我们带默认主题的hexo了，接下来我们要部署要GitHub上去还记得我们在_config.yml配置了deploy吗，这就是用来部署的配置<p></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">hexo g</span></div><div class="line">hexo d</div></pre></td></tr></table></figure>
 <p>我们现在在输入</p>
 <p><a href="http://username.github.io，" target="_blank" rel="external">http://username.github.io，</a></p>
 <p>一切ok，进入我们更换next主题</p>
 <h4 id="nexT主题"><a href="#nexT主题" class="headerlink" title="nexT主题"></a><a href="#nexT_u4E3B_u9898" title="nexT主题"></a>nexT主题</h4><p>首先还是介绍next<a href="http://theme-next.iissnan.com/five-minutes-setup.html" target="_blank" rel="external">文档</a></p>
 <p>在项目目录下clone next</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cd your-hexo-site</div><div class="line">$ git clone https://github.com/iissnan/hexo-theme-next themes/next</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> your-hexo-site</span></div><div class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span></div></pre></td></tr></table></figure>
 <p>现在next主题已经clone到我们themes下面了。<br>根据文档的指引进行一些简单的配置，基本上我们的个人博客也就搭建完成了</p>
 <p>下面介绍如何新建一篇文章：</p>
 <ol>
@@ -317,7 +317,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2015/12/09/github-hexo构建自己的博客/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://mjjde.github.io/2015/12/09/github-hexo构建自己的博客/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -461,15 +461,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Android-IPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">DiskLruCache</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android-IPC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -489,6 +489,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">事件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">widget</a>
               </li>
              
@@ -502,10 +506,6 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">事件</a>
               </li>
              
               <li class="article-tag-list-item">

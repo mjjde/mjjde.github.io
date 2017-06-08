@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
+  <link rel="dns-prefetch" href="http://mjjde.github.io">
   <title>图解Http二简单的HTTP协议 | 清风向阳</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="针对HTTP协议结构进行讲解，主要使用HTTP/1.1版本  HTTP协议用于客户端和服务端之间的通信两台计算机直接使用HTTP协议通信时，必定会有一端为客户端，一段为服务端。存在角色相互交换的情况，但是对于一次HTTP通信，必定会有一个是客户端，一个是服务端。 通过请求和响应的交换达成通信HTTP的通信必定是从客户端发起的，服务端在没有接收到请求时是不会发送通信的。客户端请求报文的具体内容是">
 <meta name="keywords" content="HTTP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图解Http二简单的HTTP协议">
-<meta property="og:url" content="http://yoursite.com/2017/04/28/图解Http二简单的HTTP协议/index.html">
+<meta property="og:url" content="http://mjjde.github.io/2017/04/28/图解Http二简单的HTTP协议/index.html">
 <meta property="og:site_name" content="清风向阳">
 <meta property="og:description" content="针对HTTP协议结构进行讲解，主要使用HTTP/1.1版本  HTTP协议用于客户端和服务端之间的通信两台计算机直接使用HTTP协议通信时，必定会有一端为客户端，一段为服务端。存在角色相互交换的情况，但是对于一次HTTP通信，必定会有一个是客户端，一个是服务端。 通过请求和响应的交换达成通信HTTP的通信必定是从客户端发起的，服务端在没有接收到请求时是不会发送通信的。客户端请求报文的具体内容是">
 <meta property="og:image" content="http://jokero1o.github.io/images/blog_http_2-1.png">
@@ -181,9 +181,9 @@
 </blockquote>
 <h3 id="HTTP协议用于客户端和服务端之间的通信"><a href="#HTTP协议用于客户端和服务端之间的通信" class="headerlink" title="HTTP协议用于客户端和服务端之间的通信"></a><a href="#HTTP_u534F_u8BAE_u7528_u4E8E_u5BA2_u6237_u7AEF_u548C_u670D_u52A1_u7AEF_u4E4B_u95F4_u7684_u901A_u4FE1" title="HTTP协议用于客户端和服务端之间的通信"></a>HTTP协议用于客户端和服务端之间的通信</h3><p>两台计算机直接使用HTTP协议通信时，必定会有一端为客户端，一段为服务端。存在角色相互交换的情况，但是对于一次HTTP通信，必定会有一个是客户端，一个是服务端。</p>
 <h3 id="通过请求和响应的交换达成通信"><a href="#通过请求和响应的交换达成通信" class="headerlink" title="通过请求和响应的交换达成通信"></a><a href="#u901A_u8FC7_u8BF7_u6C42_u548C_u54CD_u5E94_u7684_u4EA4_u6362_u8FBE_u6210_u901A_u4FE1" title="通过请求和响应的交换达成通信"></a>通过请求和响应的交换达成通信</h3><p>HTTP的通信必定是从客户端发起的，服务端在没有接收到请求时是不会发送通信的。<br>客户端请求报文的具体内容是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">第一行:请求方法(get/post等等) 请求URI(/index.html) 协议版本(HTTP/1.1)</div><div class="line">第二行:可选首部字段(Host/Connection)</div><div class="line">第三行:</div><div class="line">第四行:内容实体</div></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">第一行:请求方法<span class="comment">(get/post等等)</span> 请求URI<span class="comment">(/index.html)</span> 协议版本<span class="comment">(HTTP/1.1)</span></div><div class="line">第二行:可选首部字段<span class="comment">(Host/Connection)</span></div><div class="line">第三行:</div><div class="line">第四行:内容实体</div></pre></td></tr></table></figure>
 <p>服务端响应报文的具体内容是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">第一行:协议版本(HTTP/1.1) 状态码(200/404) 原因短语(OK)</div><div class="line">第二行:创建响应日期时间</div><div class="line">第三行:首部字段(Content-Type/Content-Length)</div><div class="line">第四行:</div><div class="line">第五行:实体内容</div></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="section">第一行:协议版本(HTTP/1.1) 状态码(200/404) 原因短语(OK)</span></div><div class="line"><span class="section">第二行:创建响应日期时间</span></div><div class="line"><span class="section">第三行:首部字段(Content-Type/Content-Length)</span></div><div class="line"><span class="section">第四行:</span></div><div class="line"><span class="section">第五行:实体内容</span></div></pre></td></tr></table></figure>
 <h3 id="HTTP是不保存状态的协议"><a href="#HTTP是不保存状态的协议" class="headerlink" title="HTTP是不保存状态的协议"></a><a href="#HTTP_u662F_u4E0D_u4FDD_u5B58_u72B6_u6001_u7684_u534F_u8BAE" title="HTTP是不保存状态的协议"></a>HTTP是不保存状态的协议</h3><p>HTTP是具备保持状态的，不会对上次的请求进行持久化处理，HTTP请求是无状态的</p>
 <h3 id="请求URI定位资源"><a href="#请求URI定位资源" class="headerlink" title="请求URI定位资源"></a><a href="#u8BF7_u6C42URI_u5B9A_u4F4D_u8D44_u6E90" title="请求URI定位资源"></a>请求URI定位资源</h3><p>HTTP使用URI定位在互联网上的资源，可以有多种方式来表示。</p>
 <ol>
@@ -295,7 +295,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/04/28/图解Http二简单的HTTP协议/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://mjjde.github.io/2017/04/28/图解Http二简单的HTTP协议/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -309,18 +309,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/04/28/图解Http一了解Web及网络服务/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/04/29/图解Http三HTTP报文内的HTTP信息/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          图解Http一了解Web及网络服务
+          图解Http三HTTP报文内的HTTP信息
         
       </div>
     </a>
   
   
-    <a href="/2017/04/26/Android-Binder技术之ServiceManager获取/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android-Binder技术之ServiceManager获取</div>
+    <a href="/2017/04/28/图解Http一了解Web及网络服务/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">图解Http一了解Web及网络服务</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -444,15 +444,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Android-IPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">DiskLruCache</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android-IPC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -472,6 +472,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">事件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">widget</a>
               </li>
              
@@ -485,10 +489,6 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">事件</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
+  <link rel="dns-prefetch" href="http://mjjde.github.io">
   <title>图解Http三HTTP报文内的HTTP信息 | 清风向阳</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="HTTP通信过程包括客户端发往服务端的请求以及从服务端返回客户端的响应  HTTP报文客户端发出的HTTP报文叫做请求报文，服务端返回的HTTP报文叫响应报文，报文通常包括两个部分，报文首部和报文主体，报文主体不一定存在。报文首部和报文主体以首次出现的换行符来划分(CR+LF) HTTP报文的结构  请求行:包含请求的方法和使用的HTTP版本号 响应行:包含响应的HTTP版本号和状态码原因短语">
 <meta name="keywords" content="HTTP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图解Http三HTTP报文内的HTTP信息">
-<meta property="og:url" content="http://yoursite.com/2017/04/29/图解Http三HTTP报文内的HTTP信息/index.html">
+<meta property="og:url" content="http://mjjde.github.io/2017/04/29/图解Http三HTTP报文内的HTTP信息/index.html">
 <meta property="og:site_name" content="清风向阳">
 <meta property="og:description" content="HTTP通信过程包括客户端发往服务端的请求以及从服务端返回客户端的响应  HTTP报文客户端发出的HTTP报文叫做请求报文，服务端返回的HTTP报文叫响应报文，报文通常包括两个部分，报文首部和报文主体，报文主体不一定存在。报文首部和报文主体以首次出现的换行符来划分(CR+LF) HTTP报文的结构  请求行:包含请求的方法和使用的HTTP版本号 响应行:包含响应的HTTP版本号和状态码原因短语">
 <meta property="og:image" content="http://jokero1o.github.io/images/blog_http_3-1.png">
@@ -201,7 +201,7 @@
 </ol>
 <h3 id="获取部分内容的范围请求"><a href="#获取部分内容的范围请求" class="headerlink" title="获取部分内容的范围请求"></a><a href="#u83B7_u53D6_u90E8_u5206_u5185_u5BB9_u7684_u8303_u56F4_u8BF7_u6C42" title="获取部分内容的范围请求"></a>获取部分内容的范围请求</h3><p>下载大文件时在网络不稳定的时候容易失败，失败后就需要重新下载，为了解决这个为题，需要一种可以恢复之前下载的机制，就是好指定下载的范围。这就是范围请求</p>
 <p>执行范围请求时需要加入首部字段Range来指定资源的byte范围。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Range: byte= 10000-20000</div><div class="line">Range: byte= 10000-</div><div class="line">Range: bytes=-3000, 5000-7000</div></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="string">Range:</span> <span class="keyword">byte</span>= <span class="number">10000</span><span class="number">-20000</span></div><div class="line"><span class="string">Range:</span> <span class="keyword">byte</span>= <span class="number">10000</span>-</div><div class="line"><span class="string">Range:</span> bytes=<span class="number">-3000</span>, <span class="number">5000</span><span class="number">-7000</span></div></pre></td></tr></table></figure>
 <p>针对范围请求的正确返回的状态码是206，如果无法响应范围资源就返回200 并返回所有的主体。</p>
 <h3 id="内容协商返回最合适的内容"><a href="#内容协商返回最合适的内容" class="headerlink" title="内容协商返回最合适的内容"></a><a href="#u5185_u5BB9_u534F_u5546_u8FD4_u56DE_u6700_u5408_u9002_u7684_u5185_u5BB9" title="内容协商返回最合适的内容"></a>内容协商返回最合适的内容</h3><p>内容协商是指服务端与客户端就响应的资源内容进行交涉，返回给客户端最为适合的内容</p>
 <ol>
@@ -302,7 +302,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/04/29/图解Http三HTTP报文内的HTTP信息/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://mjjde.github.io/2017/04/29/图解Http三HTTP报文内的HTTP信息/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -326,8 +326,8 @@
     </a>
   
   
-    <a href="/2017/04/28/图解Http一了解Web及网络服务/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">图解Http一了解Web及网络服务</div>
+    <a href="/2017/04/28/图解Http二简单的HTTP协议/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">图解Http二简单的HTTP协议</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -451,15 +451,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Android-IPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">DiskLruCache</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android-IPC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -479,6 +479,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">事件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">widget</a>
               </li>
              
@@ -492,10 +496,6 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">事件</a>
               </li>
              
               <li class="article-tag-list-item">
