@@ -1,11 +1,99 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
+<!doctype html>
+
+
+
   
-  <title>图解Http六HTTP首部 | 清风向阳</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="HTTP协议的请求和响应报文必定包含HTTP首部，只是我们平时在使用Web的过程中感受不到它  HTTP首部字段HTTP首部字段是客户端和服务端的请求及相应报文中必不可缺的元素之一。它可以传递重要的信息。HTTP首部的格式为字段名:字段值可以同时有多个字段值，使用逗号分开字段名:字段值,字段值 首部预览 常见首部字段 非HTTP规定的首部字段比如之前提到的Cookie，set-Cookie En">
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="HTTP," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="HTTP协议的请求和响应报文必定包含HTTP首部，只是我们平时在使用Web的过程中感受不到它  HTTP首部字段HTTP首部字段是客户端和服务端的请求及相应报文中必不可缺的元素之一。它可以传递重要的信息。HTTP首部的格式为字段名:字段值可以同时有多个字段值，使用逗号分开字段名:字段值,字段值 首部预览 常见首部字段 非HTTP规定的首部字段比如之前提到的Cookie，set-Cookie En">
 <meta name="keywords" content="HTTP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图解Http六HTTP首部">
@@ -17,105 +105,252 @@
 <meta property="og:image" content="http://jokero1o.github.io/images/blog_http_6-3.png">
 <meta property="og:image" content="http://jokero1o.github.io/images/blog_http_6-4.png">
 <meta property="og:image" content="http://jokero1o.github.io/images/blog_http_6-5.png">
-<meta property="og:updated_time" content="2017-06-07T07:36:44.000Z">
+<meta property="og:updated_time" content="2017-06-08T06:12:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图解Http六HTTP首部">
 <meta name="twitter:description" content="HTTP协议的请求和响应报文必定包含HTTP首部，只是我们平时在使用Web的过程中感受不到它  HTTP首部字段HTTP首部字段是客户端和服务端的请求及相应报文中必不可缺的元素之一。它可以传递重要的信息。HTTP首部的格式为字段名:字段值可以同时有多个字段值，使用逗号分开字段名:字段值,字段值 首部预览 常见首部字段 非HTTP规定的首部字段比如之前提到的Cookie，set-Cookie En">
 <meta name="twitter:image" content="http://jokero1o.github.io/images/blog_http_6-1.png">
-  
-    <link rel="alternate" href="/atom.xml" title="清风向阳" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
 
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mjjde.github.io/2017/05/06/图解Http六HTTP首部/"/>
+
+
+
+
+
+  <title>图解Http六HTTP首部 | 清风向阳</title>
 </head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">清风向阳</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://mjjde.github.io"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-图解Http六HTTP首部" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/06/图解Http六HTTP首部/" class="article-date">
-  <time datetime="2017-05-06T07:28:43.000Z" itemprop="datePublished">2017-05-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      图解Http六HTTP首部
-    </h1>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
   
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">清风向阳</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2017/05/06/图解Http六HTTP首部/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Joker Mei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="清风向阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">图解Http六HTTP首部</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-06T15:28:43+08:00">
+                2017-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         <blockquote>
 <p>HTTP协议的请求和响应报文必定包含HTTP首部，只是我们平时在使用Web的过程中感受不到它</p>
 </blockquote>
-<h3 id="HTTP首部字段"><a href="#HTTP首部字段" class="headerlink" title="HTTP首部字段"></a><a href="#HTTP_u9996_u90E8_u5B57_u6BB5" title="HTTP首部字段"></a>HTTP首部字段</h3><p>HTTP首部字段是客户端和服务端的请求及相应报文中必不可缺的元素之一。它可以传递重要的信息。<br>HTTP首部的格式为<br>字段名:字段值<br>可以同时有多个字段值，使用逗号分开<br>字段名:字段值,字段值</p>
-<h3 id="首部预览"><a href="#首部预览" class="headerlink" title="首部预览"></a><a href="#u9996_u90E8_u9884_u89C8" title="首部预览"></a>首部预览</h3><ol>
+<h3 id="HTTP首部字段"><a href="#HTTP首部字段" class="headerlink" title="HTTP首部字段"></a>HTTP首部字段</h3><p>HTTP首部字段是客户端和服务端的请求及相应报文中必不可缺的元素之一。它可以传递重要的信息。<br>HTTP首部的格式为<br>字段名:字段值<br>可以同时有多个字段值，使用逗号分开<br>字段名:字段值,字段值</p>
+<h3 id="首部预览"><a href="#首部预览" class="headerlink" title="首部预览"></a>首部预览</h3><ol>
 <li>常见首部字段<br><img src="http://jokero1o.github.io/images/blog_http_6-1.png" alt=""><br><img src="http://jokero1o.github.io/images/blog_http_6-2.png" alt=""><br><img src="http://jokero1o.github.io/images/blog_http_6-3.png" alt=""><br><img src="http://jokero1o.github.io/images/blog_http_6-4.png" alt=""><br><img src="http://jokero1o.github.io/images/blog_http_6-5.png" alt=""></li>
 <li>非HTTP规定的首部字段<br>比如之前提到的Cookie，set-Cookie</li>
 <li>End-to-end首部和Hop-by-hop首部<br>端到端首部(End-to-end)分在此类的首部将会作用到最后的接收目标。且必须保存在由缓存生成的响应中，另外规定必须被转发<br>逐跳首部(Hop-by-hop)分在此类别中的首部只对单次的转发有效。在HTTP/1.1和之后的版本需要加上Connection首部字段</li>
 </ol>
-<h3 id="HTTP-1-1通用首部字段"><a href="#HTTP-1-1通用首部字段" class="headerlink" title="HTTP/1.1通用首部字段"></a><a href="#HTTP/1-1_u901A_u7528_u9996_u90E8_u5B57_u6BB5" title="HTTP/1.1通用首部字段"></a>HTTP/1.1通用首部字段</h3><h4 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a><a href="#Cache-Control" title="Cache-Control"></a>Cache-Control</h4><p>该指令可以控制缓存的机制</p>
-<h5 id="public"><a href="#public" class="headerlink" title="public"></a><a href="#public" title="public"></a>public</h5><p>表示其他的用户也可以适合该缓存</p>
-<h5 id="private"><a href="#private" class="headerlink" title="private"></a><a href="#private" title="private"></a>private</h5><p>表示只提供给特定的用户使用的缓存，其他用户发过来请求，代理服务器不会返回缓存</p>
-<h5 id="no-cache"><a href="#no-cache" class="headerlink" title="no-cache"></a><a href="#no-cache" title="no-cache"></a>no-cache</h5><p>该指令主要是防止从缓存服务器中返回了过期的资源<br>客户端发送的请求中包含该指令表示代理服务器不能返回缓存，强制要求返回源服务器中的资源<br>服务端响应中包含该指令表示代理服务器不能将缓存保存，代理服务器想源服务器请求缓存有效性也会直接返回无效，如果服务端的响应中的该字段没有具体的值，可以使用缓存。</p>
-<h5 id="no-store"><a href="#no-store" class="headerlink" title="no-store"></a><a href="#no-store" title="no-store"></a>no-store</h5><p>该指令表示缓存不能在本地存储请求或者响应的任何部分</p>
-<h5 id="s-maxage"><a href="#s-maxage" class="headerlink" title="s-maxage"></a><a href="#s-maxage" title="s-maxage"></a>s-maxage</h5><p>该指令是针对多用户使用的公共缓存服务器，对单个用户重复返回的服务器来说是无效的。使用该指令后Expires和max-age是无效的</p>
-<h5 id="max-age"><a href="#max-age" class="headerlink" title="max-age"></a><a href="#max-age" title="max-age"></a>max-age</h5><p>该字段出现在客户端表示在max-age规定的时间内可以返回缓存的。<br>该字段出现在服务端表示在max-age规定的时间内不会对缓存的有效性确认。如果值是0，那么缓存服务器就会去源服务器请求。</p>
-<h5 id="min-fresh"><a href="#min-fresh" class="headerlink" title="min-fresh"></a><a href="#min-fresh" title="min-fresh"></a>min-fresh</h5><p>该字段表示要求发起请求到缓存服务器返回缓存的时间(新鲜生命期)要小于指定的值</p>
-<h5 id="max-stale"><a href="#max-stale" class="headerlink" title="max-stale"></a><a href="#max-stale" title="max-stale"></a>max-stale</h5><p>表示即使缓存资源过期了也会接收，如果有具体的值，那么过期了但是在该值内也接收</p>
-<h5 id="only-if-cache"><a href="#only-if-cache" class="headerlink" title="only-if-cache"></a><a href="#only-if-cache" title="only-if-cache"></a>only-if-cache</h5><p>该指标表示客户端要求只有缓存服务器有缓存的情况下才会去返回，如果没有缓存，就返回504</p>
-<h5 id="must-revalidate"><a href="#must-revalidate" class="headerlink" title="must-revalidate"></a><a href="#must-revalidate" title="must-revalidate"></a>must-revalidate</h5><p>该指令要求缓存服务器必须向源服务器确认即将返回的缓存的有效性，如果源服务器没有响应，则返回504，同是max-stale失效</p>
-<h5 id="proxy-revalidate"><a href="#proxy-revalidate" class="headerlink" title="proxy-revalidate"></a><a href="#proxy-revalidate" title="proxy-revalidate"></a>proxy-revalidate</h5><p>该指令表示所以的缓存服务器接受到了带改指令的请求，都要向源服务器请求缓存的有效性</p>
-<h5 id="no-transform"><a href="#no-transform" class="headerlink" title="no-transform"></a><a href="#no-transform" title="no-transform"></a>no-transform</h5><p>该指令表示缓存都不能改变请求或者响应的媒体类型</p>
-<h5 id="cache-extension-token"><a href="#cache-extension-token" class="headerlink" title="cache-extension token"></a><a href="#cache-extension_token" title="cache-extension token"></a>cache-extension token</h5><p>该指令可以扩展Cache-Control的指令</p>
-<h4 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a><a href="#Connection" title="Connection"></a>Connection</h4><ul>
+<h3 id="HTTP-1-1通用首部字段"><a href="#HTTP-1-1通用首部字段" class="headerlink" title="HTTP/1.1通用首部字段"></a>HTTP/1.1通用首部字段</h3><h4 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h4><p>该指令可以控制缓存的机制</p>
+<h5 id="public"><a href="#public" class="headerlink" title="public"></a>public</h5><p>表示其他的用户也可以适合该缓存</p>
+<h5 id="private"><a href="#private" class="headerlink" title="private"></a>private</h5><p>表示只提供给特定的用户使用的缓存，其他用户发过来请求，代理服务器不会返回缓存</p>
+<h5 id="no-cache"><a href="#no-cache" class="headerlink" title="no-cache"></a>no-cache</h5><p>该指令主要是防止从缓存服务器中返回了过期的资源<br>客户端发送的请求中包含该指令表示代理服务器不能返回缓存，强制要求返回源服务器中的资源<br>服务端响应中包含该指令表示代理服务器不能将缓存保存，代理服务器想源服务器请求缓存有效性也会直接返回无效，如果服务端的响应中的该字段没有具体的值，可以使用缓存。</p>
+<h5 id="no-store"><a href="#no-store" class="headerlink" title="no-store"></a>no-store</h5><p>该指令表示缓存不能在本地存储请求或者响应的任何部分</p>
+<h5 id="s-maxage"><a href="#s-maxage" class="headerlink" title="s-maxage"></a>s-maxage</h5><p>该指令是针对多用户使用的公共缓存服务器，对单个用户重复返回的服务器来说是无效的。使用该指令后Expires和max-age是无效的</p>
+<h5 id="max-age"><a href="#max-age" class="headerlink" title="max-age"></a>max-age</h5><p>该字段出现在客户端表示在max-age规定的时间内可以返回缓存的。<br>该字段出现在服务端表示在max-age规定的时间内不会对缓存的有效性确认。如果值是0，那么缓存服务器就会去源服务器请求。</p>
+<h5 id="min-fresh"><a href="#min-fresh" class="headerlink" title="min-fresh"></a>min-fresh</h5><p>该字段表示要求发起请求到缓存服务器返回缓存的时间(新鲜生命期)要小于指定的值</p>
+<h5 id="max-stale"><a href="#max-stale" class="headerlink" title="max-stale"></a>max-stale</h5><p>表示即使缓存资源过期了也会接收，如果有具体的值，那么过期了但是在该值内也接收</p>
+<h5 id="only-if-cache"><a href="#only-if-cache" class="headerlink" title="only-if-cache"></a>only-if-cache</h5><p>该指标表示客户端要求只有缓存服务器有缓存的情况下才会去返回，如果没有缓存，就返回504</p>
+<h5 id="must-revalidate"><a href="#must-revalidate" class="headerlink" title="must-revalidate"></a>must-revalidate</h5><p>该指令要求缓存服务器必须向源服务器确认即将返回的缓存的有效性，如果源服务器没有响应，则返回504，同是max-stale失效</p>
+<h5 id="proxy-revalidate"><a href="#proxy-revalidate" class="headerlink" title="proxy-revalidate"></a>proxy-revalidate</h5><p>该指令表示所以的缓存服务器接受到了带改指令的请求，都要向源服务器请求缓存的有效性</p>
+<h5 id="no-transform"><a href="#no-transform" class="headerlink" title="no-transform"></a>no-transform</h5><p>该指令表示缓存都不能改变请求或者响应的媒体类型</p>
+<h5 id="cache-extension-token"><a href="#cache-extension-token" class="headerlink" title="cache-extension token"></a>cache-extension token</h5><p>该指令可以扩展Cache-Control的指令</p>
+<h4 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h4><ul>
 <li>控制不再转发给代理的首部字段</li>
 <li>管理持久连接</li>
 </ul>
@@ -123,176 +358,410 @@
 <li>控制不再转发给代理的首部字段<br>在客户端发送的请求或者服务端返回的响应使用该字段可以使该字段定义的字段不被转发给其他的代理服务器。Hop-by-hop</li>
 <li>管理持久连接<br>HTTP/1.1默认是会持久连接的，使用Close值可以关闭连接，使用keep-alive可以保持连接</li>
 </ol>
-<h4 id="Date"><a href="#Date" class="headerlink" title="Date"></a><a href="#Date" title="Date"></a>Date</h4><p>该字段表示创建HTTP报文的创建时间</p>
-<h4 id="Transfer-Encoding"><a href="#Transfer-Encoding" class="headerlink" title="Transfer-Encoding"></a><a href="#Transfer-Encoding" title="Transfer-Encoding"></a>Transfer-Encoding</h4><p>该字段表示传输是的报文采用什么编码</p>
-<h4 id="Upgrade"><a href="#Upgrade" class="headerlink" title="Upgrade"></a><a href="#Upgrade" title="Upgrade"></a>Upgrade</h4><p>用于检测HTTP协议以及其他协议是否可以使用</p>
-<h4 id="Via"><a href="#Via" class="headerlink" title="Via"></a><a href="#Via" title="Via"></a>Via</h4><p>报文在经过代理或者网关是会追加via字段来追踪传输的路径</p>
-<h4 id="Warning"><a href="#Warning" class="headerlink" title="Warning"></a><a href="#Warning" title="Warning"></a>Warning</h4><p>该首部通常会告知用户一些与缓存相关的问题的</p>
-<h3 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a><a href="#u8BF7_u6C42_u9996_u90E8_u5B57_u6BB5" title="请求首部字段"></a>请求首部字段</h3><p>请求首部字段是指客户端向服务端发送请求是所带的首部</p>
-<h4 id="Accept"><a href="#Accept" class="headerlink" title="Accept"></a><a href="#Accept" title="Accept"></a>Accept</h4><p>该首部表面客户端可接受的媒体类型，且可以使用q来说明权重，服务端会根据权重来优先返回该媒体</p>
-<h4 id="Accept-Charset"><a href="#Accept-Charset" class="headerlink" title="Accept-Charset"></a><a href="#Accept-Charset" title="Accept-Charset"></a>Accept-Charset</h4><p>该首部用来告诉服务端客户端支持的字符集，可以使用q来说明权重</p>
-<h4 id="Accept-Encoding"><a href="#Accept-Encoding" class="headerlink" title="Accept-Encoding"></a><a href="#Accept-Encoding" title="Accept-Encoding"></a>Accept-Encoding</h4><p>该首部用来告诉服务端客户端支持的编码及优先顺序</p>
-<h4 id="Accept-Language"><a href="#Accept-Language" class="headerlink" title="Accept-Language"></a><a href="#Accept-Language" title="Accept-Language"></a>Accept-Language</h4><p>该首部用来告诉服务端客户端所能支持的语言</p>
-<h4 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a><a href="#Authorization" title="Authorization"></a>Authorization</h4><p>该首部是用来告诉服务端用户代理的认证的值</p>
-<h4 id="Expect"><a href="#Expect" class="headerlink" title="Expect"></a><a href="#Expect" title="Expect"></a>Expect</h4><p>客户端使用该首部来告知服务端期望做出某些特定的行为</p>
-<h4 id="From"><a href="#From" class="headerlink" title="From"></a><a href="#From" title="From"></a>From</h4><p>该首部用来告诉服务端使用用户代理的用户电子邮件地址</p>
-<h4 id="Host"><a href="#Host" class="headerlink" title="Host"></a><a href="#Host" title="Host"></a>Host</h4><p>该首部可以告知服务端请求的资源所处的互联网主机名和端口号</p>
-<h4 id="if-Match"><a href="#if-Match" class="headerlink" title="if-Match"></a><a href="#if-Match" title="if-Match"></a>if-Match</h4><p>该首部表示服务端只有在满足条件才可以返回，if-Match的值需要和ETag一致</p>
-<h4 id="if-Modified-Since"><a href="#if-Modified-Since" class="headerlink" title="if-Modified-Since"></a><a href="#if-Modified-Since" title="if-Modified-Since"></a>if-Modified-Since</h4><p>该首部告知服务端如果资源更新时间晚于定义的值，则希望处理该请求，如果没有更新，就返回304</p>
-<h4 id="if-None-Match"><a href="#if-None-Match" class="headerlink" title="if-None-Match"></a><a href="#if-None-Match" title="if-None-Match"></a>if-None-Match</h4><p>该首部表示服务端的资源ETag与定义的值不一致才处理请求</p>
-<h4 id="if-Range"><a href="#if-Range" class="headerlink" title="if-Range"></a><a href="#if-Range" title="if-Range"></a>if-Range</h4><p>该首部告知服务端若指定的值ETag或者时间和请求资源的ETag或时间相一致的话则做范围请求处理</p>
-<h4 id="if-Unmodified-Since"><a href="#if-Unmodified-Since" class="headerlink" title="if-Unmodified-Since"></a><a href="#if-Unmodified-Since" title="if-Unmodified-Since"></a>if-Unmodified-Since</h4><p>该首部和if-Modified-Since相反</p>
-<h4 id="Max-Forwards"><a href="#Max-Forwards" class="headerlink" title="Max-Forwards"></a><a href="#Max-Forwards" title="Max-Forwards"></a>Max-Forwards</h4><p>该首部以十进制整数形式指定可经过的服务器个数，一种调试手段</p>
-<h4 id="Proxy-Authorization"><a href="#Proxy-Authorization" class="headerlink" title="Proxy-Authorization"></a><a href="#Proxy-Authorization" title="Proxy-Authorization"></a>Proxy-Authorization</h4><p>该首部是用来当代理服务器发来认证质询时来告知服务器的认证信息</p>
-<h4 id="Range"><a href="#Range" class="headerlink" title="Range"></a><a href="#Range" title="Range"></a>Range</h4><p>该首部表示范围请求的请求范围</p>
-<h4 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a><a href="#Referer" title="Referer"></a>Referer</h4><p>该首部告知服务端请求的原始资源的URI</p>
-<h4 id="TE"><a href="#TE" class="headerlink" title="TE"></a><a href="#TE" title="TE"></a>TE</h4><p>该首部告知服务端客户端能够处理响应的传输编码方式和优先级</p>
-<h4 id="User-Agent"><a href="#User-Agent" class="headerlink" title="User-Agent"></a><a href="#User-Agent" title="User-Agent"></a>User-Agent</h4><p>该首部会简化创建请求的浏览器和用户代理名称等信息传达给服务端</p>
-<h3 id="响应首部字段"><a href="#响应首部字段" class="headerlink" title="响应首部字段"></a><a href="#u54CD_u5E94_u9996_u90E8_u5B57_u6BB5" title="响应首部字段"></a>响应首部字段</h3><p>响应首部字段是有服务器想客户端发送响应式使用的首部字段</p>
-<h4 id="Accept-Ranges"><a href="#Accept-Ranges" class="headerlink" title="Accept-Ranges"></a><a href="#Accept-Ranges" title="Accept-Ranges"></a>Accept-Ranges</h4><p>该首部告知客户端服务端是否能处理传过来的范围请求，处理成功值为byte，无法处理为none</p>
-<h4 id="Age"><a href="#Age" class="headerlink" title="Age"></a><a href="#Age" title="Age"></a>Age</h4><p>该首部告知客户端服务端多久前创建了响应</p>
-<h4 id="ETag"><a href="#ETag" class="headerlink" title="ETag"></a><a href="#ETag" title="ETag"></a>ETag</h4><p>该首部告知客户端实体标识</p>
-<h4 id="Location"><a href="#Location" class="headerlink" title="Location"></a><a href="#Location" title="Location"></a>Location</h4><p>该首部告知客户端可能需要根据该值来再次请求资源</p>
-<h4 id="Proxy-Authenticate"><a href="#Proxy-Authenticate" class="headerlink" title="Proxy-Authenticate"></a><a href="#Proxy-Authenticate" title="Proxy-Authenticate"></a>Proxy-Authenticate</h4><p>该首部会把有代理服务器所要求的认证信息传给客户端</p>
-<h4 id="Retry-After"><a href="#Retry-After" class="headerlink" title="Retry-After"></a><a href="#Retry-After" title="Retry-After"></a>Retry-After</h4><p>该首部告知客户端应该在多久之后再次发送请求</p>
-<h4 id="Server"><a href="#Server" class="headerlink" title="Server"></a><a href="#Server" title="Server"></a>Server</h4><p>该首部告知客户端当前服务器上安装的HTTP服务器应用信息</p>
-<h4 id="Vary"><a href="#Vary" class="headerlink" title="Vary"></a><a href="#Vary" title="Vary"></a>Vary</h4><p>该首部用来控制代理服务器返回缓存的条件</p>
-<h4 id="WWW-Authenticate"><a href="#WWW-Authenticate" class="headerlink" title="WWW-Authenticate"></a><a href="#WWW-Authenticate" title="WWW-Authenticate"></a>WWW-Authenticate</h4><p>该首部用于HTTP访问认证</p>
-<h3 id="实体首部字段"><a href="#实体首部字段" class="headerlink" title="实体首部字段"></a><a href="#u5B9E_u4F53_u9996_u90E8_u5B57_u6BB5" title="实体首部字段"></a>实体首部字段</h3><p>实体首部字段是包含请求和响应报文中实体部分使用的字段</p>
-<h4 id="Allow"><a href="#Allow" class="headerlink" title="Allow"></a><a href="#Allow" title="Allow"></a>Allow</h4><p>该首部通知客户端能支持的Request-URI指定资源的所有HTTP方法，当服务器接收到不支持的HTTP请求方法，返回405</p>
-<h4 id="Content-Encoding"><a href="#Content-Encoding" class="headerlink" title="Content-Encoding"></a><a href="#Content-Encoding" title="Content-Encoding"></a>Content-Encoding</h4><p>该首部告知客户端对实体的主体部分选用的内容编码格式</p>
-<h4 id="Content-Language"><a href="#Content-Language" class="headerlink" title="Content-Language"></a><a href="#Content-Language" title="Content-Language"></a>Content-Language</h4><p>该首部告知客户端，实体主体使用的自然语言</p>
-<h4 id="Content-Length"><a href="#Content-Length" class="headerlink" title="Content-Length"></a><a href="#Content-Length" title="Content-Length"></a>Content-Length</h4><p>该首部表示实体主体部分的大小</p>
-<h4 id="Content-Location"><a href="#Content-Location" class="headerlink" title="Content-Location"></a><a href="#Content-Location" title="Content-Location"></a>Content-Location</h4><p>该首部给出报文主体部分的对应的URI，客户端可能会根据URI再次请求资源</p>
-<h4 id="Content-MD5"><a href="#Content-MD5" class="headerlink" title="Content-MD5"></a><a href="#Content-MD5" title="Content-MD5"></a>Content-MD5</h4><p>该首部值数一串MD5算法生成的值，目的是为了保证传输过程中实体数据的完整性</p>
-<h4 id="Content-Range"><a href="#Content-Range" class="headerlink" title="Content-Range"></a><a href="#Content-Range" title="Content-Range"></a>Content-Range</h4><p>该首部是针对范围请求是响应使用的首部，表示响应实体的范围</p>
-<h4 id="Content-Type"><a href="#Content-Type" class="headerlink" title="Content-Type"></a><a href="#Content-Type" title="Content-Type"></a>Content-Type</h4><p>该首部表示对于的实体内对象的媒体类型</p>
-<h4 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a><a href="#Expires" title="Expires"></a>Expires</h4><p>该首部会将资源失效的日期告诉给客户端</p>
-<h4 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a><a href="#Last-Modified" title="Last-Modified"></a>Last-Modified</h4><p>该首部会告知客户端资源最后修改的日期</p>
+<h4 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h4><p>该字段表示创建HTTP报文的创建时间</p>
+<h4 id="Transfer-Encoding"><a href="#Transfer-Encoding" class="headerlink" title="Transfer-Encoding"></a>Transfer-Encoding</h4><p>该字段表示传输是的报文采用什么编码</p>
+<h4 id="Upgrade"><a href="#Upgrade" class="headerlink" title="Upgrade"></a>Upgrade</h4><p>用于检测HTTP协议以及其他协议是否可以使用</p>
+<h4 id="Via"><a href="#Via" class="headerlink" title="Via"></a>Via</h4><p>报文在经过代理或者网关是会追加via字段来追踪传输的路径</p>
+<h4 id="Warning"><a href="#Warning" class="headerlink" title="Warning"></a>Warning</h4><p>该首部通常会告知用户一些与缓存相关的问题的</p>
+<h3 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a>请求首部字段</h3><p>请求首部字段是指客户端向服务端发送请求是所带的首部</p>
+<h4 id="Accept"><a href="#Accept" class="headerlink" title="Accept"></a>Accept</h4><p>该首部表面客户端可接受的媒体类型，且可以使用q来说明权重，服务端会根据权重来优先返回该媒体</p>
+<h4 id="Accept-Charset"><a href="#Accept-Charset" class="headerlink" title="Accept-Charset"></a>Accept-Charset</h4><p>该首部用来告诉服务端客户端支持的字符集，可以使用q来说明权重</p>
+<h4 id="Accept-Encoding"><a href="#Accept-Encoding" class="headerlink" title="Accept-Encoding"></a>Accept-Encoding</h4><p>该首部用来告诉服务端客户端支持的编码及优先顺序</p>
+<h4 id="Accept-Language"><a href="#Accept-Language" class="headerlink" title="Accept-Language"></a>Accept-Language</h4><p>该首部用来告诉服务端客户端所能支持的语言</p>
+<h4 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a>Authorization</h4><p>该首部是用来告诉服务端用户代理的认证的值</p>
+<h4 id="Expect"><a href="#Expect" class="headerlink" title="Expect"></a>Expect</h4><p>客户端使用该首部来告知服务端期望做出某些特定的行为</p>
+<h4 id="From"><a href="#From" class="headerlink" title="From"></a>From</h4><p>该首部用来告诉服务端使用用户代理的用户电子邮件地址</p>
+<h4 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h4><p>该首部可以告知服务端请求的资源所处的互联网主机名和端口号</p>
+<h4 id="if-Match"><a href="#if-Match" class="headerlink" title="if-Match"></a>if-Match</h4><p>该首部表示服务端只有在满足条件才可以返回，if-Match的值需要和ETag一致</p>
+<h4 id="if-Modified-Since"><a href="#if-Modified-Since" class="headerlink" title="if-Modified-Since"></a>if-Modified-Since</h4><p>该首部告知服务端如果资源更新时间晚于定义的值，则希望处理该请求，如果没有更新，就返回304</p>
+<h4 id="if-None-Match"><a href="#if-None-Match" class="headerlink" title="if-None-Match"></a>if-None-Match</h4><p>该首部表示服务端的资源ETag与定义的值不一致才处理请求</p>
+<h4 id="if-Range"><a href="#if-Range" class="headerlink" title="if-Range"></a>if-Range</h4><p>该首部告知服务端若指定的值ETag或者时间和请求资源的ETag或时间相一致的话则做范围请求处理</p>
+<h4 id="if-Unmodified-Since"><a href="#if-Unmodified-Since" class="headerlink" title="if-Unmodified-Since"></a>if-Unmodified-Since</h4><p>该首部和if-Modified-Since相反</p>
+<h4 id="Max-Forwards"><a href="#Max-Forwards" class="headerlink" title="Max-Forwards"></a>Max-Forwards</h4><p>该首部以十进制整数形式指定可经过的服务器个数，一种调试手段</p>
+<h4 id="Proxy-Authorization"><a href="#Proxy-Authorization" class="headerlink" title="Proxy-Authorization"></a>Proxy-Authorization</h4><p>该首部是用来当代理服务器发来认证质询时来告知服务器的认证信息</p>
+<h4 id="Range"><a href="#Range" class="headerlink" title="Range"></a>Range</h4><p>该首部表示范围请求的请求范围</p>
+<h4 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h4><p>该首部告知服务端请求的原始资源的URI</p>
+<h4 id="TE"><a href="#TE" class="headerlink" title="TE"></a>TE</h4><p>该首部告知服务端客户端能够处理响应的传输编码方式和优先级</p>
+<h4 id="User-Agent"><a href="#User-Agent" class="headerlink" title="User-Agent"></a>User-Agent</h4><p>该首部会简化创建请求的浏览器和用户代理名称等信息传达给服务端</p>
+<h3 id="响应首部字段"><a href="#响应首部字段" class="headerlink" title="响应首部字段"></a>响应首部字段</h3><p>响应首部字段是有服务器想客户端发送响应式使用的首部字段</p>
+<h4 id="Accept-Ranges"><a href="#Accept-Ranges" class="headerlink" title="Accept-Ranges"></a>Accept-Ranges</h4><p>该首部告知客户端服务端是否能处理传过来的范围请求，处理成功值为byte，无法处理为none</p>
+<h4 id="Age"><a href="#Age" class="headerlink" title="Age"></a>Age</h4><p>该首部告知客户端服务端多久前创建了响应</p>
+<h4 id="ETag"><a href="#ETag" class="headerlink" title="ETag"></a>ETag</h4><p>该首部告知客户端实体标识</p>
+<h4 id="Location"><a href="#Location" class="headerlink" title="Location"></a>Location</h4><p>该首部告知客户端可能需要根据该值来再次请求资源</p>
+<h4 id="Proxy-Authenticate"><a href="#Proxy-Authenticate" class="headerlink" title="Proxy-Authenticate"></a>Proxy-Authenticate</h4><p>该首部会把有代理服务器所要求的认证信息传给客户端</p>
+<h4 id="Retry-After"><a href="#Retry-After" class="headerlink" title="Retry-After"></a>Retry-After</h4><p>该首部告知客户端应该在多久之后再次发送请求</p>
+<h4 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h4><p>该首部告知客户端当前服务器上安装的HTTP服务器应用信息</p>
+<h4 id="Vary"><a href="#Vary" class="headerlink" title="Vary"></a>Vary</h4><p>该首部用来控制代理服务器返回缓存的条件</p>
+<h4 id="WWW-Authenticate"><a href="#WWW-Authenticate" class="headerlink" title="WWW-Authenticate"></a>WWW-Authenticate</h4><p>该首部用于HTTP访问认证</p>
+<h3 id="实体首部字段"><a href="#实体首部字段" class="headerlink" title="实体首部字段"></a>实体首部字段</h3><p>实体首部字段是包含请求和响应报文中实体部分使用的字段</p>
+<h4 id="Allow"><a href="#Allow" class="headerlink" title="Allow"></a>Allow</h4><p>该首部通知客户端能支持的Request-URI指定资源的所有HTTP方法，当服务器接收到不支持的HTTP请求方法，返回405</p>
+<h4 id="Content-Encoding"><a href="#Content-Encoding" class="headerlink" title="Content-Encoding"></a>Content-Encoding</h4><p>该首部告知客户端对实体的主体部分选用的内容编码格式</p>
+<h4 id="Content-Language"><a href="#Content-Language" class="headerlink" title="Content-Language"></a>Content-Language</h4><p>该首部告知客户端，实体主体使用的自然语言</p>
+<h4 id="Content-Length"><a href="#Content-Length" class="headerlink" title="Content-Length"></a>Content-Length</h4><p>该首部表示实体主体部分的大小</p>
+<h4 id="Content-Location"><a href="#Content-Location" class="headerlink" title="Content-Location"></a>Content-Location</h4><p>该首部给出报文主体部分的对应的URI，客户端可能会根据URI再次请求资源</p>
+<h4 id="Content-MD5"><a href="#Content-MD5" class="headerlink" title="Content-MD5"></a>Content-MD5</h4><p>该首部值数一串MD5算法生成的值，目的是为了保证传输过程中实体数据的完整性</p>
+<h4 id="Content-Range"><a href="#Content-Range" class="headerlink" title="Content-Range"></a>Content-Range</h4><p>该首部是针对范围请求是响应使用的首部，表示响应实体的范围</p>
+<h4 id="Content-Type"><a href="#Content-Type" class="headerlink" title="Content-Type"></a>Content-Type</h4><p>该首部表示对于的实体内对象的媒体类型</p>
+<h4 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h4><p>该首部会将资源失效的日期告诉给客户端</p>
+<h4 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h4><p>该首部会告知客户端资源最后修改的日期</p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://mjjde.github.io/2017/05/06/图解Http六HTTP首部/" data-id="cj3o0rhec0010x5tf0s0ftpwk" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
 
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/05/图解Http五与HTTP协作的Web服务器/" rel="next" title="图解Http五与HTTP协作的Web服务器">
+                <i class="fa fa-chevron-left"></i> 图解Http五与HTTP协作的Web服务器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
     </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2017/05/05/图解Http五与HTTP协作的Web服务器/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">图解Http五与HTTP协作的Web服务器</div>
-    </a>
-  
-</nav>
+  </article>
 
-  
-</article>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-IPC/">Android-IPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DiskLruCache/">DiskLruCache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notification/">Notification</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RemoteView/">RemoteView</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServiceManager/">ServiceManager</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volley/">volley</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/widget/">widget</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事件/">事件</a></li></ul>
+    <div class="post-spread">
+      
     </div>
   </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
-    </div>
-  </div>
+          </div>
+          
 
-  
+
+          
+  <div class="comments" id="comments">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a></li></ul>
-    </div>
   </div>
 
 
+        </div>
+        
+          
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/05/06/图解Http六HTTP首部/">图解Http六HTTP首部</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/05/图解Http五与HTTP协作的Web服务器/">图解Http五与HTTP协作的Web服务器</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/04/图解Http四返回结果的HTTP状态码/">图解Http四返回结果的HTTP状态码</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/29/图解Http三HTTP报文内的HTTP信息/">图解Http三HTTP报文内的HTTP信息</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/28/图解Http一了解Web及网络服务/">图解Http一了解Web及网络服务</a>
-          </li>
-        
-      </ul>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
 
-  
-</aside>
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Joker Mei" />
+          <p class="site-author-name" itemprop="name">Joker Mei</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP首部字段"><span class="nav-number">1.</span> <span class="nav-text">HTTP首部字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首部预览"><span class="nav-number">2.</span> <span class="nav-text">首部预览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-1通用首部字段"><span class="nav-number">3.</span> <span class="nav-text">HTTP/1.1通用首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cache-Control"><span class="nav-number">3.1.</span> <span class="nav-text">Cache-Control</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#public"><span class="nav-number">3.1.1.</span> <span class="nav-text">public</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#private"><span class="nav-number">3.1.2.</span> <span class="nav-text">private</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#no-cache"><span class="nav-number">3.1.3.</span> <span class="nav-text">no-cache</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#no-store"><span class="nav-number">3.1.4.</span> <span class="nav-text">no-store</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#s-maxage"><span class="nav-number">3.1.5.</span> <span class="nav-text">s-maxage</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#max-age"><span class="nav-number">3.1.6.</span> <span class="nav-text">max-age</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#min-fresh"><span class="nav-number">3.1.7.</span> <span class="nav-text">min-fresh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#max-stale"><span class="nav-number">3.1.8.</span> <span class="nav-text">max-stale</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#only-if-cache"><span class="nav-number">3.1.9.</span> <span class="nav-text">only-if-cache</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#must-revalidate"><span class="nav-number">3.1.10.</span> <span class="nav-text">must-revalidate</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#proxy-revalidate"><span class="nav-number">3.1.11.</span> <span class="nav-text">proxy-revalidate</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#no-transform"><span class="nav-number">3.1.12.</span> <span class="nav-text">no-transform</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cache-extension-token"><span class="nav-number">3.1.13.</span> <span class="nav-text">cache-extension token</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Connection"><span class="nav-number">3.2.</span> <span class="nav-text">Connection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Date"><span class="nav-number">3.3.</span> <span class="nav-text">Date</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Transfer-Encoding"><span class="nav-number">3.4.</span> <span class="nav-text">Transfer-Encoding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Upgrade"><span class="nav-number">3.5.</span> <span class="nav-text">Upgrade</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Via"><span class="nav-number">3.6.</span> <span class="nav-text">Via</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Warning"><span class="nav-number">3.7.</span> <span class="nav-text">Warning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求首部字段"><span class="nav-number">4.</span> <span class="nav-text">请求首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Accept"><span class="nav-number">4.1.</span> <span class="nav-text">Accept</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Accept-Charset"><span class="nav-number">4.2.</span> <span class="nav-text">Accept-Charset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Accept-Encoding"><span class="nav-number">4.3.</span> <span class="nav-text">Accept-Encoding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Accept-Language"><span class="nav-number">4.4.</span> <span class="nav-text">Accept-Language</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Authorization"><span class="nav-number">4.5.</span> <span class="nav-text">Authorization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Expect"><span class="nav-number">4.6.</span> <span class="nav-text">Expect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#From"><span class="nav-number">4.7.</span> <span class="nav-text">From</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Host"><span class="nav-number">4.8.</span> <span class="nav-text">Host</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if-Match"><span class="nav-number">4.9.</span> <span class="nav-text">if-Match</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if-Modified-Since"><span class="nav-number">4.10.</span> <span class="nav-text">if-Modified-Since</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if-None-Match"><span class="nav-number">4.11.</span> <span class="nav-text">if-None-Match</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if-Range"><span class="nav-number">4.12.</span> <span class="nav-text">if-Range</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if-Unmodified-Since"><span class="nav-number">4.13.</span> <span class="nav-text">if-Unmodified-Since</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Max-Forwards"><span class="nav-number">4.14.</span> <span class="nav-text">Max-Forwards</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Proxy-Authorization"><span class="nav-number">4.15.</span> <span class="nav-text">Proxy-Authorization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Range"><span class="nav-number">4.16.</span> <span class="nav-text">Range</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Referer"><span class="nav-number">4.17.</span> <span class="nav-text">Referer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TE"><span class="nav-number">4.18.</span> <span class="nav-text">TE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#User-Agent"><span class="nav-number">4.19.</span> <span class="nav-text">User-Agent</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应首部字段"><span class="nav-number">5.</span> <span class="nav-text">响应首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Accept-Ranges"><span class="nav-number">5.1.</span> <span class="nav-text">Accept-Ranges</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Age"><span class="nav-number">5.2.</span> <span class="nav-text">Age</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ETag"><span class="nav-number">5.3.</span> <span class="nav-text">ETag</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Location"><span class="nav-number">5.4.</span> <span class="nav-text">Location</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Proxy-Authenticate"><span class="nav-number">5.5.</span> <span class="nav-text">Proxy-Authenticate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Retry-After"><span class="nav-number">5.6.</span> <span class="nav-text">Retry-After</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Server"><span class="nav-number">5.7.</span> <span class="nav-text">Server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vary"><span class="nav-number">5.8.</span> <span class="nav-text">Vary</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WWW-Authenticate"><span class="nav-number">5.9.</span> <span class="nav-text">WWW-Authenticate</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实体首部字段"><span class="nav-number">6.</span> <span class="nav-text">实体首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Allow"><span class="nav-number">6.1.</span> <span class="nav-text">Allow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Encoding"><span class="nav-number">6.2.</span> <span class="nav-text">Content-Encoding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Language"><span class="nav-number">6.3.</span> <span class="nav-text">Content-Language</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Length"><span class="nav-number">6.4.</span> <span class="nav-text">Content-Length</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Location"><span class="nav-number">6.5.</span> <span class="nav-text">Content-Location</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-MD5"><span class="nav-number">6.6.</span> <span class="nav-text">Content-MD5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Range"><span class="nav-number">6.7.</span> <span class="nav-text">Content-Range</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Type"><span class="nav-number">6.8.</span> <span class="nav-text">Content-Type</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Expires"><span class="nav-number">6.9.</span> <span class="nav-text">Expires</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Last-Modified"><span class="nav-number">6.10.</span> <span class="nav-text">Last-Modified</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
         
       </div>
-      <footer id="footer">
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 Joker Mei<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Joker Mei</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
   </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
