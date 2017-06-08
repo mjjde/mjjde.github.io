@@ -1,328 +1,262 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-CN">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <meta charset="utf-8">
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
-
-
-
-
-
-
-<meta property="og:type" content="website">
+  <title>清风向阳</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
 <meta property="og:title" content="清风向阳">
 <meta property="og:url" content="http://mjjde.github.io/page/2/index.html">
 <meta property="og:site_name" content="清风向阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="清风向阳">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://mjjde.github.io/page/2/"/>
-
-
-
-
-
-  <title>清风向阳</title>
+  
+    <link rel="alternative" href="/atom.xml" title="清风向阳" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+    
+    
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: true,
+          isPost: false,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-   page-home 
- ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">清风向阳</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            <img lazy-src="/img/head.jpg" class="js-avatar">
             
-            Startseite
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archiv
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
-          </a>
-        </li>
-      
+        </a>
 
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-  <section id="posts" class="posts-expand">
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Joker Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="清风向阳">
-    </span>
-
-    
-      <header class="post-header">
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">Joker Mei</a></h1>
+        </hgroup>
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives">博客首页</a></li>
+                        
+                            <li><a href="/works">作品展示</a></li>
+                        
+                            <li><a href="/about">留言打卡</a></li>
+                        
+                            <li><a href="/FrontEndGuide">前端导航</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PAkNDgsKBQ4MCnxNTRJfU1E" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/luuman" title="github">github</a>
+                            
+                                <a class="fl zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo" target="_blank" href="#" title="weibo">weibo</a>
+                            
+                                <a class="fl google" target="_blank" href="#" title="google">google</a>
+                            
+                                <a class="fl twitter" target="_blank" href="#" title="twitter">twitter</a>
+                            
+                                <a class="fl linkedin" target="_blank" href="#" title="linkedin">linkedin</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
                 
-                <a class="post-title-link" href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/" itemprop="url">DiskLruCache Java实现基于LRU的磁盘缓存</a></h1>
-        
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                    
+                    </div>
+                </section>
+                
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-15T15:18:20+08:00">
-                2016-06-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">纯海迷、爱运动、爱交友、爱旅行、喜欢接触新鲜事物、迎接新的挑战，更爱游离于错综复杂的编码与逻辑中</div>
+                </section>
+                
+            </div>
         </div>
-      </header>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">Joker Mei</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">Joker Mei</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives">博客首页</a></li>
+                
+                    <li><a href="/works">作品展示</a></li>
+                
+                    <li><a href="/about">留言打卡</a></li>
+                
+                    <li><a href="/FrontEndGuide">前端导航</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PAkNDgsKBQ4MCnxNTRJfU1E" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/luuman" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+                    
+                        <a class="google" target="_blank" href="#" title="google">google</a>
+                    
+                        <a class="twitter" target="_blank" href="#" title="twitter">twitter</a>
+                    
+                        <a class="linkedin" target="_blank" href="#" title="linkedin">linkedin</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap">
+  
+    <article id="post-DiskLruCache-Java实现基于LRU的磁盘缓存" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/" class="article-date">
+      <time datetime="2016-06-15T07:18:20.000Z" itemprop="datePublished">2016-06-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
     
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/">DiskLruCache Java实现基于LRU的磁盘缓存</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
           
-            <blockquote>
+        <blockquote>
 <p>DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。</p>
 </blockquote>
 <p>Github地址 <a href="https://github.com/JakeWharton/DiskLruCache" target="_blank" rel="external">https://github.com/JakeWharton/DiskLruCache</a></p>
@@ -375,117 +309,64 @@
 </ul>
 <p>创建新的日志文件，根据lruEntries集合里的Entry。</p>
 
-          
-        
+      
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
+    <div class="article-info article-info-index">
+      
       
 
-  
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DiskLruCache/">DiskLruCache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2016/03/16/widget和Notification上的RemoteView/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Joker Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="清风向阳">
-    </span>
-
+      
+      <div class="clearfix"></div>
+    </div>
     
-      <header class="post-header">
+  </div>
+  
+</article>
 
+
+
+
+
+
+
+
+
+  
+    <article id="post-widget和Notification上的RemoteView" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/16/widget和Notification上的RemoteView/" class="article-date">
+      <time datetime="2016-03-16T07:15:57.000Z" itemprop="datePublished">2016-03-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/03/16/widget和Notification上的RemoteView/" itemprop="url">widget和Notification上的RemoteView</a></h1>
-        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/16/widget和Notification上的RemoteView/">widget和Notification上的RemoteView</a>
+    </h1>
+  
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-16T15:15:57+08:00">
-                2016-03-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
       </header>
+      
     
-
-    <div class="post-body" itemprop="articleBody">
-
+    <div class="article-entry" itemprop="articleBody">
       
-      
-
-      
-        
           
-            <blockquote>
+        <blockquote>
 <p>我们在开发过程中有关于View的基本都是在当前的进程，那么会不会存在一个需要我们编写一个远程使用View的需求呢，答案是肯定的。我们在开发桌面小工具或者自定义消息通知栏的布局的时候，我们就有可能需要编写远程的View-RemoteView.</p>
 </blockquote>
 <h4 id="Notification"><a href="#Notification" class="headerlink" title="Notification"></a><a href="#Notification" title="Notification"></a>Notification</h4><p>我们在使用消息通知栏时，经常有需要要求我们去自定义UI，毕竟系统自带的布局不怎么好看，或者于我们的应用Style不统一。那么我就需要自己去定义布局了。</p>
@@ -535,117 +416,64 @@
 </ul>
 <p>上面讨论的是基于同一个PendingIntent，那么匹配原则是：requestCode相同，Intent相同。<br>requestCode相同很容易理解，Intent相同的原则是：ComponentName和intent-filtre相同，Intent的Extra是不参与匹配的。</p>
 
-          
-        
+      
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
+    <div class="article-info article-info-index">
+      
       
 
-  
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notification/">Notification</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RemoteView/">RemoteView</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/widget/">widget</a></li></ul>
+    </div>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2016/01/15/android事件分发机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Joker Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="清风向阳">
-    </span>
-
+      
+      <div class="clearfix"></div>
+    </div>
     
-      <header class="post-header">
+  </div>
+  
+</article>
 
+
+
+
+
+
+
+
+
+  
+    <article id="post-android事件分发机制" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/15/android事件分发机制/" class="article-date">
+      <time datetime="2016-01-15T07:11:52.000Z" itemprop="datePublished">2016-01-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/15/android事件分发机制/" itemprop="url">android事件分发机制</a></h1>
-        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/15/android事件分发机制/">android事件分发机制</a>
+    </h1>
+  
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-15T15:11:52+08:00">
-                2016-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
       </header>
+      
     
-
-    <div class="post-body" itemprop="articleBody">
-
+    <div class="article-entry" itemprop="articleBody">
       
-      
-
-      
-        
           
-            <blockquote>
+        <blockquote>
 <p>Android事件分发机制是我们学习Android必须要面临的问题，通常会涉及到事件冲突等问题，这也是对于新手来说比较复杂的学习过程。Android事件处理和Java类似，都是向上冒泡。一组事件序列包括down move move… up ,是以按下为开始，经历0或多个移动，最后以抬起结束。</p>
 </blockquote>
 <p>在Android事件分发中共涉及到三个函数。</p>
@@ -670,117 +498,64 @@
 <p>假设我们父控件的onInterceptTouchEvent直接拦截了Down方法，那么我们就可以看到之后的事件对于条件actionMasked == MotionEvent.ACTION_DOWN|| mFirstTouchTarget != null永远就不会成立，那么我们调整FLAG_DISALLOW_INTERCEPT也就没有任何作用，如果我们不拦截Down的话，我们的子View就可以控制FLAG_DISALLOW_INTERCEPT来进行对父控件的onInterceptTouchEvent的调用情况。这是一个解决事件冲突的一个手段。</p>
 <h4 id="onTouchEvent"><a href="#onTouchEvent" class="headerlink" title="onTouchEvent"></a><a href="#onTouchEvent" title="onTouchEvent"></a>onTouchEvent</h4><p>我们重上面的伪代码中可以看到，一旦事件被拦截了就会调用onTouchEvent去消费事件，事件只能被消费一次，它的返回值会直接作用到dispatchTouchEvent的返回值的。OnTouchListener和OnTouchEvent之间的调用是由一定关系的，OnTouchListener是在OnTouchEvent之前被调用，如果OnTouchListener返回true消费事件的话，那么onTouchEvent就不会被调用，我们知道onClickLinstener是在onTouchEvent中被执行的，那么如果OnTouchListener消费事件的话，onClickLinstener就不会被触发。</p>
 
-          
-        
+      
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
+    <div class="article-info article-info-index">
+      
       
 
-  
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事件/">事件</a></li></ul>
+    </div>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2016/01/05/Android-IPC通讯Binder和Service的关系/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Joker Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="清风向阳">
-    </span>
-
+      
+      <div class="clearfix"></div>
+    </div>
     
-      <header class="post-header">
+  </div>
+  
+</article>
 
+
+
+
+
+
+
+
+
+  
+    <article id="post-Android-IPC通讯Binder和Service的关系" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/05/Android-IPC通讯Binder和Service的关系/" class="article-date">
+      <time datetime="2016-01-05T07:11:52.000Z" itemprop="datePublished">2016-01-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/05/Android-IPC通讯Binder和Service的关系/" itemprop="url">Android-IPC通讯Binder和Service的关系</a></h1>
-        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/05/Android-IPC通讯Binder和Service的关系/">Android-IPC通讯Binder和Service的关系</a>
+    </h1>
+  
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-05T15:11:52+08:00">
-                2016-01-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
       </header>
+      
     
-
-    <div class="post-body" itemprop="articleBody">
-
+    <div class="article-entry" itemprop="articleBody">
       
-      
-
-      
-        
           
-            <blockquote>
+        <blockquote>
 <p>任何系统都有自己的跨进程通讯，Android是基于Linux，所以都会兼容Linux的通讯机制，包括有管道，信号，socket等等。基于Android自身的特点，有提出了自己的通讯方式Binder机制。接下来就来具体的介绍。</p>
 </blockquote>
 <h4 id="Binder机制"><a href="#Binder机制" class="headerlink" title="Binder机制"></a><a href="#Binder_u673A_u5236" title="Binder机制"></a>Binder机制</h4><p>Android中系统的服务基本都是基于Binder，我们在应用层使用的getService()方法调用系统服务。那么这一切是如何进行的呢。</p>
@@ -839,117 +614,64 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BookService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> List&lt;Book&gt; bookList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate();</div><div class="line">        Log.d(<span class="string">"aidl"</span>, <span class="string">"BookService--------------onCreate"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Nullable</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mBinder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> IBookAidlInterface.Stub mBinder = <span class="keyword">new</span> IBookAidlInterface.Stub()&#123;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBook</span><span class="params">(Book book)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">    <span class="keyword">synchronized</span> (bookList) &#123;</div><div class="line">        bookList.add(book);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Book&gt; <span class="title">getBooks</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">    <span class="keyword">synchronized</span> (bookList) &#123;</div><div class="line">        <span class="keyword">return</span> bookList;</div><div class="line">    &#125;</div><div class="line">    &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这个Service实现了接口里的Stub类，并且将该对象通过方法onBind返回。这样Service一旦启动成功，就会返回一个Binder驱动层的mRemote来提供给客户端使用。就可以完成基于Binder的IPC通讯了。</p>
 
-          
-        
+      
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
+    <div class="article-info article-info-index">
+      
       
 
-  
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-IPC/">Android-IPC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Binder/">Binder</a></li></ul>
+    </div>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2015/12/28/Activity的进阶/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Joker Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="清风向阳">
-    </span>
-
+      
+      <div class="clearfix"></div>
+    </div>
     
-      <header class="post-header">
+  </div>
+  
+</article>
 
+
+
+
+
+
+
+
+
+  
+    <article id="post-Activity的进阶" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/28/Activity的进阶/" class="article-date">
+      <time datetime="2015-12-28T07:09:34.000Z" itemprop="datePublished">2015-12-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/28/Activity的进阶/" itemprop="url">Activity的进阶</a></h1>
-        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/28/Activity的进阶/">Activity的进阶</a>
+    </h1>
+  
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-28T15:09:34+08:00">
-                2015-12-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
       </header>
+      
     
-
-    <div class="post-body" itemprop="articleBody">
-
+    <div class="article-entry" itemprop="articleBody">
       
-      
-
-      
-        
           
-            <blockquote>
+        <blockquote>
 <p>Activity的生命周期变化有两种情况，一个是人为，一个是系统干预。</p>
 </blockquote>
 <p><img src="http://jokero1o.github.io/images/blog_activity.jpg" alt=""></p>
@@ -973,117 +695,64 @@
 <h5 id="singleInstance模式"><a href="#singleInstance模式" class="headerlink" title="singleInstance模式"></a><a href="#singleInstance_u6A21_u5F0F" title="singleInstance模式"></a>singleInstance模式</h5><p>很霸道的模式，不管当前的Task是怎样的顺序，都会新建一个Task,并存放将要启动的activity，如果指定了android:taskAffinity，那么就会会命名新Task的名字，不然新建的名字依然是包名，这样就会出现两个相同名字的Task,但是id不一样，所以id才是Task唯一标示。如果在标记singleInstance的Activity在开启一个Activity，那么这么Activity又会回到原来的Task内，而不是和它在一起，如果我们启动一个singleTask，android:taskAffinity和用singleInstance Activity的android:taskAffinity标记一样的Task的Activity，那么这两个Activity依然不在同个Task里，即使这两个Task同名，而id却不同。</p>
 <h4 id="Activity的Flags"><a href="#Activity的Flags" class="headerlink" title="Activity的Flags"></a><a href="#Activity_u7684Flags" title="Activity的Flags"></a>Activity的Flags</h4><p>(1)Intent.FLAG_ACTIVITY_NEW_TASK：使用一个新的task来启动Activity，一般用在service中启动Activity的场景，因为service中并不存在Activity栈。<br>(2)Intent.FLAG_ACTIVITY_SINGLE_TOP：类似andoid:launchMode=”singleTop”<br>(3)Intent.FLAG_ACTIVITY_CLEAR_TOP：类似andoid:launchMode=”singleTask”<br>(4)Intent.FLAG_ACTIVITY_NO_HISTORY：使用这种模式启动Activity，当该Activity启动其他Activity后，该Activity就消失了，不会保留在task栈中。例如A B，在B中以这种模式启动C，C再启动D，则当前的task栈变成A B D。</p>
 
-          
-        
+      
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
+    <div class="article-info article-info-index">
+      
       
 
-  
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Activity/">Activity</a></li></ul>
+    </div>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2015/12/25/EventBus2-4-0源码分析之Post/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Joker Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="清风向阳">
-    </span>
-
+      
+      <div class="clearfix"></div>
+    </div>
     
-      <header class="post-header">
+  </div>
+  
+</article>
 
+
+
+
+
+
+
+
+
+  
+    <article id="post-EventBus2-4-0源码分析之Post" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/25/EventBus2-4-0源码分析之Post/" class="article-date">
+      <time datetime="2015-12-25T07:07:58.000Z" itemprop="datePublished">2015-12-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/25/EventBus2-4-0源码分析之Post/" itemprop="url">EventBus2-4-0源码分析之Post</a></h1>
-        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/25/EventBus2-4-0源码分析之Post/">EventBus2-4-0源码分析之Post</a>
+    </h1>
+  
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-25T15:07:58+08:00">
-                2015-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
       </header>
+      
     
-
-    <div class="post-body" itemprop="articleBody">
-
+    <div class="article-entry" itemprop="articleBody">
       
-      
-
-      
-        
           
-            <blockquote>
+        <blockquote>
 <p>上篇我们介绍了EventBus的注册，这篇我们主要介绍注册之后，EventBus是如何触发事件，传递事件，最后让注册者接受到事件。</p>
 </blockquote>
 <h4 id="EventBust-java"><a href="#EventBust-java" class="headerlink" title="EventBust.java"></a><a href="#EventBust-java" title="EventBust.java"></a>EventBust.java</h4><p>事件的发起函数我们可以在EventBus类里可以看到。就是 <em>post(Object event)</em> 方法。</p>
@@ -1117,117 +786,64 @@
 <p>该方法主要的是将事件存入了stickyEvents集合里，在registerSticky方法注册的时候取出来去执行。我们看到他依然是调用了post方法，这是为了万一使用者希望也能想普通事件一样的触发，当然，如果使用者的registerSticky在别的地方，这里post显然是找不到Subscription的所以就无法执行的。</p>
 <p>好了我们关于EventBusde的Post分析就到这了。</p>
 
-          
-        
+      
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
+    <div class="article-info article-info-index">
+      
       
 
-  
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Rxjava/">Rxjava</a></li></ul>
+    </div>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2015/12/23/EventBus2-4-0源码分析之订阅/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Joker Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="清风向阳">
-    </span>
-
+      
+      <div class="clearfix"></div>
+    </div>
     
-      <header class="post-header">
+  </div>
+  
+</article>
 
+
+
+
+
+
+
+
+
+  
+    <article id="post-EventBus2-4-0源码分析之订阅" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/23/EventBus2-4-0源码分析之订阅/" class="article-date">
+      <time datetime="2015-12-23T07:05:51.000Z" itemprop="datePublished">2015-12-23</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/23/EventBus2-4-0源码分析之订阅/" itemprop="url">EventBus2-4-0源码分析之订阅</a></h1>
-        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/23/EventBus2-4-0源码分析之订阅/">EventBus2-4-0源码分析之订阅</a>
+    </h1>
+  
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-23T15:05:51+08:00">
-                2015-12-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
       </header>
+      
     
-
-    <div class="post-body" itemprop="articleBody">
-
+    <div class="article-entry" itemprop="articleBody">
       
-      
-
-      
-        
           
-            <blockquote>
+        <blockquote>
 <p>EventBus最新的版本是3.0了但是beta版，所有我们还是按2.4分析源码是如何工作的，EventBus是一个简化Activities, Fragments, Threads, Services等等直接通信的框架。GitHub上的原文：Android optimized event bus that simplifies communication between Activities, Fragments, Threads, Services, etc. Less code, better quality。</p>
 </blockquote>
 <p>在GitHub地址<a href="https://github.com/greenrobot/EventBus" target="_blank" rel="external">在这里</a>该作者也是另一个开源greenDAO的作者，棒棒哒。我们以前的通信机制基本基于Handler，Bunder来进行的，现在我们使用EventBus会给我们带来很大的便捷。接下来我们先来了解下EventBus的使用。</p>
@@ -1264,117 +880,64 @@
 <p>我们接下来看到的是sticky的注册，判断是否允许事件影响到其父类，接口等上层类，然后调用<em>checkPostStickyEventToSubscription(newSubscription, stickyEvent);</em> 这个方法调用 <em>postToSubscription(newSubscription, stickyEvent, Looper.getMainLooper() == Looper.myLooper());</em> 这个方法会触发事件的调用分发，这里我们可以看到普通的register和sticky register的区别，普通的注册是没有立刻去触发事件，而是在post的时候才触发，但是sticky register刚好相反，是字注册的时候去触发事件的。事件都会保存在stickyEvents中。当然对于sticky的post也会理解触发事件，这是兼容了普通的事件注册。</p>
 <p>这篇文章介绍完了。相信对EventBus的事件注册有一定的了解了。下篇我们将分析EventBus的Post发送事件。</p>
 
-          
-        
+      
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
+    <div class="article-info article-info-index">
+      
       
 
-  
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Rxjava/">Rxjava</a></li></ul>
+    </div>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2015/12/14/Rxjava-简化你的异步调用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Joker Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="清风向阳">
-    </span>
-
+      
+      <div class="clearfix"></div>
+    </div>
     
-      <header class="post-header">
+  </div>
+  
+</article>
 
+
+
+
+
+
+
+
+
+  
+    <article id="post-Rxjava-简化你的异步调用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/14/Rxjava-简化你的异步调用/" class="article-date">
+      <time datetime="2015-12-14T07:01:49.000Z" itemprop="datePublished">2015-12-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/14/Rxjava-简化你的异步调用/" itemprop="url">Rxjava-简化你的异步调用</a></h1>
-        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/14/Rxjava-简化你的异步调用/">Rxjava-简化你的异步调用</a>
+    </h1>
+  
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-14T15:01:49+08:00">
-                2015-12-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
       </header>
+      
     
-
-    <div class="post-body" itemprop="articleBody">
-
+    <div class="article-entry" itemprop="articleBody">
       
-      
-
-      
-        
           
-            <blockquote>
+        <blockquote>
 <p>Rxjava好似一股春风，刮到了各地的论坛，博客，其实Rxjava给我们带来的是一个对编程思维的改变，它改变了我们对异步回调的正常模式，主张链式是最具表达力的方式，方便阅读，代码清晰，调理清楚。我们传统的回调都是采用接口的模式，而Rxjava给我们带来了新的体验，那么我们就好领略下它的魅力吧。</p>
 </blockquote>
 <p>Rxjava的GitHub<a href="https://github.com/ReactiveX" target="_blank" rel="external">地址</a></p>
@@ -1456,117 +1019,64 @@
 <figure class="highlight vbscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Observable&lt;<span class="built_in">String</span>&gt; joinObserver() &#123;</div><div class="line">    return Observable.just(<span class="string">"Left-"</span>).<span class="built_in">join</span>(createObserver(),</div><div class="line">        integer -&gt; Observable.<span class="built_in">timer</span>(<span class="number">3000</span>, TimeUnit.MILLISECONDS),</div><div class="line">        integer -&gt; Observable.<span class="built_in">timer</span>(<span class="number">2000</span>, TimeUnit.MILLISECONDS),</div><div class="line">        (i, j) -&gt; i + j</div><div class="line">);</div><div class="line">&#125;</div><div class="line"></div><div class="line">joinObserver.subscribe(<span class="keyword">new</span> Action1&lt;<span class="built_in">String</span>&gt;() &#123;</div><div class="line">    @Override</div><div class="line">    <span class="keyword">public</span> void <span class="keyword">call</span>(<span class="built_in">String</span> s) &#123;</div><div class="line">        <span class="built_in">Log</span>.e(<span class="string">"Joker"</span>,s);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">结果如下:</div><div class="line">    <span class="built_in">Left</span>-<span class="built_in">Right</span><span class="number">-1</span></div><div class="line">    <span class="built_in">Left</span>-<span class="built_in">Right</span><span class="number">-2</span></div><div class="line">    <span class="built_in">Left</span>-<span class="built_in">Right</span><span class="number">-3</span></div></pre></td></tr></table></figure>
 <p>好了我们就介绍这么多，Rxjava的操作符还有很多，我们可以参照下面大神的博客：<a href="http://blog.chinaunix.net/uid/20771867/list/2.html" target="_blank" rel="external">Operators介绍</a></p>
 
-          
-        
+      
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
+    <div class="article-info article-info-index">
+      
       
 
-  
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Rxjava/">Rxjava</a></li></ul>
+    </div>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2015/12/11/Volley-网络通讯框架二之处理请求/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Joker Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="清风向阳">
-    </span>
-
+      
+      <div class="clearfix"></div>
+    </div>
     
-      <header class="post-header">
+  </div>
+  
+</article>
 
+
+
+
+
+
+
+
+
+  
+    <article id="post-Volley-网络通讯框架二之处理请求" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/11/Volley-网络通讯框架二之处理请求/" class="article-date">
+      <time datetime="2015-12-11T06:58:37.000Z" itemprop="datePublished">2015-12-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/11/Volley-网络通讯框架二之处理请求/" itemprop="url">Volley-网络通讯框架二之处理请求</a></h1>
-        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/11/Volley-网络通讯框架二之处理请求/">Volley-网络通讯框架二之处理请求</a>
+    </h1>
+  
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-11T14:58:37+08:00">
-                2015-12-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
       </header>
+      
     
-
-    <div class="post-body" itemprop="articleBody">
-
+    <div class="article-entry" itemprop="articleBody">
       
-      
-
-      
-        
           
-            <p>说到Volley的请求处理，其实并没有，只是使用了Android自带的HTTP工具类HttpURLConnection和HttpClient，我们知道这两个类根据Android系统版本的不同，会有各自的优点和缺点。Volley只是合理的对两着进行取舍。所以个人认为Volley更像是一个Http工具，帮我们管理请求队列，请求分发，缓存处理等等，当然我们也可以不用以上两个Http工具类，比如使用OkHttp来作为我们request处理者。</p>
+        <p>说到Volley的请求处理，其实并没有，只是使用了Android自带的HTTP工具类HttpURLConnection和HttpClient，我们知道这两个类根据Android系统版本的不同，会有各自的优点和缺点。Volley只是合理的对两着进行取舍。所以个人认为Volley更像是一个Http工具，帮我们管理请求队列，请求分发，缓存处理等等，当然我们也可以不用以上两个Http工具类，比如使用OkHttp来作为我们request处理者。</p>
 <p>我们上篇文章里提到过RequestQueue中得构造参数，其中有一个是Network network，这个就是我们request处理者。</p>
 <p>当然一开始我们要先了解下被处理这Request</p>
 <h4 id="Reqeust-java"><a href="#Reqeust-java" class="headerlink" title="Reqeust.java"></a><a href="#Reqeust-java" title="Reqeust.java"></a>Reqeust.java</h4><p><a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/Request.java" target="_blank" rel="external">Github For Request,java</a></p>
@@ -1623,117 +1133,64 @@
 <li>正确的分发。这种的分发会出现在CacheDispatch和NetworkDispatch上，然后会调用Request的抽象方法deliverResponse(T response)，按照上面说的去实现这个方法会调用Response.Listener.onResponse()来完成传递。</li>
 </ol>
 
-          
-        
+      
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
+    <div class="article-info article-info-index">
+      
       
 
-  
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volley/">volley</a></li></ul>
+    </div>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2015/12/11/Volley-网络通讯框架一之发起请求/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Joker Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="清风向阳">
-    </span>
-
+      
+      <div class="clearfix"></div>
+    </div>
     
-      <header class="post-header">
+  </div>
+  
+</article>
 
+
+
+
+
+
+
+
+
+  
+    <article id="post-Volley-网络通讯框架一之发起请求" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/11/Volley-网络通讯框架一之发起请求/" class="article-date">
+      <time datetime="2015-12-11T06:54:28.000Z" itemprop="datePublished">2015-12-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/11/Volley-网络通讯框架一之发起请求/" itemprop="url">Volley 网络通讯框架一之发起请求</a></h1>
-        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/11/Volley-网络通讯框架一之发起请求/">Volley 网络通讯框架一之发起请求</a>
+    </h1>
+  
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-11T14:54:28+08:00">
-                2015-12-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
       </header>
+      
     
-
-    <div class="post-body" itemprop="articleBody">
-
+    <div class="article-entry" itemprop="articleBody">
       
-      
-
-      
-        
           
-            <blockquote>
+        <blockquote>
 <p>Android系统给我们提供了一些最直接的HTTP库，和相关的工具类，AsyncTaskLoader，HttpURLConnection，AsyncTask，HTTPClient（Apache）等等，这些东西在使用的时候都没有系统性的管理者，导致在一个APP中很难有效的去管理请求，而且我们也会对除请求之外的事情也要关心，基于此，我们可能需要一个框架来统一我们的网络请求。</p>
 </blockquote>
 <p>所以网络框架的出现也就顺理成章了，接下来就给大家介绍一下Googol出品的volley框架。</p>
@@ -1775,308 +1232,136 @@
 <li>读取 <strong>get(String key)</strong> 该方法是用来读取的。首先会在内存中检索是否有缓存，如果有的话，根据key拿到包含数据的File，读取后得到一个Entity</li>
 </ol>
 
-          
-        
+      
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
-  </section>
+    <div class="article-info article-info-index">
+      
+      
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-
-          
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volley/">volley</a></li></ul>
     </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
   </div>
+  
+</article>
 
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
 
-      
 
-      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="Joker Mei" />
-          <p class="site-author-name" itemprop="name">Joker Mei</p>
-           
-              <p class="site-description motion-element" itemprop="description"></p>
-          
-        </div>
-        <nav class="site-state motion-element">
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives/">
-                <span class="site-state-item-count">21</span>
-                <span class="site-state-item-name">Artikel</span>
-              </a>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    </nav>
+  
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 Joker Mei
             </div>
-          
-
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">17</span>
-                <span class="site-state-item-name">Tags</span>
-              
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
             </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
         </div>
-
         
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
         
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-
-      
+    </div>
+</footer>
 
     </div>
-  </aside>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
 
 
-        
-      </div>
-    </main>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Joker Mei</span>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
 </div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
 
-<div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
-</div>
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
 
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
-
-
-        
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
 </script>
 
 
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
-
-
-
-  
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
+  </div>
 </body>
 </html>
