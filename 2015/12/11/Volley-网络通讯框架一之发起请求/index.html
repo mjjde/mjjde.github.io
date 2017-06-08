@@ -1,0 +1,724 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="volley," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Android系统给我们提供了一些最直接的HTTP库，和相关的工具类，AsyncTaskLoader，HttpURLConnection，AsyncTask，HTTPClient（Apache）等等，这些东西在使用的时候都没有系统性的管理者，导致在一个APP中很难有效的去管理请求，而且我们也会对除请求之外的事情也要关心，基于此，我们可能需要一个框架来统一我们的网络请求。  所以网络框架的出现也就">
+<meta name="keywords" content="volley">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Volley 网络通讯框架一之发起请求">
+<meta property="og:url" content="http://mjjde.github.io/2015/12/11/Volley-网络通讯框架一之发起请求/index.html">
+<meta property="og:site_name" content="清风向阳">
+<meta property="og:description" content="Android系统给我们提供了一些最直接的HTTP库，和相关的工具类，AsyncTaskLoader，HttpURLConnection，AsyncTask，HTTPClient（Apache）等等，这些东西在使用的时候都没有系统性的管理者，导致在一个APP中很难有效的去管理请求，而且我们也会对除请求之外的事情也要关心，基于此，我们可能需要一个框架来统一我们的网络请求。  所以网络框架的出现也就">
+<meta property="og:image" content="http://img.blog.csdn.net/20130929130854328">
+<meta property="og:updated_time" content="2017-06-07T06:57:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Volley 网络通讯框架一之发起请求">
+<meta name="twitter:description" content="Android系统给我们提供了一些最直接的HTTP库，和相关的工具类，AsyncTaskLoader，HttpURLConnection，AsyncTask，HTTPClient（Apache）等等，这些东西在使用的时候都没有系统性的管理者，导致在一个APP中很难有效的去管理请求，而且我们也会对除请求之外的事情也要关心，基于此，我们可能需要一个框架来统一我们的网络请求。  所以网络框架的出现也就">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20130929130854328">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mjjde.github.io/2015/12/11/Volley-网络通讯框架一之发起请求/"/>
+
+
+
+
+
+  <title>Volley 网络通讯框架一之发起请求 | 清风向阳</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">清风向阳</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2015/12/11/Volley-网络通讯框架一之发起请求/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Joker Mei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="清风向阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Volley 网络通讯框架一之发起请求</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-11T14:54:28+08:00">
+                2015-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Android系统给我们提供了一些最直接的HTTP库，和相关的工具类，AsyncTaskLoader，HttpURLConnection，AsyncTask，HTTPClient（Apache）等等，这些东西在使用的时候都没有系统性的管理者，导致在一个APP中很难有效的去管理请求，而且我们也会对除请求之外的事情也要关心，基于此，我们可能需要一个框架来统一我们的网络请求。</p>
+</blockquote>
+<p>所以网络框架的出现也就顺理成章了，接下来就给大家介绍一下Googol出品的volley框架。</p>
+<p>发布时间是2013年的IO大会，并且配上了下面的一张宣传图</p>
+<p><img src="http://img.blog.csdn.net/20130929130854328" alt="volley"></p>
+<p>图片里是发射火弓箭的图，有点类似流星，这里也是表明了volley框架的特点</p>
+<ol>
+<li>JSON，图像等的异步下载</li>
+<li>网络请求的排序</li>
+<li>网络请求的优先级处理</li>
+<li>缓存</li>
+<li>多级别取消请求</li>
+<li>和Activity和生命周期的联动（Activity结束时同时取消所有网络请求）</li>
+</ol>
+<p>本篇我们会从源码的角度去分析volley网络框架的请求发起的过程</p>
+<h4 id="Volley-java"><a href="#Volley-java" class="headerlink" title="Volley.java"></a><a href="#Volley-java" title="Volley.java"></a>Volley.java</h4><p>如果没有源码可以看着里<a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/toolbox/Volley.java" target="_blank" rel="external">Guthub For Volley</a></p>
+<p>首先我们看下Volley.java，这个类算是我们框架的入口了。</p>
+<p>这个是该类的主要方法，其他的构造最后都是调用这个的。<br>其实是要创建一个RequestQueue对象，而要new 这个对象是需要2个参数的一个是继承了Cache的硬盘缓存对象，一个是继承了Network的网络处理对象，这个我们后面在详细说明，接下来我们要说的是DiskBasedCache和RequestQueue；</p>
+<h4 id="RequestQueue-java"><a href="#RequestQueue-java" class="headerlink" title="RequestQueue.java"></a><a href="#RequestQueue-java" title="RequestQueue.java"></a>RequestQueue.java</h4><p>如果没有源码可以看着里<a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/RequestQueue.java" target="_blank" rel="external">Guthub For RequestQueue.java</a></p>
+<p>我们看到在Volley中创建了RequestQueue，并且调用了 <strong>start()</strong> 方法，其实该方法实现的目的就和方法名一样，首先调用stop方法来确保Dispatcher已经是停止的，然后开启我们处理request的两个Dispatcher。这两个Dispatcher我们后面在说。<br>我们再来看下这里的另一个重要的方法 <strong>add(Request <t>request)</t></strong> ;既然启动了Dispatcher，那么我们当然要加入要执行的request了。<br>它主要工作是：</p>
+<ol>
+<li>将request加入到 <em>HashSet<request<?>&gt; mCurrentRequests</request<?></em> 用来存放正在要处理的request</li>
+<li>判断request是否需要被缓存，如果不是就直接放入 <em>PriorityBlockingQueue<request<?>&gt; mNetworkQueue</request<?></em> 中，而这个队列就是两个Dispatcher其中的NetworkDispatcher要take的队列</li>
+<li>这一步是个优化点：根据request拿到CacheKey 也就是我们以后缓存的句柄，如果 <em>Map<string, queue<request<?="">&gt;&gt; mWaitingRequests</string,></em> 包含该句柄说明在mWaitingRequests里面有相同的request请求，那么既然是相同的请求，我们就只要请求到一个request就等于访问了所有的request。</li>
+</ol>
+<p>根据add这个方法的具体实现那么肯定得有一个request结束后对mWaitingRequests存放的相同的request的处理，那么我们就来看下 <strong>finish(Request <t>request)</t></strong> 这个方法</p>
+<ol>
+<li>移除 <em>HashSet<request<?>&gt; mCurrentRequests</request<?></em> 存放的request</li>
+<li>调用onRequestFinished回调</li>
+<li>如果request是需要缓存的，将mWaitingRequests相同的request请求全部取出再放入 <em>PriorityBlockingQueue<request<?>&gt; mCacheQueue</request<?></em> 缓存队列里，因为已经经过一次成功的request请求了，必定会有缓存，所以这里就全部走缓存队列</li>
+</ol>
+<p>好了RequestQueue中主要的方法已经走完了，现在来看下DiskBasedCache</p>
+<h4 id="DiskBasedCache-java"><a href="#DiskBasedCache-java" class="headerlink" title="DiskBasedCache.java"></a><a href="#DiskBasedCache-java" title="DiskBasedCache.java"></a>DiskBasedCache.java</h4><p>如果没有源码可以看着里<a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/toolbox/DiskBasedCache.java" target="_blank" rel="external">Github For DiskBasedCache.java</a></p>
+<p>DiskBasedCache是volley给我们提供的默认缓存策略，当然你也可以自己实现自己的硬盘缓存，比如LruDiskCache，只要实现<a href="https://github.com/mcxiaoke/android-volley/blob/master/src/main/java/com/android/volley/Cache.java" target="_blank" rel="external">Cache</a>接口，就可以做到扩展了，现在我们就对其进行分析</p>
+<ol>
+<li>Disk的缓存一般都会以文件的形式存储在本地,那么就需要Directory,还有一个缓存必定会有一个容量的，不然其内存一直增加，最终会。。<br>我们看到构造方法 <strong>DiskBasedCache(File rootDirectory, int maxCacheSizeInBytes)</strong> 好了两个条件都具备了，maxCacheSizeInBytes提供了默认大小_DEFAULT_DISK_USAGE<em>BYTES = 5 M;</em></li>
+<li>既然我们的缓存文件都会在文件里那么一开始我们必定要将已经缓存的文件读出来，也就是初始化 <strong>initialize()</strong>，该方法首先对文件目录进行判断，然后listFiles()读出所以的文件，遍历读出流，我们看到 <strong>CacheHeader entry = CacheHeader.readHeader(fis);</strong> 这个方法的调用，其实该缓存策略是包含2个部分的，一部分是保存了CacheHeader在内存中，一部分是保存了具体内容在文件里，而CacheHeader对象里保存的是头部信息，并没有实体。我们知道内存检索的速度是快于IO文件操作的，这样一来就提高的缓存查找的速度，刚刚上面的那个方法是CacheHeader的一个静态方法，它的目的是用来读取文件流中保存的头部信息，也就是说CacheHeader中得属性都是按一定格式存放在了文件的头部，CacheHeader中包括一些额外信息如文件大小，和请求返回后的一些头信息等。刚刚说的一定的格式我们可以从CacheHeader的 <strong>writeHeader()</strong> 和 <strong>readHeader()</strong> 看出来。取出的CacheHeader我们会存放在 <em>Map <string, cacheheader="">mEntries</string,></em> 中.</li>
+<li>初始化完后我们要关心的当然是如何存放，如何读取。我们来看第一个方法 <strong>put(String key, Entry entry)</strong> 该方法是用来存放缓存的，上面说过了，缓存都是有具体内存的，那么我们要存放一个缓存的时候，就要检查内存大小 <strong>pruneIfNeeded(int neededSpace)</strong> :判断mTotalSize总和加上传参进来的大小是否超过总内存大小，如果超过了，那么就得删除其他的缓存，那么删除的策略是什么样呢，我们看到其实mEntries集合是采用Lru策略的，即最近最不常使用。我们取出一个最不常用的缓存对象，删除后，再判断，一直做while循环。</li>
+<li>读取 <strong>get(String key)</strong> 该方法是用来读取的。首先会在内存中检索是否有缓存，如果有的话，根据key拿到包含数据的File，读取后得到一个Entity</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/volley/" rel="tag"># volley</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/09/github-hexo构建自己的博客/" rel="next" title="github+hexo构建自己的博客">
+                <i class="fa fa-chevron-left"></i> github+hexo构建自己的博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/11/Volley-网络通讯框架二之处理请求/" rel="prev" title="Volley-网络通讯框架二之处理请求">
+                Volley-网络通讯框架二之处理请求 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Joker Mei" />
+          <p class="site-author-name" itemprop="name">Joker Mei</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Volley-java"><span class="nav-number">1.</span> <span class="nav-text">Volley.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestQueue-java"><span class="nav-number">2.</span> <span class="nav-text">RequestQueue.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DiskBasedCache-java"><span class="nav-number">3.</span> <span class="nav-text">DiskBasedCache.java</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Joker Mei</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

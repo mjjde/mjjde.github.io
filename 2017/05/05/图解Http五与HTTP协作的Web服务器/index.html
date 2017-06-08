@@ -1,0 +1,704 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="HTTP," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一台服务器可以搭载多个不同独立域名的Web网站，也可以作为通信路径上的中转服务器提升传输效率  用单台虚拟主机实现多个域名即使物理层面上只有一台服务端，但是使用了虚拟主机的功能就可以假象成多台服务器，提供给多个客户服务，可以以每个客户所持有域名来运行各自不同的网站 通信数据转发程序：代理，网关，隧道HTTP通信数，不止是服务端和客户端，还有一些用于通信数据转发的应用程序，如代理，网关，隧道。">
+<meta name="keywords" content="HTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解Http五与HTTP协作的Web服务器">
+<meta property="og:url" content="http://mjjde.github.io/2017/05/05/图解Http五与HTTP协作的Web服务器/index.html">
+<meta property="og:site_name" content="清风向阳">
+<meta property="og:description" content="一台服务器可以搭载多个不同独立域名的Web网站，也可以作为通信路径上的中转服务器提升传输效率  用单台虚拟主机实现多个域名即使物理层面上只有一台服务端，但是使用了虚拟主机的功能就可以假象成多台服务器，提供给多个客户服务，可以以每个客户所持有域名来运行各自不同的网站 通信数据转发程序：代理，网关，隧道HTTP通信数，不止是服务端和客户端，还有一些用于通信数据转发的应用程序，如代理，网关，隧道。">
+<meta property="og:updated_time" content="2017-06-07T07:35:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图解Http五与HTTP协作的Web服务器">
+<meta name="twitter:description" content="一台服务器可以搭载多个不同独立域名的Web网站，也可以作为通信路径上的中转服务器提升传输效率  用单台虚拟主机实现多个域名即使物理层面上只有一台服务端，但是使用了虚拟主机的功能就可以假象成多台服务器，提供给多个客户服务，可以以每个客户所持有域名来运行各自不同的网站 通信数据转发程序：代理，网关，隧道HTTP通信数，不止是服务端和客户端，还有一些用于通信数据转发的应用程序，如代理，网关，隧道。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mjjde.github.io/2017/05/05/图解Http五与HTTP协作的Web服务器/"/>
+
+
+
+
+
+  <title>图解Http五与HTTP协作的Web服务器 | 清风向阳</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">清风向阳</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2017/05/05/图解Http五与HTTP协作的Web服务器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Joker Mei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="清风向阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">图解Http五与HTTP协作的Web服务器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-05T15:28:43+08:00">
+                2017-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>一台服务器可以搭载多个不同独立域名的Web网站，也可以作为通信路径上的中转服务器提升传输效率</p>
+</blockquote>
+<h3 id="用单台虚拟主机实现多个域名"><a href="#用单台虚拟主机实现多个域名" class="headerlink" title="用单台虚拟主机实现多个域名"></a><a href="#u7528_u5355_u53F0_u865A_u62DF_u4E3B_u673A_u5B9E_u73B0_u591A_u4E2A_u57DF_u540D" title="用单台虚拟主机实现多个域名"></a>用单台虚拟主机实现多个域名</h3><p>即使物理层面上只有一台服务端，但是使用了虚拟主机的功能就可以假象成多台服务器，提供给多个客户服务，可以以每个客户所持有域名来运行各自不同的网站</p>
+<h3 id="通信数据转发程序：代理，网关，隧道"><a href="#通信数据转发程序：代理，网关，隧道" class="headerlink" title="通信数据转发程序：代理，网关，隧道"></a><a href="#u901A_u4FE1_u6570_u636E_u8F6C_u53D1_u7A0B_u5E8F_uFF1A_u4EE3_u7406_uFF0C_u7F51_u5173_uFF0C_u96A7_u9053" title="通信数据转发程序：代理，网关，隧道"></a>通信数据转发程序：代理，网关，隧道</h3><p>HTTP通信数，不止是服务端和客户端，还有一些用于通信数据转发的应用程序，如代理，网关，隧道。</p>
+<ol>
+<li>代理<br>代理是一种具备转发功能的应用程序，它扮演了服务器和客户端之间的“中间人”的角色，它可以将客户端发出的请求转发给服务端，也可以将服务端的响应转发给客户端。</li>
+<li>网关<br>网关是转发其他服务器通信数据的服务器，接收来自客户端发来的请求。就想自己拥有资源一样的对请求进行处理。有时客户端不会察觉自己是在与网关通信</li>
+<li>隧道<br>隧道是在相隔很远的服务器和客户端之间进行中转，并保持双方连接的应用程序</li>
+</ol>
+<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a><a href="#u4EE3_u7406" title="代理"></a>代理</h3><p>代理服务器的基本行为就是接受客户端发送过来的请求转发给其他的服务器，代理不改变请求的URI，会直接将请求转发给持有资源的服务器，<br>持有资源的服务器叫做源服务器，从源服务器返回的响应信息经过代理服务器转发给客户端</p>
+<p>在HTTP通信过程中可以级联多个代理服务器，请求和响应的转发会经过向锁链一样连接的代理服务器，转发是需要附加Via首部字段。</p>
+<p>使用代理服务器的理由：利用缓存技术较少网络带宽的流量，组织内部针对特定网站的访问控制，以获得访问日志为主要目的，等</p>
+<p>代理的使用方法可以分为两类。一种是是否使用缓存，另一种是是否修改报文</p>
+<ol>
+<li>缓存代理服务器<br>代理在转发响应时，缓存代理会将资源的副本保存在代理服务器上，当再次接收到相同请求时，可以不用从源服务器获取资源，而是将之前的缓存的资源直接返回</li>
+<li>透明代理服务器<br>转发请求或响应时不对报文做任何的加工的代理类型称为透明代理，反之为非透明代理</li>
+</ol>
+<h3 id="网关"><a href="#网关" class="headerlink" title="网关"></a><a href="#u7F51_u5173" title="网关"></a>网关</h3><p>网关的工作机制和代理相似，而网关能使通信路上的服务器提供非HTTP协议服务。<br>利用网关可以提高通信的安全性，因为可以在客户端与网关之间的通信线路上加密以确保连接的安全。</p>
+<h3 id="隧道"><a href="#隧道" class="headerlink" title="隧道"></a><a href="#u96A7_u9053" title="隧道"></a>隧道</h3><p>隧道可以按要求建立起与其他服务器的通信线路。可以使用SSL等加密手段进行通信。隧道是保证服务端和客户端之间进行安全的通信。</p>
+<h3 id="保存资源的缓存"><a href="#保存资源的缓存" class="headerlink" title="保存资源的缓存"></a><a href="#u4FDD_u5B58_u8D44_u6E90_u7684_u7F13_u5B58" title="保存资源的缓存"></a>保存资源的缓存</h3><p>缓存是指代理服务端或者本地客户端磁盘保存的资源副本，理由缓存可以减少对源服务器的访问，减少通信流量和通信时间。</p>
+<h4 id="缓存的有效期限"><a href="#缓存的有效期限" class="headerlink" title="缓存的有效期限"></a><a href="#u7F13_u5B58_u7684_u6709_u6548_u671F_u9650" title="缓存的有效期限"></a>缓存的有效期限</h4><p>即使服务器内有缓存，也不能保证每次都是返回对同资源的请求，因为被缓存的资源有效性问题。<br>即使服务器上有缓存，也会因为客户端的要求，缓存的有效期问题，向源服务器确认自由的额有效性。判断失败则会在源服务器上获取新的资源。</p>
+<h4 id="客户端的缓存"><a href="#客户端的缓存" class="headerlink" title="客户端的缓存"></a><a href="#u5BA2_u6237_u7AEF_u7684_u7F13_u5B58" title="客户端的缓存"></a>客户端的缓存</h4><p>缓存不仅可以缓存在服务器里，也可以缓存在本地浏览器中，如果缓存是有效的，那么就不需要再向服务器发送请求了。直接返回本地的缓存资源。<br>当本地缓存过期是，还是会向源服务器发送请求，以获得最新的资源。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/04/图解Http四返回结果的HTTP状态码/" rel="next" title="图解Http四返回结果的HTTP状态码">
+                <i class="fa fa-chevron-left"></i> 图解Http四返回结果的HTTP状态码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/06/图解Http六HTTP首部/" rel="prev" title="图解Http六HTTP首部">
+                图解Http六HTTP首部 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Joker Mei" />
+          <p class="site-author-name" itemprop="name">Joker Mei</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#用单台虚拟主机实现多个域名"><span class="nav-number">1.</span> <span class="nav-text">用单台虚拟主机实现多个域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通信数据转发程序：代理，网关，隧道"><span class="nav-number">2.</span> <span class="nav-text">通信数据转发程序：代理，网关，隧道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代理"><span class="nav-number">3.</span> <span class="nav-text">代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网关"><span class="nav-number">4.</span> <span class="nav-text">网关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隧道"><span class="nav-number">5.</span> <span class="nav-text">隧道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保存资源的缓存"><span class="nav-number">6.</span> <span class="nav-text">保存资源的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存的有效期限"><span class="nav-number">6.1.</span> <span class="nav-text">缓存的有效期限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端的缓存"><span class="nav-number">6.2.</span> <span class="nav-text">客户端的缓存</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Joker Mei</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

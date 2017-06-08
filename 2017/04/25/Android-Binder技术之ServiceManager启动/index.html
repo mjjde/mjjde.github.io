@@ -1,0 +1,762 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,Binder,ServiceManager," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="ServiceManager是用户空间的一个守护进程，是用来管理以Binder通讯的Service的大管家。ServiceManager作为Android系统中服务的管理者，具备的功能很明显也会很简单，它的功能主要是当Service启动时将服务注册进来，同时当Client端要获取Service时提供查询和获取的任务,那么作为这样的一个管理者是如何启动的呢，我们接下来说说ServiceManage">
+<meta name="keywords" content="Android,Binder,ServiceManager">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-Binder技术之ServiceManager启动">
+<meta property="og:url" content="http://mjjde.github.io/2017/04/25/Android-Binder技术之ServiceManager启动/index.html">
+<meta property="og:site_name" content="清风向阳">
+<meta property="og:description" content="ServiceManager是用户空间的一个守护进程，是用来管理以Binder通讯的Service的大管家。ServiceManager作为Android系统中服务的管理者，具备的功能很明显也会很简单，它的功能主要是当Service启动时将服务注册进来，同时当Client端要获取Service时提供查询和获取的任务,那么作为这样的一个管理者是如何启动的呢，我们接下来说说ServiceManage">
+<meta property="og:image" content="http://jokero1o.github.io/images/blog_servicemanager_1.png">
+<meta property="og:updated_time" content="2017-06-07T07:23:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-Binder技术之ServiceManager启动">
+<meta name="twitter:description" content="ServiceManager是用户空间的一个守护进程，是用来管理以Binder通讯的Service的大管家。ServiceManager作为Android系统中服务的管理者，具备的功能很明显也会很简单，它的功能主要是当Service启动时将服务注册进来，同时当Client端要获取Service时提供查询和获取的任务,那么作为这样的一个管理者是如何启动的呢，我们接下来说说ServiceManage">
+<meta name="twitter:image" content="http://jokero1o.github.io/images/blog_servicemanager_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mjjde.github.io/2017/04/25/Android-Binder技术之ServiceManager启动/"/>
+
+
+
+
+
+  <title>Android-Binder技术之ServiceManager启动 | 清风向阳</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">清风向阳</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://mjjde.github.io/2017/04/25/Android-Binder技术之ServiceManager启动/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Joker Mei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="清风向阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android-Binder技术之ServiceManager启动</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-25T15:21:44+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>ServiceManager是用户空间的一个守护进程，是用来管理以Binder通讯的Service的大管家。ServiceManager作为Android系统中服务的管理者，具备的功能很明显也会很简单，它的功能主要是当Service启动时将服务注册进来，同时当Client端要获取Service时提供查询和获取的任务,那么作为这样的一个管理者是如何启动的呢，我们接下来说说ServiceManager的启动。</p>
+</blockquote>
+<h2 id="一-启动过程"><a href="#一-启动过程" class="headerlink" title="一.启动过程"></a><a href="#u4E00-_u542F_u52A8_u8FC7_u7A0B" title="一.启动过程"></a>一.启动过程</h2><p>ServiceManager作为一个大管家其实也是一个以Binder通讯的Service，但是这个特殊的Service的启动肯定是有一定的优先权的。它的初始化是在init进程去解析init.rc文件的时候。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">service servicemanager /system/bin/servicemanager</div><div class="line">    class core</div><div class="line">   <span class="built_in"> user system</span></div><div class="line">   <span class="built_in"> group system</span></div><div class="line">    critical</div><div class="line">    onrestart restart healthd</div><div class="line">    onrestart restart zygote</div><div class="line">    onrestart restart media</div><div class="line">    onrestart restart surfaceflinger</div><div class="line">    onrestart restart drm</div></pre></td></tr></table></figure>
+<p>ServiceManager的启动的代码是service_manager.c的main函数.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">binder_state</span> *<span class="title">bs</span>;</span></div><div class="line">    <span class="comment">//打开binder驱动，申请分配128k的内存空间</span></div><div class="line">    bs = binder_open(<span class="number">128</span>*<span class="number">1024</span>);</div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="comment">//成为上下文管理者</span></div><div class="line">    <span class="keyword">if</span> (binder_become_context_manager(bs)) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    selinux_enabled = is_selinux_enabled(); <span class="comment">//selinux权限是否使能</span></div><div class="line">    sehandle = selinux_android_service_context_handle();</div><div class="line">    selinux_status_open(<span class="literal">true</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (selinux_enabled &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (sehandle == <span class="literal">NULL</span>) &#123;  </div><div class="line">            <span class="built_in">abort</span>(); <span class="comment">//无法获取sehandle</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (getcon(&amp;service_manager_context) != <span class="number">0</span>) &#123;</div><div class="line">            <span class="built_in">abort</span>(); <span class="comment">//无法获取service_manager上下文</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="comment">//进入无限循环，处理client端发来的请求</span></div><div class="line">    binder_loop(bs, svcmgr_handler);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从上面的代码可以看出来ServiceManager的启动过程分成上个部分。</p>
+<ol>
+<li>打开Binder驱动文件，分配空间</li>
+<li>调用binder_become_context_manager申请成为Binder上下文管理者</li>
+<li><p>调用binder_loop进入循环等待处理客户端的请求，如果没有请求，进入睡眠，一旦有请求，立刻被唤醒，然后处理Client请求<br>我们接下来一步一步的看</p>
+<h3 id="binder-open"><a href="#binder-open" class="headerlink" title="binder_open"></a><a href="#binder_open" title="binder_open"></a>binder_open</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">//frameworks/native/cmds/servicemanager/<span class="keyword">binder.c</span></div><div class="line"><span class="keyword">struct </span><span class="keyword">binder_state </span>*<span class="keyword">binder_open(size_t </span>mapsize)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">struct </span><span class="keyword">binder_state </span>*<span class="keyword">bs;</span></div><div class="line">    ...</div><div class="line">    //通过系统调用陷入内核，打开<span class="keyword">Binder设备驱动</span></div><div class="line">    <span class="keyword">bs-&gt;fd </span>= open(<span class="string">"/dev/binder"</span>, O_RDWR)<span class="comment">;</span></div><div class="line">    <span class="meta">if</span> (<span class="keyword">bs-&gt;fd </span>&lt; <span class="number">0</span>) &#123;</div><div class="line">        goto fail_open<span class="comment">; // 无法打开binder设备</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //通过系统调用，ioctl获取<span class="keyword">binder版本信息</span></div><div class="line">    <span class="meta">if</span> ((ioctl(<span class="keyword">bs-&gt;fd, </span><span class="keyword">BINDER_VERSION, </span>&amp;vers) == -<span class="number">1</span>) <span class="title">||</span></div><div class="line">        (vers.protocol_version != <span class="keyword">BINDER_CURRENT_PROTOCOL_VERSION)) </span>&#123;</div><div class="line">        goto fail_open<span class="comment">; //内核空间与用户空间的binder不是同一版本</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">bs-&gt;mapsize </span>= mapsize<span class="comment">;</span></div><div class="line">    //通过系统调用，mmap内存映射，mmap必须是page的整数倍</div><div class="line">    <span class="keyword">bs-&gt;mapped </span>= mmap(NULL, mapsize, PROT_READ, MAP_PRIVATE, <span class="keyword">bs-&gt;fd, </span><span class="number">0</span>)<span class="comment">;</span></div><div class="line">    <span class="meta">if</span> (<span class="keyword">bs-&gt;mapped </span>== MAP_FAILED) &#123;</div><div class="line">        goto fail_map<span class="comment">; // binder设备内存无法映射</span></div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>上面代码流程其实很清楚打开Binder驱动的具体步骤:</p>
+<ol>
+<li>open(“/dev/binder”, O_RDWR)进过系统调用，最后调用的是驱动的binder_open方法。这个方法会创建一个binder_proc对象，并将这个对象存入全局变量binder_procs中。</li>
+<li>mmap(NULL, mapsize, PROT_READ, MAP_PRIVATE, bs-&gt;fd, 0)经过系统调用，最后调用的是驱动的binder_mmap方法，这个方法是用来创建一个内存映射以为后边处理请求提供内存。第一个参数表示映射内存的起始地址，Null表示由系统决定，mapsize为映射的内存大小，值为128k，PROT_READ表示映射空间是可读的，MAP_PRIVATE表示进程在写入内存时是写入到内存的拷贝里。 bs-&gt;fd是“/dev/binder”的句柄，0是代表偏移量。该方法会创建一个Binder_buffer对象并保存在binder_proc中。</li>
+<li><p>binder_state是用来保存/dev/binder驱动信息的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">binder_state</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> fd; <span class="comment">// dev/binder的文件描述符</span></div><div class="line">    <span class="keyword">void</span> *mapped; <span class="comment">//指向mmap的内存地址</span></div><div class="line">    <span class="keyword">size_t</span> mapsize; <span class="comment">//分配的内存大小，默认为128KB</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>那么这里说的到系统调用是如何进行的呢。我们来具体看下open(“/dev/binder”)</p>
+<h4 id="open-“-dev-binder”"><a href="#open-“-dev-binder”" class="headerlink" title="open(“/dev/binder”)"></a><a href="#open_28_u201C/dev/binder_u201D_29" title="open(“/dev/binder”)"></a>open(“/dev/binder”)</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">//drivers/staging/<span class="keyword">android/binder.c</span></div><div class="line"><span class="symbol">static</span> const <span class="keyword">struct </span>file_operations <span class="keyword">binder_fops </span>= &#123;</div><div class="line"><span class="symbol">.owner</span> = THIS_MODULE,</div><div class="line"><span class="symbol">.poll</span> = <span class="keyword">binder_poll,</span></div><div class="line"><span class="symbol">.unlocked_ioctl</span> = <span class="keyword">binder_ioctl,</span></div><div class="line"><span class="symbol">.mmap</span> = <span class="keyword">binder_mmap,</span></div><div class="line"><span class="symbol">.open</span> = <span class="keyword">binder_open,</span></div><div class="line"><span class="symbol">.flush</span> = <span class="keyword">binder_flush,</span></div><div class="line"><span class="symbol">.release</span> = <span class="keyword">binder_release,</span></div><div class="line">&#125;<span class="comment">;</span></div><div class="line"></div><div class="line"><span class="symbol">static</span> <span class="keyword">struct </span>miscdevice <span class="keyword">binder_miscdev </span>= &#123;</div><div class="line"><span class="symbol">.minor</span> = MISC_DYNAMIC_MINOR,</div><div class="line"><span class="symbol">.name</span> = <span class="string">"binder"</span>,</div><div class="line"><span class="symbol">.fops</span> = &amp;<span class="keyword">binder_fops</span></div><div class="line">&#125;<span class="comment">;</span></div><div class="line"></div><div class="line"><span class="symbol">static</span> int __init <span class="keyword">binder_init(void)</span></div><div class="line">&#123;</div><div class="line">    ...</div><div class="line">    ret = misc_register(&amp;<span class="keyword">binder_miscdev);</span></div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="symbol">device_initcall</span>(<span class="keyword">binder_init);</span></div></pre></td></tr></table></figure>
+<ol>
+<li>device_initcall(binder_init)的作用是将函数binder_init注册到Kernel的初始化函数中,这样的话当内核在启动的时候将会以一定的顺序去执行这些初始化函数，也就是说在Kernel启动的时候就回去调用binder_init方法。</li>
+<li>binder_init的方法是将Binder驱动注册到文件系统中，这样就可以通过操作文件来调用驱动，该文件的节点的“/dev/binder”设备信息是binder_miscdev</li>
+<li>对于结构体binder_miscdev我们需要关心的是fops，这个变量代表的是文件操作的对象，也就是binder_fops。</li>
+<li>binder_fops结构体中定义的变量owner是标明了该文件操作变量的拥有者，就是该驱动；poll则指定了poll函数指针，当我们对/dev/binder文件节点执行poll()操作时，实际上就是调用的binder_poll()函数；同理，mmap()对应binder_mmap()，open()对应binder_open()，ioctl()对应binder_ioctl()…</li>
+</ol>
+<p>经过上面的介绍，我们可以知道open(“/dev/binder”, O_RDWR)实际上是调用Binder驱动中的binder函数。<br>static HLIST_HEAD(binder_procs);<br>…</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> int binder_open(<span class="class"><span class="keyword">struct</span> <span class="title">inode</span></span> *nodp, <span class="class"><span class="keyword">struct</span> <span class="title">file</span></span> *filp)</div><div class="line">&#123;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">binder_proc</span></span> *<span class="keyword">proc</span>;</div><div class="line"></div><div class="line">    binder_debug(BINDER_DEBUG_OPEN_CLOSE, <span class="string">"binder_open: %d:%d\n"</span>,</div><div class="line">        current-&gt;group_leader-&gt;pid, current-&gt;pid);</div><div class="line"></div><div class="line">    <span class="comment">// 为proc分配内存</span></div><div class="line">    <span class="keyword">proc</span> = kzalloc(<span class="keyword">sizeof</span>(*<span class="keyword">proc</span>), GFP_KERNEL);</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">proc</span> == NULL)</div><div class="line">    <span class="keyword">return</span> -ENOMEM;</div><div class="line">    get_task_struct(current);</div><div class="line">    <span class="comment">// 将proc-&gt;tsk指向当前线程</span></div><div class="line">    <span class="keyword">proc</span>-&gt;tsk = current;</div><div class="line">    <span class="comment">// 初始化proc的待处理事务列表</span></div><div class="line">    INIT_LIST_HEAD(&amp;<span class="keyword">proc</span>-&gt;todo);</div><div class="line">    <span class="comment">// 初始化proc的等待队列</span></div><div class="line">    init_waitqueue_head(&amp;<span class="keyword">proc</span>-&gt;wait);</div><div class="line">    <span class="comment">// 设置proc的进程优先级为当前线程的优先级</span></div><div class="line">    <span class="keyword">proc</span>-&gt;default_priority = task_nice(current);</div><div class="line"></div><div class="line">    binder_lock(__func__);</div><div class="line"></div><div class="line">    binder_stats_created(BINDER_STAT_PROC);</div><div class="line">    <span class="comment">// 将该进程上下文信息proc保存到"全局哈希表binder_procs"中</span></div><div class="line">    hlist_add_head(&amp;<span class="keyword">proc</span>-&gt;proc_node, &amp;binder_procs);</div><div class="line">    <span class="comment">// 设置进程id</span></div><div class="line">    <span class="keyword">proc</span>-&gt;pid = current-&gt;group_leader-&gt;pid;</div><div class="line">    INIT_LIST_HEAD(&amp;<span class="keyword">proc</span>-&gt;delivered_death);</div><div class="line">    <span class="comment">// 将proc添加到私有数据中。</span></div><div class="line">    <span class="comment">// 这样，mmap(),ioctl()等函数都可以通过私有数据获取到proc，即该进程的上下文信息</span></div><div class="line">    filp-&gt;private_data = <span class="keyword">proc</span>;</div><div class="line"></div><div class="line">    binder_unlock(__func__);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (binder_debugfs_dir_entry_proc) &#123;</div><div class="line">    <span class="built_in">char</span> strbuf[<span class="number">11</span>];</div><div class="line">    snprintf(strbuf, <span class="keyword">sizeof</span>(strbuf), <span class="string">"%u"</span>, <span class="keyword">proc</span>-&gt;pid);</div><div class="line">    <span class="keyword">proc</span>-&gt;debugfs_entry = debugfs_create_file(strbuf, S_IRUGO,</div><div class="line">        binder_debugfs_dir_entry_proc, <span class="keyword">proc</span>, &amp;binder_proc_fops);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么在上面我们提到了binder_open()函数会生成binder_proc对象，这个对象是用来保存当前进程的信息的。</p>
+<ol>
+<li>创建并初始化binder_proc结构体变量proc。binder_proc是描述Binder进程的上下文信息结构体。这里，就是将ServiceManager这个进程的信息都存储到proc中</li>
+<li>将proc添加到全局哈希表binder_procs中</li>
+<li>将proc设为filp的私有成员。这样，在mmap()，ioctl()等函数中，我们都可以根据filp的私有成员来获取proc信息。</li>
+</ol>
+<p>说完Open我们在看看mmap函数，他对应的系统调用时binder_mmap</p>
+<h4 id="binder-mmap"><a href="#binder-mmap" class="headerlink" title="binder_mmap"></a><a href="#binder_mmap" title="binder_mmap"></a>binder_mmap</h4><p>这个函数主要的作用是创建内存映射，这里就要说到Binder IPC通信方法对内存是如何操作的了，Android为什么要使用Binder来作为大多数IPC通信的主要手段呢。我们知道在Linux系统将应用的内存地址划分为2个部分，0-3G为用户空间，也就是我们App运行的地方，4-5G为内核空间，也就是Kernel和驱动运行的地方，如果需要进行两块内存通信时，也就是用户空间的进程和内核空间中的进程进行IPC通信时是如何操作的呢，我们知道Linux的IPC通信手段有很多，比如管道，消息队列，socket，内存共享等等。但是Android系统大多都是没有使用这些手段。内存控制比较复杂，对于Android系统来说不是合适的。socket是比较常用于网络中，剩下的我看下Android为什么没有使用管道或者消息队列，原因是这两个手段要完成一次IPC通信的话需要进行两次拷贝，第一次将数据从用户空间拷贝到内核空间，第二次是将内核空间的数据拷贝到相对应的进程中，这样的两次拷贝对于移动设备来说是一个很大的消耗，于是针对Android运行的设备进行优化，产生了Binder通信机制，只需要进行一次数据的拷贝，因为内核空间和目标进程的空间共同指向了一块物理内存，这样就不需要在内核空间进行再一次的数据拷贝了。那么binder_mmap所做的事情就是映射同一片物理内存。</p>
+<p>至此，binder_open(128*1024)算是介绍完了。从”用户空间的ServiceManager进程” 和 “Binder驱动”这两个方面分析它的作用。<br>(01) ServiceManager进程：就是打开/dev/binder，同时映射物理内存到进程空间。<br>(02) Binder驱动：新建并初始化该进程对应的binder_proc结构体，同时将内核虚拟地址和该进程的虚拟地址映射到同一物理内存中。</p>
+<h3 id="binder-become-context-manager"><a href="#binder-become-context-manager" class="headerlink" title="binder_become_context_manager()"></a><a href="#binder_become_context_manager_28_29" title="binder_become_context_manager()"></a>binder_become_context_manager()</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int <span class="keyword">binder_become_context_manager(struct </span><span class="keyword">binder_state </span>*<span class="keyword">bs)</span></div><div class="line">&#123;</div><div class="line">    return ioctl(<span class="keyword">bs-&gt;fd, </span><span class="keyword">BINDER_SET_CONTEXT_MGR, </span><span class="number">0</span>)<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ioctl通过系统调用，最后调用的是binder_ioctl</p>
+<h4 id="binder-ioctl"><a href="#binder-ioctl" class="headerlink" title="binder_ioctl"></a><a href="#binder_ioctl" title="binder_ioctl"></a>binder_ioctl</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 全局binder实体，准确点说是ServiceManager的binder实体</span></div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">binder_node</span> *<span class="title">binder_context_mgr_node</span>;</span></div><div class="line"><span class="comment">// ServiceManager守护进程的uid</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">uid_t</span> binder_context_mgr_uid = <span class="number">-1</span>;</div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> binder_stop_on_user_error;</div><div class="line">...</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">long</span> <span class="title">binder_ioctl</span><span class="params">(struct file *filp, <span class="keyword">unsigned</span> <span class="keyword">int</span> cmd, <span class="keyword">unsigned</span> <span class="keyword">long</span> arg)</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">int</span> ret;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">binder_proc</span> *<span class="title">proc</span> = <span class="title">filp</span>-&gt;<span class="title">private_data</span>;</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">binder_thread</span> *<span class="title">thread</span>;</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> size = _IOC_SIZE(cmd);</div><div class="line"><span class="keyword">void</span> __user *ubuf = (<span class="keyword">void</span> __user *)arg;</div><div class="line"></div><div class="line"><span class="comment">// 中断等待函数。</span></div><div class="line"><span class="comment">// 1\. 当binder_stop_on_user_error &lt; 2为true时；不会进入等待状态；直接跳过。</span></div><div class="line"><span class="comment">// 2\. 当binder_stop_on_user_error &lt; 2为false时，进入等待状态。</span></div><div class="line"><span class="comment">//    当有其他进程通过wake_up_interruptible来唤醒binder_user_error_wait队列，并且binder_stop_on_user_error &lt; 2为true时；</span></div><div class="line"><span class="comment">//    则继续执行；否则，再进入等待状态。</span></div><div class="line">ret = wait_event_interruptible(binder_user_error_wait, binder_stop_on_user_error &lt; <span class="number">2</span>);</div><div class="line">...</div><div class="line"></div><div class="line">binder_lock(__func__);</div><div class="line"><span class="comment">// 在proc进程中查找该线程对应的binder_thread；若查找失败，则新建一个binder_thread，并添加到proc-&gt;threads中。</span></div><div class="line">thread = binder_get_thread(proc);</div><div class="line">...</div><div class="line"></div><div class="line"><span class="keyword">switch</span> (cmd) &#123;</div><div class="line">...</div><div class="line"></div><div class="line"><span class="keyword">case</span> BINDER_SET_CONTEXT_MGR:</div><div class="line">    <span class="keyword">if</span> (binder_context_mgr_node != <span class="literal">NULL</span>) &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (binder_context_mgr_uid != <span class="number">-1</span>) &#123;</div><div class="line">        ...</div><div class="line">    &#125; <span class="keyword">else</span></div><div class="line">        <span class="comment">// 设置ServiceManager对应的uid</span></div><div class="line">        binder_context_mgr_uid = current-&gt;cred-&gt;euid;</div><div class="line"></div><div class="line">    <span class="comment">// 新建binder实体，并将proc进程上下文信息保存到binder实体中；</span></div><div class="line">    <span class="comment">// 然后，将该binder实体赋值给全局变量binder_context_mgr_node。</span></div><div class="line">    <span class="comment">// 这个全局的binder实体，是ServiceManager对应的binder实体。</span></div><div class="line">    binder_context_mgr_node = binder_new_node(proc, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="comment">// 设置binder实体的引用计数等参数</span></div><div class="line">    binder_context_mgr_node-&gt;local_weak_refs++;</div><div class="line">    binder_context_mgr_node-&gt;local_strong_refs++;</div><div class="line">    binder_context_mgr_node-&gt;has_strong_ref = <span class="number">1</span>;</div><div class="line">    binder_context_mgr_node-&gt;has_weak_ref = <span class="number">1</span>;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">...</div><div class="line"></div><div class="line">&#125;</div><div class="line">ret = <span class="number">0</span>;</div><div class="line"></div><div class="line">err:</div><div class="line"><span class="comment">// 去掉thread的BINDER_LOOPER_STATE_NEED_RETURN标记</span></div><div class="line"><span class="keyword">if</span> (thread)</div><div class="line">    thread-&gt;looper &amp;= ~BINDER_LOOPER_STATE_NEED_RETURN;</div><div class="line">binder_unlock(__func__);</div><div class="line">wait_event_interruptible(binder_user_error_wait, binder_stop_on_user_error &lt; <span class="number">2</span>);</div><div class="line">...</div><div class="line"></div><div class="line"><span class="keyword">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>调用wait_event_interruptible(binder_user_error_wait, binder_stop_on_user_error &lt; 2)。由于binder_stop_on_user_error是全局变量，它的初始值是0，因此binder_stop_on_user_error &lt; 2为true，不进入中断等待，而是直接跳过该函数继续运行</li>
+<li>binder_get_thread()会在proc中查找当前线程对应的binder_thread结构体；由于之前还未创建该线程的binder_thread结构体，因此查找失败。进而创建一个binder_thread结构体变量，并将其添加到proc-&gt;threads红黑树中，然后返回该变量</li>
+<li>cmd的值是我们调用ioctl()传入的参数BINDER_SET_CONTEXT_MGR。在BINDER_SET_CONTEXT_MGR分支中，会设置binder_context_mgr_uid，binder_context_mgr_uid是一个全局变量，它代表ServiceManager对应的uid；接着，通过binder_new_node()新建一个Binder实体(即binder_node结构体对象)，并将该Binder实体赋值给全局变量binder_context_mgr_node，binder_context_mgr_node就是Serveice Manager对应的Binder实体；最后，设置binder实体的引用计数等参数。</li>
+<li>清除thread-&gt;looper的BINDER_LOOPER_STATE_NEED_RETURN标记。这个BINDER_LOOPER_STATE_NEED_RETURN标记，是在调用binder_get_thread()中创建binder_thread对象时添加的。</li>
+</ol>
+<p>至此，binder_become_context_manager()就介绍完了。它的作用：</p>
+<ol>
+<li>ServiceManager进程：告诉Kernel驱动，当前进程(即ServiceManager进程)是Binder上下文管理者。</li>
+<li>Binder驱动：新建当前线程对应的binder_thread对象，并将其添加到进程上下文信息binder_proc的threads红黑树中；新建ServiceManager对应的binder实体，并将该binder实体保存到全局变量binder_context_mgr_node中。</li>
+</ol>
+<h3 id="binder-loop"><a href="#binder-loop" class="headerlink" title="binder_loop()"></a><a href="#binder_loop_28_29" title="binder_loop()"></a>binder_loop()</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">void</span> <span class="keyword">binder_loop(struct </span><span class="keyword">binder_state </span>*<span class="keyword">bs, </span><span class="keyword">binder_handler </span>func)</div><div class="line">&#123;</div><div class="line">    int res<span class="comment">; </span></div><div class="line">    <span class="keyword">struct </span><span class="keyword">binder_write_read </span><span class="keyword">bwr;</span></div><div class="line">    unsigned readbuf[<span class="number">32</span>]<span class="comment">;</span></div><div class="line"></div><div class="line">    <span class="keyword">bwr.write_size </span>= <span class="number">0</span><span class="comment">;</span></div><div class="line">    <span class="keyword">bwr.write_consumed </span>= <span class="number">0</span><span class="comment">;</span></div><div class="line">    <span class="keyword">bwr.write_buffer </span>= <span class="number">0</span><span class="comment">;</span></div><div class="line"></div><div class="line">    // 告诉Kernel，ServiceManager进程进入了消息循环状态。</div><div class="line">    readbuf[<span class="number">0</span>] = <span class="keyword">BC_ENTER_LOOPER;</span></div><div class="line">    <span class="keyword">binder_write(bs, </span>readbuf, sizeof(unsigned))<span class="comment">;</span></div><div class="line"></div><div class="line">    for (<span class="comment">;;) &#123;</span></div><div class="line">        <span class="keyword">bwr.read_size </span>= sizeof(readbuf)<span class="comment">;</span></div><div class="line">        <span class="keyword">bwr.read_consumed </span>= <span class="number">0</span><span class="comment">;</span></div><div class="line">        <span class="keyword">bwr.read_buffer </span>= (unsigned) readbuf<span class="comment">;</span></div><div class="line"></div><div class="line">        // 向Kernel中发送消息(先写后读)。</div><div class="line">        // 先将消息传递给Kernel，然后再从Kernel读取消息反馈</div><div class="line">        res = ioctl(<span class="keyword">bs-&gt;fd, </span><span class="keyword">BINDER_WRITE_READ, </span>&amp;<span class="keyword">bwr);</span></div><div class="line"></div><div class="line">        ...</div><div class="line"></div><div class="line">        // 解析读取的消息反馈</div><div class="line">        res = <span class="keyword">binder_parse(bs, </span><span class="number">0</span>, readbuf, <span class="keyword">bwr.read_consumed, </span>func)<span class="comment">;</span></div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法的作用就是告诉KernelServiceManager将进入循环等待处理请求的状态，接着调用ioctl(bs-&gt;fd, BINDER_WRITE_READ, &amp;bwr)进入循环状态，等待Client端的请求。</p>
+<h4 id="binder-write"><a href="#binder-write" class="headerlink" title="binder_write()"></a><a href="#binder_write_28_29" title="binder_write()"></a>binder_write()</h4><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">int <span class="keyword">binder_write(struct </span><span class="keyword">binder_state </span>*<span class="keyword">bs, </span>void *data, unsigned len)</div><div class="line">&#123;</div><div class="line">    struct <span class="keyword">binder_write_read </span><span class="keyword">bwr;</span></div><div class="line">    int res<span class="comment">;</span></div><div class="line">    <span class="keyword">bwr.write_size </span>= len<span class="comment">;                // 数据长度</span></div><div class="line">    <span class="keyword">bwr.write_consumed </span>= <span class="number">0</span><span class="comment">;             </span></div><div class="line">    <span class="keyword">bwr.write_buffer </span>= (unsigned) data<span class="comment">;  // 数据是BINDER_WRITE_READ</span></div><div class="line">    <span class="keyword">bwr.read_size </span>= <span class="number">0</span><span class="comment">;</span></div><div class="line">    <span class="keyword">bwr.read_consumed </span>= <span class="number">0</span><span class="comment">;</span></div><div class="line">    <span class="keyword">bwr.read_buffer </span>= <span class="number">0</span><span class="comment">;</span></div><div class="line">    res = ioctl(<span class="keyword">bs-&gt;fd, </span><span class="keyword">BINDER_WRITE_READ, </span>&amp;<span class="keyword">bwr);</span></div><div class="line">    if (res &lt; <span class="number">0</span>) &#123;</div><div class="line">        fprintf(stderr,<span class="string">"binder_write: ioctl failed (%s)\n"</span>,</div><div class="line">                strerror(errno))<span class="comment">;</span></div><div class="line">    &#125;</div><div class="line">    return res<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的ioctl并没有要去读取返回的信息。我们来看下ioctl在执行BINDER_WRITE_READ是的代码</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">static</span> long <span class="keyword">binder_ioctl(struct </span>file *filp, unsigned int cmd, unsigned long arg)</div><div class="line">&#123;</div><div class="line"><span class="symbol">int</span> ret<span class="comment">;</span></div><div class="line"><span class="keyword">struct </span><span class="keyword">binder_proc </span>*<span class="meta">proc</span> = filp-&gt;private_data<span class="comment">;</span></div><div class="line"><span class="keyword">struct </span><span class="keyword">binder_thread </span>*thread<span class="comment">;</span></div><div class="line"><span class="symbol">unsigned</span> int size = _IOC_SIZE(cmd)<span class="comment">;</span></div><div class="line"><span class="symbol">void</span> __user *ubuf = (void __user *)arg<span class="comment">;</span></div><div class="line"></div><div class="line">// 中断等待函数。</div><div class="line">// <span class="number">1</span>\. 当<span class="keyword">binder_stop_on_user_error </span>&lt; <span class="number">2</span>为true时；不会进入等待状态；直接跳过。</div><div class="line">// <span class="number">2</span>\. 当<span class="keyword">binder_stop_on_user_error </span>&lt; <span class="number">2</span>为false时，进入等待状态。</div><div class="line">//    当有其他进程通过wake_up_interruptible来唤醒<span class="keyword">binder_user_error_wait队列，并且binder_stop_on_user_error </span>&lt; <span class="number">2</span>为true时；</div><div class="line">//    则继续执行；否则，再进入等待状态。</div><div class="line"><span class="symbol">ret</span> = wait_event_interruptible(<span class="keyword">binder_user_error_wait, </span><span class="keyword">binder_stop_on_user_error </span>&lt; <span class="number">2</span>)<span class="comment">;</span></div><div class="line"></div><div class="line"><span class="keyword">binder_lock(__func__);</span></div><div class="line">// 在<span class="meta">proc</span>进程中查找该线程对应的<span class="keyword">binder_thread；若查找失败，则新建一个binder_thread，并添加到proc-&gt;threads中。</span></div><div class="line"><span class="symbol">thread</span> = <span class="keyword">binder_get_thread(proc);</span></div><div class="line"><span class="symbol">...</span></div><div class="line"></div><div class="line"><span class="keyword">switch </span>(cmd) &#123;</div><div class="line"><span class="symbol">case</span> <span class="keyword">BINDER_WRITE_READ: </span>&#123;</div><div class="line">    <span class="keyword">struct </span><span class="keyword">binder_write_read </span><span class="keyword">bwr;</span></div><div class="line">    ...</div><div class="line"></div><div class="line">    // 将<span class="keyword">binder_write_read从"用户空间" </span>拷贝到 <span class="string">"内核空间"</span></div><div class="line">    <span class="meta">if</span> (copy_from_user(&amp;<span class="keyword">bwr, </span>ubuf, sizeof(<span class="keyword">bwr))) </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 如果write_size&gt;<span class="number">0</span>，则进行写操作</div><div class="line">    <span class="meta">if</span> (<span class="keyword">bwr.write_size </span>&gt; <span class="number">0</span>) &#123;</div><div class="line">        ret = <span class="keyword">binder_thread_write(proc, </span>thread, (void __user *)<span class="keyword">bwr.write_buffer, </span><span class="keyword">bwr.write_size, </span>&amp;<span class="keyword">bwr.write_consumed);</span></div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 如果read_size&gt;<span class="number">0</span>，则进行读操作</div><div class="line">    <span class="meta">if</span> (<span class="keyword">bwr.read_size </span>&gt; <span class="number">0</span>) &#123;</div><div class="line">        ret = <span class="keyword">binder_thread_read(proc, </span>thread, (void __user *)<span class="keyword">bwr.read_buffer, </span><span class="keyword">bwr.read_size, </span>&amp;<span class="keyword">bwr.read_consumed, </span>filp-&gt;f_flags   &amp; O_NONBLOCK)<span class="comment">;</span></div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="meta">if</span> (copy_to_user(ubuf, &amp;<span class="keyword">bwr, </span>sizeof(<span class="keyword">bwr))) </span>&#123;</div><div class="line">        ret = -EFAULT<span class="comment">;</span></div><div class="line">        goto err<span class="comment">;</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">break;</span></div><div class="line">&#125;</div><div class="line"><span class="symbol">...</span></div><div class="line">&#125;</div><div class="line"><span class="symbol">ret</span> = <span class="number">0</span><span class="comment">;</span></div><div class="line"></div><div class="line"><span class="symbol">...</span></div><div class="line"><span class="symbol">return</span> ret<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>不进行wait_event_interruptible中断函数，往下执行</li>
+<li>获取保存在proc中的thread，由于上次已经创建过thread，所以这次直接返回该对象</li>
+<li>将用户数据拷贝到内核空间，这里就是将写入的数据bwr拷贝到binder驱动中</li>
+<li>在binder_write()中，bwr.write_size &gt; 0 所以调用binder_thread_write函数</li>
+<li>在binder_write()中，bwr.read_size =0 所以不调用binder_thread_read函数</li>
+<li>将内核数据再拷贝到用户空间</li>
+</ol>
+<h4 id="binder-thread-write"><a href="#binder-thread-write" class="headerlink" title="binder_thread_write()"></a><a href="#binder_thread_write_28_29" title="binder_thread_write()"></a>binder_thread_write()</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> binder_thread_write(struct binder_proc *proc, struct binder_thread *thread,</div><div class="line">        <span class="keyword">void</span> __user *<span class="built_in">buffer</span>, <span class="keyword">int</span> <span class="built_in">size</span>, <span class="keyword">signed</span> <span class="keyword">long</span> *consumed)</div><div class="line">&#123;</div><div class="line">uint32_t cmd;</div><div class="line"><span class="keyword">void</span> __user *ptr = <span class="built_in">buffer</span> + *consumed;</div><div class="line"><span class="keyword">void</span> __user *<span class="built_in">end</span> = <span class="built_in">buffer</span> + <span class="built_in">size</span>;</div><div class="line"></div><div class="line"><span class="comment">// 读取binder_write_read.write_buffer中的内容。</span></div><div class="line"><span class="comment">// 每次读取32bit(即4个字节)</span></div><div class="line"><span class="built_in">while</span> (ptr &lt; <span class="built_in">end</span> &amp;&amp; thread-&gt;return_error == BR_OK) &#123;</div><div class="line">    <span class="comment">// 从用户空间读取32bit到内核中，并赋值给cmd。</span></div><div class="line">    <span class="built_in">if</span> (get_user(cmd, (uint32_t __user *)ptr))</div><div class="line">        <span class="built_in">return</span> -EFAULT;</div><div class="line"></div><div class="line">    ptr += <span class="keyword">sizeof</span>(uint32_t);</div><div class="line">    ...</div><div class="line">    <span class="built_in">switch</span> (cmd) &#123;</div><div class="line">    ...</div><div class="line">    <span class="built_in">case</span> BC_ENTER_LOOPER:</div><div class="line">        ...</div><div class="line">        <span class="comment">// 设置线程的状态为BINDER_LOOPER_STATE_ENTERED；</span></div><div class="line">        <span class="comment">// 即，进入了循环状态</span></div><div class="line">        thread-&gt;looper |= BINDER_LOOPER_STATE_ENTERED;</div><div class="line">        <span class="built_in">break</span>;</div><div class="line">    ...</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 更新bwr.write_consumed的值</span></div><div class="line">    *consumed = ptr - <span class="built_in">buffer</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>binder_thread_write()从brw.write_buffer中读取4个字节作为cmd。这4个字节就是ServiceManager传递的指令BC_ENTER_LOOPER。<br>在BC_ENTER_LOOPER对应的switch分支中，就是将BINDER_LOOPER_STATE_ENTERED加入到thread-&gt;looper中。即，告诉Binder驱动，ServiceManager进程进入了消息循环状态。</p>
+<h4 id="for"><a href="#for" class="headerlink" title="for(;;)"></a><a href="#for_28_3B_3B_29" title="for(;;)"></a>for(;;)</h4><p>进入循环后，首先调用ioctl(,BINDER_WRITE_READ,)；此时，对应的bwr内容如下：<br>bwr.write_size = 0;<br>bwr.write_consumed = 0;<br>bwr.write_buffer = 0;<br>bwr.read_size = sizeof(readbuf);<br>bwr.read_consumed = 0;<br>bwr.read_buffer = (unsigned) readbuf;</p>
+<p>同样的将进入binder_ioctl函数，但是和上面的bwr不同这次数要读取，那么就会进入binder_thread_read方法</p>
+<h4 id="binder-thread-read"><a href="#binder-thread-read" class="headerlink" title="binder_thread_read()"></a><a href="#binder_thread_read_28_29" title="binder_thread_read()"></a>binder_thread_read()</h4><figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">        <span class="keyword">static</span> int binder_thread_read(<span class="class"><span class="keyword">struct</span> <span class="title">binder_proc</span></span> *<span class="keyword">proc</span>,</div><div class="line">                        <span class="class"><span class="keyword">struct</span> <span class="title">binder_thread</span></span> *thread,</div><div class="line">                        void  __user *buffer, int size,</div><div class="line">                        signed long *consumed, int non_block)</div><div class="line">        &#123;</div><div class="line">        void __user *ptr = buffer + *consumed;</div><div class="line">        void __user *end = buffer + size;</div><div class="line"></div><div class="line">        int ret = <span class="number">0</span>;</div><div class="line">        int wait_for_proc_work;</div><div class="line"></div><div class="line">        <span class="comment">// 如果*consumed=0，则写入BR_NOOP到用户传进来的bwr.read_buffer缓存区</span></div><div class="line">        <span class="keyword">if</span> (*consumed == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (put_user(BR_NOOP, (uint32_t __user *)ptr))</div><div class="line">                <span class="keyword">return</span> -EFAULT;</div><div class="line">            <span class="comment">// 修改指针位置</span></div><div class="line">            ptr += <span class="keyword">sizeof</span>(uint32_t);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        retry:</div><div class="line">        <span class="comment">// 等待proc进程的事务标记。</span></div><div class="line">        <span class="comment">// 当线程的事务栈为空 并且 待处理事务列表为空时，该标记位true。</span></div><div class="line">        wait_for_proc_work = thread-&gt;transaction_stack == NULL &amp;&amp;</div><div class="line">                    list_empty(&amp;thread-&gt;todo);</div><div class="line"></div><div class="line">        ...</div><div class="line"></div><div class="line">        <span class="comment">// 设置线程为"等待状态"</span></div><div class="line">        thread-&gt;looper |= BINDER_LOOPER_STATE_WAITING;</div><div class="line">        <span class="keyword">if</span> (wait_for_proc_work)</div><div class="line">            <span class="keyword">proc</span>-&gt;ready_threads++;</div><div class="line"></div><div class="line">        ...</div><div class="line">        <span class="keyword">if</span> (wait_for_proc_work) &#123;</div><div class="line">            ...</div><div class="line">            <span class="comment">// 设置当前线程的优先级=proc-&gt;default_priority。</span></div><div class="line">            <span class="comment">// 即，当前线程要处理proc的事务，所以设置优先级和proc一样。</span></div><div class="line">            binder_set_nice(<span class="keyword">proc</span>-&gt;default_priority);</div><div class="line">            <span class="keyword">if</span> (non_block) &#123;</div><div class="line">                <span class="comment">// 非阻塞式的读取，则通过binder_has_proc_work()读取proc的事务；</span></div><div class="line">                <span class="comment">// 若没有，则直接返回</span></div><div class="line">                <span class="keyword">if</span> (!binder_has_proc_work(<span class="keyword">proc</span>, thread))</div><div class="line">                    ret = -EAGAIN;</div><div class="line">            &#125; <span class="keyword">else</span></div><div class="line">                <span class="comment">// 阻塞式的读取，则阻塞等待事务的发生。</span></div><div class="line">                ret = wait_event_interruptible_exclusive(<span class="keyword">proc</span>-&gt;wait, binder_has_proc_work(<span class="keyword">proc</span>, thread));</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">        ...</div><div class="line">        &#125;</div><div class="line"><span class="number">1</span>\. consumed为<span class="number">0</span>将会拷贝BR_NOOP到用户空间的read_buffer缓存区</div><div class="line"><span class="number">2</span>\. 目前为止，并没有进程将事务添加到当前线程中；因此，线程的事务栈和待处理事务队列都是为空。于是得到wait_for_proc_work的值是<span class="literal">true</span></div><div class="line"><span class="number">3</span>\. binder_set_nice()的作用是设置当前线程的优先级=<span class="keyword">proc</span>-&gt;default_priority</div><div class="line"><span class="number">4</span>\. 根据上下文，可知non_block为<span class="literal">false</span>。因此调用wait_event_interruptible_exclusive(<span class="keyword">proc</span>-&gt;wait, binder_has_proc_work(<span class="keyword">proc</span>, thread))。 而目前ServiceManager进程中没有待处理事务，因此binder_has_proc_work(<span class="keyword">proc</span>, thread)为<span class="literal">false</span>。从而当前线程进入中断等待状态，等待其它进程将ServiceManager唤醒</div><div class="line"></div><div class="line">到此ServiceManager进入循环等待Client请求状态。</div></pre></td></tr></table></figure>
+<h2 id="二-时序图"><a href="#二-时序图" class="headerlink" title="二.时序图"></a><a href="#u4E8C-_u65F6_u5E8F_u56FE" title="二.时序图"></a>二.时序图</h2><p><img src="http://jokero1o.github.io/images/blog_servicemanager_1.png" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Binder/" rel="tag"># Binder</a>
+          
+            <a href="/tags/ServiceManager/" rel="tag"># ServiceManager</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/" rel="next" title="DiskLruCache Java实现基于LRU的磁盘缓存">
+                <i class="fa fa-chevron-left"></i> DiskLruCache Java实现基于LRU的磁盘缓存
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/26/Fragment弃坑之旅/" rel="prev" title="Fragment弃坑之旅">
+                Fragment弃坑之旅 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Joker Mei" />
+          <p class="site-author-name" itemprop="name">Joker Mei</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-启动过程"><span class="nav-number">1.</span> <span class="nav-text">一.启动过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#binder-open"><span class="nav-number">1.1.</span> <span class="nav-text">binder_open</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#open-“-dev-binder”"><span class="nav-number">1.1.1.</span> <span class="nav-text">open(“/dev/binder”)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#binder-mmap"><span class="nav-number">1.1.2.</span> <span class="nav-text">binder_mmap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binder-become-context-manager"><span class="nav-number">1.2.</span> <span class="nav-text">binder_become_context_manager()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#binder-ioctl"><span class="nav-number">1.2.1.</span> <span class="nav-text">binder_ioctl</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binder-loop"><span class="nav-number">1.3.</span> <span class="nav-text">binder_loop()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#binder-write"><span class="nav-number">1.3.1.</span> <span class="nav-text">binder_write()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#binder-thread-write"><span class="nav-number">1.3.2.</span> <span class="nav-text">binder_thread_write()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#for"><span class="nav-number">1.3.3.</span> <span class="nav-text">for(;;)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#binder-thread-read"><span class="nav-number">1.3.4.</span> <span class="nav-text">binder_thread_read()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-时序图"><span class="nav-number">2.</span> <span class="nav-text">二.时序图</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Joker Mei</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
