@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。">
-<meta name="keywords" content="DiskLruCache,Java">
+<meta name="description" content="某些Web页面只想让特定定的人浏览，或者干脆仅本人可见。为达到这个目标，必不可少的就是认证功。下面我们一起来学习一下认证机制。  何为认证计算机本身无法判断坐在显示器前的使用者的身份。进一步说，也无法确认网络的那头究竟有谁。可见，为了弄清楚是谁在访问服务器，就得让对方的客户端自报家们 核对的信息通常是指下面这些. 密码:只有本人才会知道的字符串信息. 动态令牌:仅限本人持有的设备内显示的一次性密">
+<meta name="keywords" content="HTTP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DiskLruCache Java实现基于LRU的磁盘缓存">
-<meta property="og:url" content="http://mjjde.github.io/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/index.html">
+<meta property="og:title" content="图解HTTP八确认访问用户身份的认证">
+<meta property="og:url" content="http://mjjde.github.io/2017/06/14/图解HTTP八确认访问用户身份的认证/index.html">
 <meta property="og:site_name" content="清风向阳">
-<meta property="og:description" content="DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。">
-<meta property="og:updated_time" content="2017-06-08T07:50:48.000Z">
+<meta property="og:description" content="某些Web页面只想让特定定的人浏览，或者干脆仅本人可见。为达到这个目标，必不可少的就是认证功。下面我们一起来学习一下认证机制。  何为认证计算机本身无法判断坐在显示器前的使用者的身份。进一步说，也无法确认网络的那头究竟有谁。可见，为了弄清楚是谁在访问服务器，就得让对方的客户端自报家们 核对的信息通常是指下面这些. 密码:只有本人才会知道的字符串信息. 动态令牌:仅限本人持有的设备内显示的一次性密">
+<meta property="og:updated_time" content="2017-06-14T07:23:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DiskLruCache Java实现基于LRU的磁盘缓存">
-<meta name="twitter:description" content="DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。">
+<meta name="twitter:title" content="图解HTTP八确认访问用户身份的认证">
+<meta name="twitter:description" content="某些Web页面只想让特定定的人浏览，或者干脆仅本人可见。为达到这个目标，必不可少的就是认证功。下面我们一起来学习一下认证机制。  何为认证计算机本身无法判断坐在显示器前的使用者的身份。进一步说，也无法确认网络的那头究竟有谁。可见，为了弄清楚是谁在访问服务器，就得让对方的客户端自报家们 核对的信息通常是指下面这些. 密码:只有本人才会知道的字符串信息. 动态令牌:仅限本人持有的设备内显示的一次性密">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>DiskLruCache Java实现基于LRU的磁盘缓存 | 清风向阳</title>
+<title>图解HTTP八确认访问用户身份的认证 | 清风向阳</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -232,11 +232,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-DiskLruCache-Java实现基于LRU的磁盘缓存" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-图解HTTP八确认访问用户身份的认证" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/" class="article-date">
-      <time datetime="2016-06-15T07:18:20.000Z" itemprop="datePublished">2016-06-15</time>
+      <a href="/2017/06/14/图解HTTP八确认访问用户身份的认证/" class="article-date">
+      <time datetime="2017-06-14T06:15:22.000Z" itemprop="datePublished">2017-06-14</time>
 </a>
 
 
@@ -251,7 +251,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      DiskLruCache Java实现基于LRU的磁盘缓存
+      图解HTTP八确认访问用户身份的认证
     </h1>
   
 
@@ -262,7 +262,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DiskLruCache/">DiskLruCache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -273,56 +273,42 @@
       
           
         <blockquote>
-<p>DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。<br><a id="more"></a><br>Github地址 <a href="https://github.com/JakeWharton/DiskLruCache" target="_blank" rel="external">https://github.com/JakeWharton/DiskLruCache</a></p>
+<p>某些Web页面只想让特定定的人浏览，或者干脆仅本人可见。为达到这个目标，必不可少的就是认证功。下面我们一起来学习一下认证机制。</p>
 </blockquote>
-<p>DiskLruCache还是比较简单的，总计也只有3个类。我们来分析下源码。</p>
-<h5 id="Util-java"><a href="#Util-java" class="headerlink" title="Util.java"></a><a href="#Util-java" title="Util.java"></a>Util.java</h5><p>我们先从简单的工具类开始，这个类主要是提供工具方法，</p>
-<ul>
-<li>readFully(Reader reader)：String</li>
-</ul>
-<p>这个方法是将Reader中的数据转换成String，现将Reader中的数据读入Buffer数组中，然后写入StringWriter，调用toString方法，返回数据。</p>
-<ul>
-<li>deleteContents(File): void</li>
-</ul>
-<p>删除文件夹中的所有文件</p>
-<ul>
-<li>closeQuietly(Closeable): void</li>
-</ul>
-<p>关闭Closeable接口。</p>
-<h4 id="StrictLineReader-java"><a href="#StrictLineReader-java" class="headerlink" title="StrictLineReader.java"></a><a href="#StrictLineReader-java" title="StrictLineReader.java"></a>StrictLineReader.java</h4><p>用来读取特殊的一行数据</p>
-<ul>
-<li>fillBuf(): void</li>
-</ul>
-<p><strong>in.read(buf, 0, buf.length)</strong>正常的读取一个buf.length长度的数据，但是并不能保证读到的数据就是该长度的数据，有可能只读到了1byte的数据。</p>
-<ul>
-<li>readLine(): String</li>
-</ul>
-<p>一开始pos == end == 0,通过判断调用fillBuf() 读取数据，pos =0; end = 读到的数据长度。接着查找读到的数据中是否有换行符，如果有，就表示我们读到了至少是一个完整的一行（可能会多余一行的数据），那么我们截取一行数据返回，第二次调到readLine(),此时的pos = 第二行的起始位置，在判断pos和end如果第一次读到了第二行的数据 就不在调用fillBuff(),接下来继续对读到的数据遍历查找第二行的回车键，如果存在就返回，不存在就创建一个内容大小是输出流原来读到数据长度+80。用来写入第二行数据。接下来进入死循环，首先用创建的输出流接受第一次读到的出去第一行的数据（也就是不完整的第二行数据），调用fillBuff().读取一次数据，判断是否有回车符(即第二行是否完整),如果存在，就将剩下的第二行数据也写入输出流中，返回，如果没有，继续写入，再次读取数据。</p>
-<p>####DiskLruCache.java</p>
-<p>这个类是库的使用类，入口类，包括3个内部类Snapshot,Editor,Entry。</p>
-<p>Snapshot，包括属性：长度，key，数据，sequenceNumber</p>
-<p>Entry,包括属性：长度，key，sequenceNumber.这个对象是用来存储在内存中的，因为不包括数据，属于占用内存不大</p>
-<p>Editor，用来编辑Entry的，包括属性：Entry，hasErrors(编辑Entry时是否发生错误)，committed是否提交。<br>这个类是用来set缓存的，我们可以调用<strong>newOutputStream(int): OutputStream</strong>来返回一个输出流，写入我们将要缓存的对象。之后调用<strong>commit(): void</strong>,接着调用<strong>completeEdite(Editor,boolean): void</strong>,这个方法是讲保存在dirty的内容移动到clean文件里</p>
-<ul>
-<li>open(File,int,int,long): DiskLruCache</li>
-</ul>
-<p>这方法是库的初始化方法，参数：文件保存路径，app版本，可以保存几分相同文件，最大内存。如果存在备份文件，就用备份文件代替日志文件。第二步创建DiskLruCache实例。第三步读取日志文件。</p>
-<ul>
-<li>readJournal(): void</li>
-</ul>
-<p>通过StrictLineReader读取日志的每一行文件。</p>
-<ul>
-<li>readJournalLine(String): void</li>
-</ul>
-<p>lruEntries集合根据日志中的状态放入或者删除一个Entry实例。状态有3种，remove表示移除，相应的也要在集合里移除，clean，dirty，read。都表示数据存在可以获取。</p>
-<ul>
-<li>processJournal(): void</li>
-</ul>
-<p>清楚不正确的日志，比如只有clean日志在的Entry。</p>
-<ul>
-<li>rebuildJournal(): void</li>
-</ul>
-<p>创建新的日志文件，根据lruEntries集合里的Entry。</p>
+<h4 id="何为认证"><a href="#何为认证" class="headerlink" title="何为认证"></a>何为认证</h4><p>计算机本身无法判断坐在显示器前的使用者的身份。进一步说，也无法确认网络的那头究竟有谁。可见，为了弄清楚是谁在访问服务器，就得让对方的客户端自报家们</p>
+<p>核对的信息通常是指下面这些<br>. 密码:只有本人才会知道的字符串信息<br>. 动态令牌:仅限本人持有的设备内显示的一次性密码<br>. 数字证书:仅限本人（终端）持有的信息<br>. 生物认证:指纹和虹膜等本人的生理特征信息<br>. IC卡等:仅限本人持有的信息</p>
+<p><strong>HTTP使用的认证方式</strong><br>HTTP/1.1使用的认证方式如下所以。<br>. BASIC认证（基本认证）<br>. DIGEST认证（摘要认证）<br>. SSL客户端认证<br>. FormBase认证（基于表单认证）</p>
+<h4 id="BASIC认证"><a href="#BASIC认证" class="headerlink" title="BASIC认证"></a>BASIC认证</h4><p>BASIC认证步骤</p>
+<ol>
+<li>请求的资源需要BASIC认证时服务端会返回code为401状态码，返回带有WWW-Authenticate首部字段响应，</li>
+<li>客户端浏览器接受到401状态码后为了通过BASIC认证，需要用户输入ID和密码，并将以:隔断组成字符串，在经过Base64编码处理</li>
+<li>服务端在接受到包含Authorization请求后，将对认证信息进行确认，如果验证通过就会返回包含RequestURI资源的响应</li>
+</ol>
+<p>BASIC认证虽然采用了Base64编码，但是这不是加密的手段，一旦被窃取后，就会对认证造成破坏，所以SASIC认证的缺陷还是明显的，所以这种的认证已经很少使用了。</p>
+<h4 id="DIGEST认证"><a href="#DIGEST认证" class="headerlink" title="DIGEST认证"></a>DIGEST认证</h4><p>BIGEST认证步骤</p>
+<ol>
+<li>请求需要认证资源时，服务器会随着状态码401响应，返回带有WWW-Authenticate首部字段，该字段内必须包含realm和nonce两个字段信息，客户端将会依靠这两个字段回传认证信息。</li>
+<li>服务端收到状态码，将发送包含username，realm，nonce，uri，response的字段信息。其中realm和nonce就是服务端传过来的值，username是可认证的用户名，uri是Request-URI的值，response是经过MD5加密过后的密码，</li>
+<li>服务端对客户端的字段进行认证。</li>
+</ol>
+<p>DIGEST认证和BASIC认证类似只是对密码进行了保护，防止密码被窃听泄露，但是仍然无法防止用户的伪装。目前的使用场景不多</p>
+<h4 id="SSL客户端认证"><a href="#SSL客户端认证" class="headerlink" title="SSL客户端认证"></a>SSL客户端认证</h4><h5 id="SSL客户端认证的认证步骤"><a href="#SSL客户端认证的认证步骤" class="headerlink" title="SSL客户端认证的认证步骤"></a>SSL客户端认证的认证步骤</h5><ol>
+<li>接收到需要认证的资源的请求，服务端会发送Certificate Request报文，要求客户端提供客户端证书</li>
+<li>用户选择发送的客户端证书后，客户端会把客户端证书信息以Client Certificate报文方式发给服务端</li>
+<li>服务端验证客户端证书通过之后，可以领取到证书内的客户端公开密钥，然后开始HTTPS加密通信</li>
+</ol>
+<h5 id="SSL客户端认证采用双因素认证"><a href="#SSL客户端认证采用双因素认证" class="headerlink" title="SSL客户端认证采用双因素认证"></a>SSL客户端认证采用双因素认证</h5><p>SSL客户端认证只会保证当前用户使用的计算机的身份是合法的，但是无法判断使用者的身份，因此一般都会使用基于表单认证的组合形式来进行双因素认证</p>
+<p>#####SSL客户端认证必要的费用<br>使用SSL客户端认证需要用到客户端证书，而客户端证书是需要支付费用的。</p>
+<h4 id="基于表单认证"><a href="#基于表单认证" class="headerlink" title="基于表单认证"></a>基于表单认证</h4><p>基于表单的认证方法并不是在HTTP协议中定义的。客户端会向服务器上的Web应用程序发送登录信 (Credential)，按登录信息的验证结果认证。</p>
+<h5 id="认证多半为基于表单认证"><a href="#认证多半为基于表单认证" class="headerlink" title="认证多半为基于表单认证"></a>认证多半为基于表单认证</h5><p>由于使用上的便利性及安全性问题，HTTP协议标准提供的BASIC认证和DIGEST认证几乎不怎么使用。另外，SSL客户端认证虽然具有较高度的安全等级，但因为导入及维持费用等问题，还尚未 普及，所以只好使用由Web应用程序各自实现基于表单的认证方式。</p>
+<h5 id="Session管理及Cookie应用"><a href="#Session管理及Cookie应用" class="headerlink" title="Session管理及Cookie应用"></a>Session管理及Cookie应用</h5><p>基于表单认证本身是通过服务器端的Web应用，将客户端发送过来的用户ID和密码与之前登录过的信做匹配来进行认证的。</p>
+<p>但鉴于HTTP是无状态协议，之前已认证成功的用户状态无法通过协议层面保存下来。即无法实现状态管理，因此即使当该用户下一次继续访问，也无法区分他与其他的用户。于是我们会使用Cookie来管理 Session，以弥补HTTP协议中不存在的状态管理功能</p>
+<p>步骤</p>
+<ol>
+<li>客户端把用户ID和密码等登录信息放入报文的实体部分，通常是以POST方法请求发送给服务器</li>
+<li>服务器会发放用以识别用户的Session ID，向客户端返回响应时，会在首部字段 Set-Cookie内写入Session ID，Session ID应使用难以推测的字符串，且服务器端也需要进行有效性的管理，保证其安全性</li>
+<li>客户端接 到从服务器端发来的Session ID后，会将其作做为Cookie保存在本地。下次向服务器发送请求时，浏览器会自动发送Cookie，所以Session ID也随之发送到服务器</li>
+</ol>
 
       
     </div>
@@ -331,13 +317,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/">DiskLruCache Java实现基于LRU的磁盘缓存</a></p>
+        <p><span>本文标题:</span><a href="/2017/06/14/图解HTTP八确认访问用户身份的认证/">图解HTTP八确认访问用户身份的认证</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Joker Mei</a></p>
-        <p><span>发布时间:</span>2016-06-15, 15:18:20</p>
-        <p><span>最后更新:</span>2017-06-08, 15:50:48</p>
+        <p><span>发布时间:</span>2017-06-14, 14:15:22</p>
+        <p><span>最后更新:</span>2017-06-14, 15:23:46</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/" title="DiskLruCache Java实现基于LRU的磁盘缓存">http://mjjde.github.io/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://mjjde.github.io/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/　　作者: Joker Mei" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/06/14/图解HTTP八确认访问用户身份的认证/" title="图解HTTP八确认访问用户身份的认证">http://mjjde.github.io/2017/06/14/图解HTTP八确认访问用户身份的认证/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://mjjde.github.io/2017/06/14/图解HTTP八确认访问用户身份的认证/　　作者: Joker Mei" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -349,16 +335,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/04/25/Android-Binder技术之ServiceManager启动/">
-                    Android-Binder技术之ServiceManager启动
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/03/16/widget和Notification上的RemoteView/">
-                    widget和Notification上的RemoteView
+                <a href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/">
+                    图解HTTP七确保Web安全的HTTPS
                 </a>
             </div>
         
@@ -370,7 +350,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#Util-java"><span class="toc-number">1.</span> <span class="toc-text">Util.java</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#StrictLineReader-java"><span class="toc-number"></span> <span class="toc-text">StrictLineReader.java</span></a>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#何为认证"><span class="toc-number">1.</span> <span class="toc-text">何为认证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BASIC认证"><span class="toc-number">2.</span> <span class="toc-text">BASIC认证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DIGEST认证"><span class="toc-number">3.</span> <span class="toc-text">DIGEST认证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SSL客户端认证"><span class="toc-number">4.</span> <span class="toc-text">SSL客户端认证</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#SSL客户端认证的认证步骤"><span class="toc-number">4.1.</span> <span class="toc-text">SSL客户端认证的认证步骤</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SSL客户端认证采用双因素认证"><span class="toc-number">4.2.</span> <span class="toc-text">SSL客户端认证采用双因素认证</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于表单认证"><span class="toc-number">5.</span> <span class="toc-text">基于表单认证</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#认证多半为基于表单认证"><span class="toc-number">5.1.</span> <span class="toc-text">认证多半为基于表单认证</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Session管理及Cookie应用"><span class="toc-number">5.2.</span> <span class="toc-text">Session管理及Cookie应用</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -406,7 +386,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"DiskLruCache Java实现基于LRU的磁盘缓存　| 清风向阳　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"图解HTTP八确认访问用户身份的认证　| 清风向阳　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -426,15 +406,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/04/25/Android-Binder技术之ServiceManager启动/" title="上一篇: Android-Binder技术之ServiceManager启动">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/03/16/widget和Notification上的RemoteView/" title="下一篇: widget和Notification上的RemoteView">
+            <a href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/" title="下一篇: 图解HTTP七确保Web安全的HTTPS">
                 <i class="fa fa-angle-right"></i>
             </a>
         
