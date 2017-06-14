@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://mjjde.github.io/2017/06/14/图解HTTP八确认访问用户身份的认证/index.html">
 <meta property="og:site_name" content="清风向阳">
 <meta property="og:description" content="某些Web页面只想让特定定的人浏览，或者干脆仅本人可见。为达到这个目标，必不可少的就是认证功。下面我们一起来学习一下认证机制。">
-<meta property="og:updated_time" content="2017-06-14T07:35:06.000Z">
+<meta property="og:updated_time" content="2017-06-14T07:36:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图解HTTP八确认访问用户身份的认证">
 <meta name="twitter:description" content="某些Web页面只想让特定定的人浏览，或者干脆仅本人可见。为达到这个目标，必不可少的就是认证功。下面我们一起来学习一下认证机制。">
@@ -284,7 +284,13 @@
 <li>生物认证:指纹和虹膜等本人的生理特征信息</li>
 <li>IC卡等:仅限本人持有的信息</li>
 </ul>
-<p><strong>HTTP使用的认证方式</strong><br>HTTP/1.1使用的认证方式如下所以。<br>. BASIC认证（基本认证）<br>. DIGEST认证（摘要认证）<br>. SSL客户端认证<br>. FormBase认证（基于表单认证）</p>
+<p><strong>HTTP使用的认证方式</strong><br>HTTP/1.1使用的认证方式如下所以。</p>
+<ul>
+<li>BASIC认证（基本认证）</li>
+<li>DIGEST认证（摘要认证）</li>
+<li>SSL客户端认证</li>
+<li>FormBase认证（基于表单认证）</li>
+</ul>
 <h4 id="BASIC认证"><a href="#BASIC认证" class="headerlink" title="BASIC认证"></a>BASIC认证</h4><p>BASIC认证步骤</p>
 <ol>
 <li>请求的资源需要BASIC认证时服务端会返回code为401状态码，返回带有WWW-Authenticate首部字段响应，</li>
@@ -327,7 +333,7 @@
         <p><span>本文标题:</span><a href="/2017/06/14/图解HTTP八确认访问用户身份的认证/">图解HTTP八确认访问用户身份的认证</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Joker Mei</a></p>
         <p><span>发布时间:</span>2017-06-14, 14:15:22</p>
-        <p><span>最后更新:</span>2017-06-14, 15:35:06</p>
+        <p><span>最后更新:</span>2017-06-14, 15:36:17</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/06/14/图解HTTP八确认访问用户身份的认证/" title="图解HTTP八确认访问用户身份的认证">http://mjjde.github.io/2017/06/14/图解HTTP八确认访问用户身份的认证/</a>
             <span class="copy-path" data-clipboard-text="原文: http://mjjde.github.io/2017/06/14/图解HTTP八确认访问用户身份的认证/　　作者: Joker Mei" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -425,7 +431,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/06/14/图解HTTP八确认访问用户身份的认证/">图解HTTP八确认访问用户身份的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/">图解HTTP七确保Web安全的HTTPS</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/图解Http六HTTP首部/">图解Http六HTTP首部</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/05/图解Http五与HTTP协作的Web服务器/">图解Http五与HTTP协作的Web服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/04/图解Http四返回结果的HTTP状态码/">图解Http四返回结果的HTTP状态码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/29/图解Http三HTTP报文内的HTTP信息/">图解Http三HTTP报文内的HTTP信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/图解Http二简单的HTTP协议/">图解Http二简单的HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/图解Http一了解Web及网络服务/">图解Http一了解Web及网络服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Android-Binder技术之ServiceManager获取/">Android-Binder技术之ServiceManager获取</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/">Android-Binder技术ServiceManager之服务注册请求的发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Fragment弃坑之旅/">Fragment弃坑之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/25/Android-Binder技术之ServiceManager启动/">Android-Binder技术之ServiceManager启动</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/">DiskLruCache Java实现基于LRU的磁盘缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/16/widget和Notification上的RemoteView/">widget和Notification上的RemoteView</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/android事件分发机制/">android事件分发机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/05/Android-IPC通讯Binder和Service的关系/">Android-IPC通讯Binder和Service的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/28/Activity的进阶/">Activity的进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/25/EventBus2-4-0源码分析之Post/">EventBus2-4-0源码分析之Post</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/23/EventBus2-4-0源码分析之订阅/">EventBus2-4-0源码分析之订阅</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/14/Rxjava-简化你的异步调用/">Rxjava-简化你的异步调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/11/Volley-网络通讯框架二之处理请求/">Volley-网络通讯框架二之处理请求</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/11/Volley-网络通讯框架一之发起请求/">Volley 网络通讯框架一之发起请求</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/09/github-hexo构建自己的博客/">github+hexo构建自己的博客</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/06/14/图解HTTP八确认访问用户身份的认证/">图解HTTP八确认访问用户身份的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/">图解HTTP七确保Web安全的HTTPS</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/图解Http六HTTP首部/">图解Http六HTTP首部</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/05/图解Http五与HTTP协作的Web服务器/">图解Http五与HTTP协作的Web服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/04/图解Http四返回结果的HTTP状态码/">图解Http四返回结果的HTTP状态码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/29/图解Http三HTTP报文内的HTTP信息/">图解Http三HTTP报文内的HTTP信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/图解Http一了解Web及网络服务/">图解Http一了解Web及网络服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/图解Http二简单的HTTP协议/">图解Http二简单的HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Android-Binder技术之ServiceManager获取/">Android-Binder技术之ServiceManager获取</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/">Android-Binder技术ServiceManager之服务注册请求的发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Fragment弃坑之旅/">Fragment弃坑之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/25/Android-Binder技术之ServiceManager启动/">Android-Binder技术之ServiceManager启动</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/">DiskLruCache Java实现基于LRU的磁盘缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/16/widget和Notification上的RemoteView/">widget和Notification上的RemoteView</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/android事件分发机制/">android事件分发机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/05/Android-IPC通讯Binder和Service的关系/">Android-IPC通讯Binder和Service的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/28/Activity的进阶/">Activity的进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/25/EventBus2-4-0源码分析之Post/">EventBus2-4-0源码分析之Post</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/23/EventBus2-4-0源码分析之订阅/">EventBus2-4-0源码分析之订阅</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/14/Rxjava-简化你的异步调用/">Rxjava-简化你的异步调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/11/Volley-网络通讯框架二之处理请求/">Volley-网络通讯框架二之处理请求</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/11/Volley-网络通讯框架一之发起请求/">Volley 网络通讯框架一之发起请求</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/09/github-hexo构建自己的博客/">github+hexo构建自己的博客</a></li></ul>
 
 
 
