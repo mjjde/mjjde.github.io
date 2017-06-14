@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。">
-<meta name="keywords" content="DiskLruCache,Java">
+<meta name="description" content="在HTTP协议中有可能存在信息窃听或身份伪装等安全问。使用HTTPS通信机制可以有效的防止这些问题。">
+<meta name="keywords" content="HTTP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DiskLruCache Java实现基于LRU的磁盘缓存">
-<meta property="og:url" content="http://mjjde.github.io/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/index.html">
+<meta property="og:title" content="图解HTTP七确保Web安全的HTTPS">
+<meta property="og:url" content="http://mjjde.github.io/2017/06/09/图解HTTP七确保Web安全的HTTPS/index.html">
 <meta property="og:site_name" content="清风向阳">
-<meta property="og:description" content="DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。">
-<meta property="og:updated_time" content="2017-06-08T07:50:48.000Z">
+<meta property="og:description" content="在HTTP协议中有可能存在信息窃听或身份伪装等安全问。使用HTTPS通信机制可以有效的防止这些问题。">
+<meta property="og:updated_time" content="2017-06-14T03:48:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DiskLruCache Java实现基于LRU的磁盘缓存">
-<meta name="twitter:description" content="DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。">
+<meta name="twitter:title" content="图解HTTP七确保Web安全的HTTPS">
+<meta name="twitter:description" content="在HTTP协议中有可能存在信息窃听或身份伪装等安全问。使用HTTPS通信机制可以有效的防止这些问题。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>DiskLruCache Java实现基于LRU的磁盘缓存 | 清风向阳</title>
+<title>图解HTTP七确保Web安全的HTTPS | 清风向阳</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -232,11 +232,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-DiskLruCache-Java实现基于LRU的磁盘缓存" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-图解HTTP七确保Web安全的HTTPS" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/" class="article-date">
-      <time datetime="2016-06-15T07:18:20.000Z" itemprop="datePublished">2016-06-15</time>
+      <a href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/" class="article-date">
+      <time datetime="2017-06-09T02:34:36.000Z" itemprop="datePublished">2017-06-09</time>
 </a>
 
 
@@ -251,7 +251,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      DiskLruCache Java实现基于LRU的磁盘缓存
+      图解HTTP七确保Web安全的HTTPS
     </h1>
   
 
@@ -262,7 +262,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DiskLruCache/">DiskLruCache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -273,56 +273,41 @@
       
           
         <blockquote>
-<p>DiskLruCache 是基于Java实现的硬盘缓存策略库。使用该库可以将数据，图片等保存在本地，避免了频繁请求服务端的困扰，而且可以极大的提高数据显示的效率。DiskLruCache也被很多的成功的应用使用，如网易新闻，Dropbox和Twitter，而且很多的图片加载库也对缓存策略开放接口，如很有名的Volley，universalimageloader等，我们可以很方便的集成进去。<br><a id="more"></a><br>Github地址 <a href="https://github.com/JakeWharton/DiskLruCache" target="_blank" rel="external">https://github.com/JakeWharton/DiskLruCache</a></p>
+<p>在HTTP协议中有可能存在信息窃听或身份伪装等安全问。使用HTTPS通信机制可以有效的防止这些问题。<br><a id="more"></a></p>
 </blockquote>
-<p>DiskLruCache还是比较简单的，总计也只有3个类。我们来分析下源码。</p>
-<h5 id="Util-java"><a href="#Util-java" class="headerlink" title="Util.java"></a><a href="#Util-java" title="Util.java"></a>Util.java</h5><p>我们先从简单的工具类开始，这个类主要是提供工具方法，</p>
-<ul>
-<li>readFully(Reader reader)：String</li>
+<h4 id="HTTP的缺点"><a href="#HTTP的缺点" class="headerlink" title="HTTP的缺点"></a>HTTP的缺点</h4><ol>
+<li>通信使用明文(不加密),内容可能会被窃听</li>
+<li>不验证通信方的身份，因此有可能遭遇伪装</li>
+<li>无法证明报文的完整性，所以有可能已经遭到更改</li>
+</ol>
+<p>另外Java，PHP等汇编语言在开发WEB应用是也可能产生安全漏洞</p>
+<h5 id="通信使用明文可能会被窃听"><a href="#通信使用明文可能会被窃听" class="headerlink" title="通信使用明文可能会被窃听"></a>通信使用明文可能会被窃听</h5><ul>
+<li><p>TCP/IP是可能被窃听的网络</p>
+<p>  根据TCP/IP通信机制，不管通信的内容有没有被加密，都会被窃听到，只是说加密后的报文被窃听后可能无法破解而对内容无法获取，但是如果是明文的话，窃听到的内容即可被识别。</p>
+</li>
+<li><p>加密处理防止被窃听</p>
+<p>  <strong>通信的加密</strong></p>
+<p>  HTTP 协议中没有加密机制，但可以通过和SSL(Secure Socket Layer，安全套接字)或TLS(Transport Layer Security，安全层传输协议)的组合使用，加密 HTTP 的通信内容。</p>
+<p>  <strong>内容的加密</strong></p>
+<p>  还有一种将参与通信的内容本身加密的方式。由于HTTP协议中没有加密机制，那么就对HTTP协议传输的内容本身加密。即把HTTP报文里所含的内容进行加密处理。</p>
+</li>
 </ul>
-<p>这个方法是将Reader中的数据转换成String，现将Reader中的数据读入Buffer数组中，然后写入StringWriter，调用toString方法，返回数据。</p>
-<ul>
-<li>deleteContents(File): void</li>
+<h5 id="不验证通信方的身份就有可能遭遇伪装"><a href="#不验证通信方的身份就有可能遭遇伪装" class="headerlink" title="不验证通信方的身份就有可能遭遇伪装"></a>不验证通信方的身份就有可能遭遇伪装</h5><ul>
+<li>无法确定请求发送至目标的Web服务器是不是按真实意图返回的响应的那台服务器。有可能是已伪装的Web服务器</li>
+<li>无法确定响应返回到的客户端是否是按真是意图接受响应额那个客户端，有可能是已经伪装的客户端</li>
+<li>无法确定正在通信的对方是否具备访问权限，因为有些WEB服务器上保存了重要的信息，只想发给特定的用户</li>
+<li>无法判断请求是来自何方，出自谁手</li>
+<li>即使是无意义的请求也会照单全收。无法阻止海量请求下的DoS攻击</li>
 </ul>
-<p>删除文件夹中的所有文件</p>
-<ul>
-<li>closeQuietly(Closeable): void</li>
-</ul>
-<p>关闭Closeable接口。</p>
-<h4 id="StrictLineReader-java"><a href="#StrictLineReader-java" class="headerlink" title="StrictLineReader.java"></a><a href="#StrictLineReader-java" title="StrictLineReader.java"></a>StrictLineReader.java</h4><p>用来读取特殊的一行数据</p>
-<ul>
-<li>fillBuf(): void</li>
-</ul>
-<p><strong>in.read(buf, 0, buf.length)</strong>正常的读取一个buf.length长度的数据，但是并不能保证读到的数据就是该长度的数据，有可能只读到了1byte的数据。</p>
-<ul>
-<li>readLine(): String</li>
-</ul>
-<p>一开始pos == end == 0,通过判断调用fillBuf() 读取数据，pos =0; end = 读到的数据长度。接着查找读到的数据中是否有换行符，如果有，就表示我们读到了至少是一个完整的一行（可能会多余一行的数据），那么我们截取一行数据返回，第二次调到readLine(),此时的pos = 第二行的起始位置，在判断pos和end如果第一次读到了第二行的数据 就不在调用fillBuff(),接下来继续对读到的数据遍历查找第二行的回车键，如果存在就返回，不存在就创建一个内容大小是输出流原来读到数据长度+80。用来写入第二行数据。接下来进入死循环，首先用创建的输出流接受第一次读到的出去第一行的数据（也就是不完整的第二行数据），调用fillBuff().读取一次数据，判断是否有回车符(即第二行是否完整),如果存在，就将剩下的第二行数据也写入输出流中，返回，如果没有，继续写入，再次读取数据。</p>
-<p>####DiskLruCache.java</p>
-<p>这个类是库的使用类，入口类，包括3个内部类Snapshot,Editor,Entry。</p>
-<p>Snapshot，包括属性：长度，key，数据，sequenceNumber</p>
-<p>Entry,包括属性：长度，key，sequenceNumber.这个对象是用来存储在内存中的，因为不包括数据，属于占用内存不大</p>
-<p>Editor，用来编辑Entry的，包括属性：Entry，hasErrors(编辑Entry时是否发生错误)，committed是否提交。<br>这个类是用来set缓存的，我们可以调用<strong>newOutputStream(int): OutputStream</strong>来返回一个输出流，写入我们将要缓存的对象。之后调用<strong>commit(): void</strong>,接着调用<strong>completeEdite(Editor,boolean): void</strong>,这个方法是讲保存在dirty的内容移动到clean文件里</p>
-<ul>
-<li>open(File,int,int,long): DiskLruCache</li>
-</ul>
-<p>这方法是库的初始化方法，参数：文件保存路径，app版本，可以保存几分相同文件，最大内存。如果存在备份文件，就用备份文件代替日志文件。第二步创建DiskLruCache实例。第三步读取日志文件。</p>
-<ul>
-<li>readJournal(): void</li>
-</ul>
-<p>通过StrictLineReader读取日志的每一行文件。</p>
-<ul>
-<li>readJournalLine(String): void</li>
-</ul>
-<p>lruEntries集合根据日志中的状态放入或者删除一个Entry实例。状态有3种，remove表示移除，相应的也要在集合里移除，clean，dirty，read。都表示数据存在可以获取。</p>
-<ul>
-<li>processJournal(): void</li>
-</ul>
-<p>清楚不正确的日志，比如只有clean日志在的Entry。</p>
-<ul>
-<li>rebuildJournal(): void</li>
-</ul>
-<p>创建新的日志文件，根据lruEntries集合里的Entry。</p>
+<p><strong>查明对手的证书</strong><br>  虽然使用HTTP协议无法确定通信方，但如果使用SSL则可以。SSL不仅提供加密处理，而且还使用了一种被称为证书的手段，可用于确定方。</p>
+<h5 id="无法证明报文的完整性，可能已经遭到篡改"><a href="#无法证明报文的完整性，可能已经遭到篡改" class="headerlink" title="无法证明报文的完整性，可能已经遭到篡改"></a>无法证明报文的完整性，可能已经遭到篡改</h5><p><strong>接收到的内容可能有误</strong><br>由于HTTP协议无法证明通信的报文完整，因此，在请求或响应发送出之后直到对方接收之前的这段时间内，即使请求或响应的内容遭到了篡改，也没有办法获悉</p>
+<p><strong>如何防止篡改</strong><br>为了有效防止这些弊端，有必要使用HTTPS。SSL提供认证和加密处理及摘要功能。仅靠HTTP确保完整性是非常困难的，因此通过和其他协议使用来实现这个目标</p>
+<h4 id="HTTP-加密-认证-完整性保护-HTTPS"><a href="#HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="HTTP+加密+认证+完整性保护=HTTPS"></a>HTTP+加密+认证+完整性保护=HTTPS</h4><h5 id="HTTPS是身披SSL外壳的HTTP"><a href="#HTTPS是身披SSL外壳的HTTP" class="headerlink" title="HTTPS是身披SSL外壳的HTTP"></a>HTTPS是身披SSL外壳的HTTP</h5><p>HTTPS并非是应用 的一种新协议，通常，HTTP直接和TCP通信。当使用SSL时，则演变成先和SSL通信，再由SSL和TCP通信了。SSL是独立于HTTP的协议，所以不止是HTTP协议，其他运行在应用层的SMTP和Telnet等协议都可配合SSL协议使用</p>
+<h5 id="相互交换密钥的公开密钥加密技术"><a href="#相互交换密钥的公开密钥加密技术" class="headerlink" title="相互交换密钥的公开密钥加密技术"></a>相互交换密钥的公开密钥加密技术</h5><p>现代的加密方法中加密算法是公开的，而密钥却是保密的。通过这种方式得以保持加密方法的安全。加密和解密都会用到密钥。没有密钥就无法对密码解密，反过来说，任何人只要持有密钥就能解密了</p>
+<p><strong>共享密钥加密的困境</strong><br>加密和解密同用一个密钥的方式称为共享密钥加密(Common key crypto system)，也被称做对称密钥加密<br>以共享密钥方式加密时需要将密钥也发给对方，但是如何发送才能不能窃听呢，这是使用该加密的前提条件</p>
+<p><strong>使用两把密钥的公开密钥加密</strong><br>公开密钥加密方式很好地解决了共享密钥加密的困难<br>公开密钥加密使用一对非对称的密钥。一把叫做私有密钥(private key)，另一叫做公开密钥(public key)。顾名思义，私有密钥不能让其它他任何人知道，而公开密钥是可以随意发布，任何人都可以获得。</p>
+<p><strong>采用混合加密机制</strong><br>HTTPS采用共享密钥加密和公开密钥加密两者并用的混合加密机制。若密钥能够实现安全交换，那么有可能会考虑仅使用公开密钥加密来通信。但是公开密钥加密与共享密钥加密相比，其处理速度要慢。<br>所以应充分利用两者各自的优势，将多种方法组合起来用于通信。在交换密钥环节使用公开密钥加密方式，之后的建立通信交换报文阶段则使用共享密钥加密方式。</p>
+<h5 id="证明公开密钥正确性的证书"><a href="#证明公开密钥正确性的证书" class="headerlink" title="证明公开密钥正确性的证书"></a>证明公开密钥正确性的证书</h5><p>为了确保公开密钥可以正确的传递给客户端，需要服务端向第三方的权威机构申请加密的证书，该证书的生成是将服务端的公开密钥发给第三方，第三方使用自己的私钥加密服务端发送过来的公开密钥，由于第三方已经将自己的公开密钥加入到了客户端里，所以客户端就可以去对证书进行解码验证，核实了是第三方权威机构发来的证书，在解码出服务端发过来的公开密码，客户端就可以使用这个公开密钥来和服务端进行通信了。</p>
 
       
     </div>
@@ -331,13 +316,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/">DiskLruCache Java实现基于LRU的磁盘缓存</a></p>
+        <p><span>本文标题:</span><a href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/">图解HTTP七确保Web安全的HTTPS</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Joker Mei</a></p>
-        <p><span>发布时间:</span>2016-06-15, 15:18:20</p>
-        <p><span>最后更新:</span>2017-06-08, 15:50:48</p>
+        <p><span>发布时间:</span>2017-06-09, 10:34:36</p>
+        <p><span>最后更新:</span>2017-06-14, 11:48:44</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/" title="DiskLruCache Java实现基于LRU的磁盘缓存">http://mjjde.github.io/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://mjjde.github.io/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/　　作者: Joker Mei" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/" title="图解HTTP七确保Web安全的HTTPS">http://mjjde.github.io/2017/06/09/图解HTTP七确保Web安全的HTTPS/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://mjjde.github.io/2017/06/09/图解HTTP七确保Web安全的HTTPS/　　作者: Joker Mei" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -349,16 +334,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/04/25/Android-Binder技术之ServiceManager启动/">
-                    Android-Binder技术之ServiceManager启动
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/03/16/widget和Notification上的RemoteView/">
-                    widget和Notification上的RemoteView
+                <a href="/2017/05/06/图解Http六HTTP首部/">
+                    图解Http六HTTP首部
                 </a>
             </div>
         
@@ -370,7 +349,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#Util-java"><span class="toc-number">1.</span> <span class="toc-text">Util.java</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#StrictLineReader-java"><span class="toc-number"></span> <span class="toc-text">StrictLineReader.java</span></a>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP的缺点"><span class="toc-number">1.</span> <span class="toc-text">HTTP的缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#通信使用明文可能会被窃听"><span class="toc-number">1.1.</span> <span class="toc-text">通信使用明文可能会被窃听</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#不验证通信方的身份就有可能遭遇伪装"><span class="toc-number">1.2.</span> <span class="toc-text">不验证通信方的身份就有可能遭遇伪装</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#无法证明报文的完整性，可能已经遭到篡改"><span class="toc-number">1.3.</span> <span class="toc-text">无法证明报文的完整性，可能已经遭到篡改</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-加密-认证-完整性保护-HTTPS"><span class="toc-number">2.</span> <span class="toc-text">HTTP+加密+认证+完整性保护=HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#HTTPS是身披SSL外壳的HTTP"><span class="toc-number">2.1.</span> <span class="toc-text">HTTPS是身披SSL外壳的HTTP</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#相互交换密钥的公开密钥加密技术"><span class="toc-number">2.2.</span> <span class="toc-text">相互交换密钥的公开密钥加密技术</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#证明公开密钥正确性的证书"><span class="toc-number">2.3.</span> <span class="toc-text">证明公开密钥正确性的证书</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -406,7 +385,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"DiskLruCache Java实现基于LRU的磁盘缓存　| 清风向阳　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"图解HTTP七确保Web安全的HTTPS　| 清风向阳　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -426,15 +405,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/04/25/Android-Binder技术之ServiceManager启动/" title="上一篇: Android-Binder技术之ServiceManager启动">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/03/16/widget和Notification上的RemoteView/" title="下一篇: widget和Notification上的RemoteView">
+            <a href="/2017/05/06/图解Http六HTTP首部/" title="下一篇: 图解Http六HTTP首部">
                 <i class="fa fa-angle-right"></i>
             </a>
         
