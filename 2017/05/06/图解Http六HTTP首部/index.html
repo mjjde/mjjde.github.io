@@ -140,11 +140,11 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -236,7 +236,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-图解Http六HTTP首部" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -363,17 +363,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/05/06/图解Http六HTTP首部/">图解Http六HTTP首部</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">Joker Mei</a></p>
-        <p><span>发布时间:</span>2017-05-06, 15:28:43</p>
-        <p><span>最后更新:</span>2017-06-08, 15:49:22</p>
+        <p><span>Title:</span><a href="/2017/05/06/图解Http六HTTP首部/">图解Http六HTTP首部</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Joker Mei</a></p>
+        <p><span>Created:</span>2017-05-06, 15:28:43</p>
+        <p><span>Updated:</span>2017-06-08, 15:49:22</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/05/06/图解Http六HTTP首部/" title="图解Http六HTTP首部">http://mjjde.github.io/2017/05/06/图解Http六HTTP首部/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://mjjde.github.io/2017/05/06/图解Http六HTTP首部/　　作者: Joker Mei" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/05/06/图解Http六HTTP首部/" title="图解Http六HTTP首部">http://mjjde.github.io/2017/05/06/图解Http六HTTP首部/</a>
+            <span class="copy-path" data-clipboard-text="From http://mjjde.github.io/2017/05/06/图解Http六HTTP首部/　　By Joker Mei" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -400,7 +400,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP首部字段"><span class="toc-number">1.</span> <span class="toc-text">HTTP首部字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#首部预览"><span class="toc-number">2.</span> <span class="toc-text">首部预览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-1-1通用首部字段"><span class="toc-number">3.</span> <span class="toc-text">HTTP/1.1通用首部字段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cache-Control"><span class="toc-number">3.1.</span> <span class="toc-text">Cache-Control</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#public"><span class="toc-number">3.1.1.</span> <span class="toc-text">public</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#private"><span class="toc-number">3.1.2.</span> <span class="toc-text">private</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#no-cache"><span class="toc-number">3.1.3.</span> <span class="toc-text">no-cache</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#no-store"><span class="toc-number">3.1.4.</span> <span class="toc-text">no-store</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#s-maxage"><span class="toc-number">3.1.5.</span> <span class="toc-text">s-maxage</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#max-age"><span class="toc-number">3.1.6.</span> <span class="toc-text">max-age</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#min-fresh"><span class="toc-number">3.1.7.</span> <span class="toc-text">min-fresh</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#max-stale"><span class="toc-number">3.1.8.</span> <span class="toc-text">max-stale</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#only-if-cache"><span class="toc-number">3.1.9.</span> <span class="toc-text">only-if-cache</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#must-revalidate"><span class="toc-number">3.1.10.</span> <span class="toc-text">must-revalidate</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#proxy-revalidate"><span class="toc-number">3.1.11.</span> <span class="toc-text">proxy-revalidate</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#no-transform"><span class="toc-number">3.1.12.</span> <span class="toc-text">no-transform</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cache-extension-token"><span class="toc-number">3.1.13.</span> <span class="toc-text">cache-extension token</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Connection"><span class="toc-number">3.2.</span> <span class="toc-text">Connection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Date"><span class="toc-number">3.3.</span> <span class="toc-text">Date</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transfer-Encoding"><span class="toc-number">3.4.</span> <span class="toc-text">Transfer-Encoding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Upgrade"><span class="toc-number">3.5.</span> <span class="toc-text">Upgrade</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Via"><span class="toc-number">3.6.</span> <span class="toc-text">Via</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Warning"><span class="toc-number">3.7.</span> <span class="toc-text">Warning</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求首部字段"><span class="toc-number">4.</span> <span class="toc-text">请求首部字段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept"><span class="toc-number">4.1.</span> <span class="toc-text">Accept</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Charset"><span class="toc-number">4.2.</span> <span class="toc-text">Accept-Charset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Encoding"><span class="toc-number">4.3.</span> <span class="toc-text">Accept-Encoding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Language"><span class="toc-number">4.4.</span> <span class="toc-text">Accept-Language</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Authorization"><span class="toc-number">4.5.</span> <span class="toc-text">Authorization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Expect"><span class="toc-number">4.6.</span> <span class="toc-text">Expect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#From"><span class="toc-number">4.7.</span> <span class="toc-text">From</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Host"><span class="toc-number">4.8.</span> <span class="toc-text">Host</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if-Match"><span class="toc-number">4.9.</span> <span class="toc-text">if-Match</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if-Modified-Since"><span class="toc-number">4.10.</span> <span class="toc-text">if-Modified-Since</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if-None-Match"><span class="toc-number">4.11.</span> <span class="toc-text">if-None-Match</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if-Range"><span class="toc-number">4.12.</span> <span class="toc-text">if-Range</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if-Unmodified-Since"><span class="toc-number">4.13.</span> <span class="toc-text">if-Unmodified-Since</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Max-Forwards"><span class="toc-number">4.14.</span> <span class="toc-text">Max-Forwards</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Proxy-Authorization"><span class="toc-number">4.15.</span> <span class="toc-text">Proxy-Authorization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Range"><span class="toc-number">4.16.</span> <span class="toc-text">Range</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Referer"><span class="toc-number">4.17.</span> <span class="toc-text">Referer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TE"><span class="toc-number">4.18.</span> <span class="toc-text">TE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#User-Agent"><span class="toc-number">4.19.</span> <span class="toc-text">User-Agent</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应首部字段"><span class="toc-number">5.</span> <span class="toc-text">响应首部字段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Ranges"><span class="toc-number">5.1.</span> <span class="toc-text">Accept-Ranges</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Age"><span class="toc-number">5.2.</span> <span class="toc-text">Age</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ETag"><span class="toc-number">5.3.</span> <span class="toc-text">ETag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Location"><span class="toc-number">5.4.</span> <span class="toc-text">Location</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Proxy-Authenticate"><span class="toc-number">5.5.</span> <span class="toc-text">Proxy-Authenticate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Retry-After"><span class="toc-number">5.6.</span> <span class="toc-text">Retry-After</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Server"><span class="toc-number">5.7.</span> <span class="toc-text">Server</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vary"><span class="toc-number">5.8.</span> <span class="toc-text">Vary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WWW-Authenticate"><span class="toc-number">5.9.</span> <span class="toc-text">WWW-Authenticate</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实体首部字段"><span class="toc-number">6.</span> <span class="toc-text">实体首部字段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Allow"><span class="toc-number">6.1.</span> <span class="toc-text">Allow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Encoding"><span class="toc-number">6.2.</span> <span class="toc-text">Content-Encoding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Language"><span class="toc-number">6.3.</span> <span class="toc-text">Content-Language</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Length"><span class="toc-number">6.4.</span> <span class="toc-text">Content-Length</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Location"><span class="toc-number">6.5.</span> <span class="toc-text">Content-Location</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-MD5"><span class="toc-number">6.6.</span> <span class="toc-text">Content-MD5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Range"><span class="toc-number">6.7.</span> <span class="toc-text">Content-Range</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Type"><span class="toc-number">6.8.</span> <span class="toc-text">Content-Type</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Expires"><span class="toc-number">6.9.</span> <span class="toc-text">Expires</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Last-Modified"><span class="toc-number">6.10.</span> <span class="toc-text">Last-Modified</span></a></li></ol></li></ol>
         
@@ -416,10 +416,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -458,21 +458,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/" title="上一篇: 图解HTTP七确保Web安全的HTTPS">
+            <a href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/" title="Pre: 图解HTTP七确保Web安全的HTTPS">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/05/05/图解Http五与HTTP协作的Web服务器/" title="下一篇: 图解Http五与HTTP协作的Web服务器">
+            <a href="/2017/05/05/图解Http五与HTTP协作的Web服务器/" title="Next: 图解Http五与HTTP协作的Web服务器">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/06/14/图解HTTP八确认访问用户身份的认证/">图解HTTP八确认访问用户身份的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/">图解HTTP七确保Web安全的HTTPS</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/图解Http六HTTP首部/">图解Http六HTTP首部</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/05/图解Http五与HTTP协作的Web服务器/">图解Http五与HTTP协作的Web服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/04/图解Http四返回结果的HTTP状态码/">图解Http四返回结果的HTTP状态码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/29/图解Http三HTTP报文内的HTTP信息/">图解Http三HTTP报文内的HTTP信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/图解Http一了解Web及网络服务/">图解Http一了解Web及网络服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/图解Http二简单的HTTP协议/">图解Http二简单的HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Android-Binder技术之ServiceManager获取/">Android-Binder技术之ServiceManager获取</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/">Android-Binder技术ServiceManager之服务注册请求的发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Fragment弃坑之旅/">Fragment弃坑之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/25/Android-Binder技术之ServiceManager启动/">Android-Binder技术之ServiceManager启动</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/">DiskLruCache Java实现基于LRU的磁盘缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/16/widget和Notification上的RemoteView/">widget和Notification上的RemoteView</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/android事件分发机制/">android事件分发机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/05/Android-IPC通讯Binder和Service的关系/">Android-IPC通讯Binder和Service的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/28/Activity的进阶/">Activity的进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/25/EventBus2-4-0源码分析之Post/">EventBus2-4-0源码分析之Post</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/23/EventBus2-4-0源码分析之订阅/">EventBus2-4-0源码分析之订阅</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/14/Rxjava-简化你的异步调用/">Rxjava-简化你的异步调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/11/Volley-网络通讯框架二之处理请求/">Volley-网络通讯框架二之处理请求</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/11/Volley-网络通讯框架一之发起请求/">Volley 网络通讯框架一之发起请求</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/09/github-hexo构建自己的博客/">github+hexo构建自己的博客</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/06/14/图解HTTP八确认访问用户身份的认证/">图解HTTP八确认访问用户身份的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/09/图解HTTP七确保Web安全的HTTPS/">图解HTTP七确保Web安全的HTTPS</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/图解Http六HTTP首部/">图解Http六HTTP首部</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/05/图解Http五与HTTP协作的Web服务器/">图解Http五与HTTP协作的Web服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/04/图解Http四返回结果的HTTP状态码/">图解Http四返回结果的HTTP状态码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/29/图解Http三HTTP报文内的HTTP信息/">图解Http三HTTP报文内的HTTP信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/图解Http二简单的HTTP协议/">图解Http二简单的HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/28/图解Http一了解Web及网络服务/">图解Http一了解Web及网络服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Android-Binder技术之ServiceManager获取/">Android-Binder技术之ServiceManager获取</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/">Android-Binder技术ServiceManager之服务注册请求的发送</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/Fragment弃坑之旅/">Fragment弃坑之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/25/Android-Binder技术之ServiceManager启动/">Android-Binder技术之ServiceManager启动</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/15/DiskLruCache-Java实现基于LRU的磁盘缓存/">DiskLruCache Java实现基于LRU的磁盘缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/16/widget和Notification上的RemoteView/">widget和Notification上的RemoteView</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/android事件分发机制/">android事件分发机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/05/Android-IPC通讯Binder和Service的关系/">Android-IPC通讯Binder和Service的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/28/Activity的进阶/">Activity的进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/25/EventBus2-4-0源码分析之Post/">EventBus2-4-0源码分析之Post</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/23/EventBus2-4-0源码分析之订阅/">EventBus2-4-0源码分析之订阅</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/14/Rxjava-简化你的异步调用/">Rxjava-简化你的异步调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/11/Volley-网络通讯框架二之处理请求/">Volley-网络通讯框架二之处理请求</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/11/Volley-网络通讯框架一之发起请求/">Volley 网络通讯框架一之发起请求</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/09/github-hexo构建自己的博客/">github+hexo构建自己的博客</a></li></ul>
 
 
 
@@ -489,14 +489,14 @@
                 2016-2017 Joker Mei
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -505,7 +505,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -538,9 +538,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
