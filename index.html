@@ -173,7 +173,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-IPC/">Android-IPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DiskLruCache/">DiskLruCache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notification/">Notification</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RemoteView/">RemoteView</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServiceManager/">ServiceManager</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volley/">volley</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/widget/">widget</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事件/">事件</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-IPC/">Android-IPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DiskLruCache/">DiskLruCache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notification/">Notification</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RemoteView/">RemoteView</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServiceManager/">ServiceManager</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volley/">volley</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/widget/">widget</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事件/">事件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
                     </div>
                 </section>
                 
@@ -233,6 +233,88 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-面向对象设计-单一职责原则" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/14/面向对象设计-单一职责原则/" class="article-date">
+      <time datetime="2017-09-14T02:58:52.000Z" itemprop="datePublished">2017-09-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/14/面向对象设计-单一职责原则/">面向对象设计-单一职责原则</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p>单一职责原则被列在面向对象设计之首，当从字面意思来理解视乎很简单，但是何为单一，何为职责，如何把握职责的粒度，这是该原则不好把控的地方，也是带来争议的点。究其原因，每个人对项目的整体把握度不一致，而被认为是同一个职责的类或者方法在其他项目却不尽相同。</p>
+</blockquote>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=31445772&auto=1&height=66"><br></iframe>  
+
+<h3 id="何为单一，何为职责"><a href="#何为单一，何为职责" class="headerlink" title="何为单一，何为职责"></a>何为单一，何为职责</h3><p>职责就是Action，单一就是有且只有一个因素可以改变这个职责或者功能。也就是说一个类或者一个方法只能被一种因素使用，即不会有其他的需求导致这个职责的修改或扩展。</p>
+<p>定义：单一职责原则就是指一个类或者模块应该有且只有一个改变的原因。</p>
+<h3 id="为何要如此"><a href="#为何要如此" class="headerlink" title="为何要如此"></a>为何要如此</h3><p>单一职责规定我们将项目分拆成单一的职责单元，主要的目的是为了代码的复用，实现高内聚低耦合。如果一个类或者一个模块的职责过于复杂，那么这样的类或者模块不大会被高性能的复用，一旦类或者模块中的职责多且相互耦合的话，那么对于这个类或者模块来说就会面临的多次被修改的命运。对于代码的维护也带来的巨大的挑战。</p>
+<p><img src="/images/modem.png" alt=""></p>
+<p>上面的接口根据我们正常的角度可以将它分为2个职责，一个是连接操作，一个是通信操作。</p>
+<p>那么问题来了，这样的2个职责应该被分开吗？</p>
+<p>那就要看项目对于这“两个”职责如何看待了。如果这“两个”职责对于该项目来说只有一个改变因素那就不应该被分开，不然会徒然增加代码的复杂度，过度的设计，如果项目的角度看待的是两个职责，那么对于这个接口来说会有大于一个的因素要求其改变。这样就违反了单一职责原则</p>
+<p>那么我们要如何去做呢</p>
+<p>为了符合该原则，我们需要将这个接口拆分。</p>
+<p><img src="/images/modem_fix.png" alt=""></p>
+<p>如上面的类图我们将之前的Modem接口拆分成IModemManager和IMessageManager的两个接口。这样对于数据连接部分的职责就会有一个唯一的类来管理，接收消息也有专门的类来管理，降低耦合度。</p>
+<h3 id="有问题"><a href="#有问题" class="headerlink" title="有问题"></a>有问题</h3><p>那么对于这样粒度的接口定义是否就是完全正确的呢？我们是否真正的做到了单一职责了呢。</p>
+<p>这个问题需要交给我们自己对当前项目的思考了。</p>
+<p>标准就是这个类是否还存在其他被改变的因素。</p>
+<p>同样的如果你在当前项目中已经不存在其他因素来改变数据连接部分了。也就是接口IModemManager的两个方法都遵从同一个因素改变，那么恭喜你这个就是完美的当单一职责类。那么是否就可以把这个接口使用要其他项目中了呢？</p>
+<p>答案当然是NO</p>
+<p>如果在另一个项目中存在多种拨号方式呢，这样的接口就无法满足单一职责了。所以这一原则是相对的。需要立足在当前项目之上。使用到别处，意义可能就不一样了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>单一职责原则很好理解，难点就是如何去脉搏到项目职责的粒度。这个很关键，将会影响到你对这个类的职责的规划。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-图解HTTP八确认访问用户身份的认证" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -624,71 +706,6 @@
 
 
   
-    <article id="post-图解Http二简单的HTTP协议" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/04/28/图解Http二简单的HTTP协议/" class="article-date">
-      <time datetime="2017-04-28T07:28:43.000Z" itemprop="datePublished">2017-04-28</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/28/图解Http二简单的HTTP协议/">图解Http二简单的HTTP协议</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <blockquote>
-<p>针对HTTP协议结构进行讲解，主要使用HTTP/1.1版本<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/04/28/图解Http二简单的HTTP协议/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-图解Http一了解Web及网络服务" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -754,6 +771,71 @@
 
 
   
+    <article id="post-图解Http二简单的HTTP协议" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/28/图解Http二简单的HTTP协议/" class="article-date">
+      <time datetime="2017-04-28T07:28:43.000Z" itemprop="datePublished">2017-04-28</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/28/图解Http二简单的HTTP协议/">图解Http二简单的HTTP协议</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <blockquote>
+<p>针对HTTP协议结构进行讲解，主要使用HTTP/1.1版本<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/04/28/图解Http二简单的HTTP协议/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Android-Binder技术之ServiceManager获取" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -801,71 +883,6 @@
       
         <p class="article-more-link">
           <a href="/2017/04/26/Android-Binder技术之ServiceManager获取/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Android-Binder技术ServiceManager之服务注册请求的发送" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/" class="article-date">
-      <time datetime="2017-04-26T07:26:06.000Z" itemprop="datePublished">2017-04-26</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/">Android-Binder技术ServiceManager之服务注册请求的发送</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <blockquote>
-<p>ServiceManager的启动已经介绍过了,那么ServiceManager的主要功能是注册和获取服务，那么这些功能的前提都是要能够获取ServiceManager，当然这部分我们也上上篇介绍过了，接下来我们就介绍一下具体的一个服务是如果注册的。当然我们选一个Service就可以了。其他的Service都是类似的。那么我们接下来就说说MediaPlayerService是如何注册的。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Binder/">Binder</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ServiceManager/">ServiceManager</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

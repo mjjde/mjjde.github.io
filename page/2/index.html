@@ -173,7 +173,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-IPC/">Android-IPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DiskLruCache/">DiskLruCache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notification/">Notification</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RemoteView/">RemoteView</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServiceManager/">ServiceManager</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volley/">volley</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/widget/">widget</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事件/">事件</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-IPC/">Android-IPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DiskLruCache/">DiskLruCache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notification/">Notification</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RemoteView/">RemoteView</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServiceManager/">ServiceManager</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volley/">volley</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/widget/">widget</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事件/">事件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
                     </div>
                 </section>
                 
@@ -233,6 +233,71 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Android-Binder技术ServiceManager之服务注册请求的发送" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/" class="article-date">
+      <time datetime="2017-04-26T07:26:06.000Z" itemprop="datePublished">2017-04-26</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/">Android-Binder技术ServiceManager之服务注册请求的发送</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <blockquote>
+<p>ServiceManager的启动已经介绍过了,那么ServiceManager的主要功能是注册和获取服务，那么这些功能的前提都是要能够获取ServiceManager，当然这部分我们也上上篇介绍过了，接下来我们就介绍一下具体的一个服务是如果注册的。当然我们选一个Service就可以了。其他的Service都是类似的。那么我们接下来就说说MediaPlayerService是如何注册的。<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Binder/">Binder</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ServiceManager/">ServiceManager</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/04/26/Android-Binder技术ServiceManager之服务注册请求的发送/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Fragment弃坑之旅" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -801,71 +866,6 @@
       
         <p class="article-more-link">
           <a href="/2015/12/23/EventBus2-4-0源码分析之订阅/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Rxjava-简化你的异步调用" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/12/14/Rxjava-简化你的异步调用/" class="article-date">
-      <time datetime="2015-12-14T07:01:49.000Z" itemprop="datePublished">2015-12-14</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/14/Rxjava-简化你的异步调用/">Rxjava-简化你的异步调用</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <blockquote>
-<p>Rxjava好似一股春风，刮到了各地的论坛，博客，其实Rxjava给我们带来的是一个对编程思维的改变，它改变了我们对异步回调的正常模式，主张链式是最具表达力的方式，方便阅读，代码清晰，调理清楚。我们传统的回调都是采用接口的模式，而Rxjava给我们带来了新的体验，那么我们就好领略下它的魅力吧。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Rxjava/">Rxjava</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2015/12/14/Rxjava-简化你的异步调用/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
