@@ -15,13 +15,13 @@
 <meta property="og:url" content="http://mjjde.github.io/2017/04/25/Android-Binder技术之ServiceManager启动/index.html">
 <meta property="og:site_name" content="清风向阳">
 <meta property="og:description" content="ServiceManager是用户空间的一个守护进程，是用来管理以Binder通讯的Service的大管家。ServiceManager作为Android系统中服务的管理者，具备的功能很明显也会很简单，它的功能主要是当Service启动时将服务注册进来，同时当Client端要获取Service时提供查询和获取的任务,那么作为这样的一个管理者是如何启动的呢，我们接下来说说ServiceManage">
-<meta property="og:updated_time" content="2017-09-04T05:56:22.000Z">
+<meta property="og:updated_time" content="2017-09-15T07:00:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android-Binder技术之ServiceManager启动">
 <meta name="twitter:description" content="ServiceManager是用户空间的一个守护进程，是用来管理以Binder通讯的Service的大管家。ServiceManager作为Android系统中服务的管理者，具备的功能很明显也会很简单，它的功能主要是当Service启动时将服务注册进来，同时当Client端要获取Service时提供查询和获取的任务,那么作为这样的一个管理者是如何启动的呢，我们接下来说说ServiceManage">
   
   
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon_pic.ico">
   
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/style.css">
@@ -91,7 +91,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="Joker" target="_blank" href="//joker-studio.pub">
+                        <a title="Joker"  href="//joker-studio.pub">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/mjjde">
@@ -114,6 +114,13 @@
     </h1>
     <div class="post-title-bar">
       <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/Android技术/">Android技术</a>
+                  
+              </li>
           
         <li>
           <i class="fa fa-calendar"></i>  2017-04-25
@@ -208,7 +215,7 @@
 <h4 id="binder-thread-read"><a href="#binder-thread-read" class="headerlink" title="binder_thread_read()"></a><a href="#binder_thread_read_28_29" title="binder_thread_read()"></a>binder_thread_read()</h4><figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">        <span class="keyword">static</span> int binder_thread_read(<span class="class"><span class="keyword">struct</span> <span class="title">binder_proc</span></span> *<span class="keyword">proc</span>,</div><div class="line">                        <span class="class"><span class="keyword">struct</span> <span class="title">binder_thread</span></span> *thread,</div><div class="line">                        void  __user *buffer, int size,</div><div class="line">                        signed long *consumed, int non_block)</div><div class="line">        &#123;</div><div class="line">        void __user *ptr = buffer + *consumed;</div><div class="line">        void __user *end = buffer + size;</div><div class="line"></div><div class="line">        int ret = <span class="number">0</span>;</div><div class="line">        int wait_for_proc_work;</div><div class="line"></div><div class="line">        <span class="comment">// 如果*consumed=0，则写入BR_NOOP到用户传进来的bwr.read_buffer缓存区</span></div><div class="line">        <span class="keyword">if</span> (*consumed == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (put_user(BR_NOOP, (uint32_t __user *)ptr))</div><div class="line">                <span class="keyword">return</span> -EFAULT;</div><div class="line">            <span class="comment">// 修改指针位置</span></div><div class="line">            ptr += <span class="keyword">sizeof</span>(uint32_t);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        retry:</div><div class="line">        <span class="comment">// 等待proc进程的事务标记。</span></div><div class="line">        <span class="comment">// 当线程的事务栈为空 并且 待处理事务列表为空时，该标记位true。</span></div><div class="line">        wait_for_proc_work = thread-&gt;transaction_stack == NULL &amp;&amp;</div><div class="line">                    list_empty(&amp;thread-&gt;todo);</div><div class="line"></div><div class="line">        ...</div><div class="line"></div><div class="line">        <span class="comment">// 设置线程为"等待状态"</span></div><div class="line">        thread-&gt;looper |= BINDER_LOOPER_STATE_WAITING;</div><div class="line">        <span class="keyword">if</span> (wait_for_proc_work)</div><div class="line">            <span class="keyword">proc</span>-&gt;ready_threads++;</div><div class="line"></div><div class="line">        ...</div><div class="line">        <span class="keyword">if</span> (wait_for_proc_work) &#123;</div><div class="line">            ...</div><div class="line">            <span class="comment">// 设置当前线程的优先级=proc-&gt;default_priority。</span></div><div class="line">            <span class="comment">// 即，当前线程要处理proc的事务，所以设置优先级和proc一样。</span></div><div class="line">            binder_set_nice(<span class="keyword">proc</span>-&gt;default_priority);</div><div class="line">            <span class="keyword">if</span> (non_block) &#123;</div><div class="line">                <span class="comment">// 非阻塞式的读取，则通过binder_has_proc_work()读取proc的事务；</span></div><div class="line">                <span class="comment">// 若没有，则直接返回</span></div><div class="line">                <span class="keyword">if</span> (!binder_has_proc_work(<span class="keyword">proc</span>, thread))</div><div class="line">                    ret = -EAGAIN;</div><div class="line">            &#125; <span class="keyword">else</span></div><div class="line">                <span class="comment">// 阻塞式的读取，则阻塞等待事务的发生。</span></div><div class="line">                ret = wait_event_interruptible_exclusive(<span class="keyword">proc</span>-&gt;wait, binder_has_proc_work(<span class="keyword">proc</span>, thread));</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">        ...</div><div class="line">        &#125;</div><div class="line"><span class="number">1</span>\. consumed为<span class="number">0</span>将会拷贝BR_NOOP到用户空间的read_buffer缓存区</div><div class="line"><span class="number">2</span>\. 目前为止，并没有进程将事务添加到当前线程中；因此，线程的事务栈和待处理事务队列都是为空。于是得到wait_for_proc_work的值是<span class="literal">true</span></div><div class="line"><span class="number">3</span>\. binder_set_nice()的作用是设置当前线程的优先级=<span class="keyword">proc</span>-&gt;default_priority</div><div class="line"><span class="number">4</span>\. 根据上下文，可知non_block为<span class="literal">false</span>。因此调用wait_event_interruptible_exclusive(<span class="keyword">proc</span>-&gt;wait, binder_has_proc_work(<span class="keyword">proc</span>, thread))。 而目前ServiceManager进程中没有待处理事务，因此binder_has_proc_work(<span class="keyword">proc</span>, thread)为<span class="literal">false</span>。从而当前线程进入中断等待状态，等待其它进程将ServiceManager唤醒</div><div class="line"></div><div class="line">到此ServiceManager进入循环等待Client请求状态。</div></pre></td></tr></table></figure>
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2017年09月04日 13:56</p>
+        <p>最后更新： 2017年09月15日 15:00</p>
         <p>原始链接： <a class="post-url" href="/2017/04/25/Android-Binder技术之ServiceManager启动/" title="Android-Binder技术之ServiceManager启动">http://mjjde.github.io/2017/04/25/Android-Binder技术之ServiceManager启动/</a></p>
         <footer>
             <a href="http://mjjde.github.io">
@@ -360,9 +367,9 @@ ServiceManager是用户空间的一个守护进程，是用来管理以Binder通
   }
 </script>
 <div class="sidebar">
-    <div id="sidebar-search" title="Search">
+    <!-- <div id="sidebar-search" title="Search">
         <i class="fa fa-search"></i>
-    </div>
+    </div> -->
     <div id="sidebar-category" title="Categories">
         <i class="fa fa-book"></i>
     </div>
@@ -376,7 +383,7 @@ ServiceManager是用户空间的一个守护进程，是用来管理以Binder通
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            
+            <a class="category-link" href="/categories/Android技术/">Android技术</a><a class="category-link" href="/categories/其他技术/">其他技术</a><a class="category-link" href="/categories/网络技术/">网络技术</a><a class="category-link" href="/categories/设计模式/">设计模式</a>
         </div>
         <div id="sidebar-menu-box-tags">
             <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>

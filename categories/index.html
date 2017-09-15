@@ -3,24 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>图解Http四返回结果的HTTP状态码 | 清风向阳</title>
+  <title>categories | 清风向阳</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="Joker,Joker's Blog" />
   
-  <meta name="description" content="HTTP状态码负责表示客户端HTTP请求的返回结果，标记服务器端的处理是否正常、通知出现的错误等工作">
-<meta name="keywords" content="HTTP">
-<meta property="og:type" content="article">
-<meta property="og:title" content="图解Http四返回结果的HTTP状态码">
-<meta property="og:url" content="http://mjjde.github.io/2017/05/04/图解Http四返回结果的HTTP状态码/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://mjjde.github.io/categories/index.html">
 <meta property="og:site_name" content="清风向阳">
-<meta property="og:description" content="HTTP状态码负责表示客户端HTTP请求的返回结果，标记服务器端的处理是否正常、通知出现的错误等工作">
-<meta property="og:image" content="http://jokero1o.github.io/images/blog_http_4-1.png">
-<meta property="og:updated_time" content="2017-09-15T06:59:59.000Z">
+<meta property="og:updated_time" content="2017-09-15T06:58:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="图解Http四返回结果的HTTP状态码">
-<meta name="twitter:description" content="HTTP状态码负责表示客户端HTTP请求的返回结果，标记服务器端的处理是否正常、通知出现的错误等工作">
-<meta name="twitter:image" content="http://jokero1o.github.io/images/blog_http_4-1.png">
+<meta name="twitter:title" content="categories">
   
   
     <link rel="icon" href="/favicon_pic.ico">
@@ -105,27 +99,20 @@
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap"><article id="post-图解Http四返回结果的HTTP状态码" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main" class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="post-title" itemprop="name">
-      图解Http四返回结果的HTTP状态码
+      categories
     </h1>
     <div class="post-title-bar">
       <ul>
           
-              <li>
-                  <i class="fa fa-book"></i>
-                  
-                      <a href="/categories/网络技术/">网络技术</a>
-                  
-              </li>
-          
         <li>
-          <i class="fa fa-calendar"></i>  2017-05-04
+          <i class="fa fa-calendar"></i>  2017-09-15
         </li>
         <li>
           <i class="fa fa-eye"></i>
@@ -138,44 +125,14 @@
           
       </header>
     
-    <div class="article-entry post-content" itemprop="articleBody">
+    <div class="article-entry " itemprop="articleBody">
       
             
-            <blockquote>
-<p>HTTP状态码负责表示客户端HTTP请求的返回结果，标记服务器端的处理是否正常、通知出现的错误等工作<br><a id="more"></a></p>
-</blockquote>
-<h3 id="状态码告知从服务端返回的请求结果"><a href="#状态码告知从服务端返回的请求结果" class="headerlink" title="状态码告知从服务端返回的请求结果"></a><a href="#u72B6_u6001_u7801_u544A_u77E5_u4ECE_u670D_u52A1_u7AEF_u8FD4_u56DE_u7684_u8BF7_u6C42_u7ED3_u679C" title="状态码告知从服务端返回的请求结果"></a>状态码告知从服务端返回的请求结果</h3><p>状态码是用来告知客户端发送给服务端的请求的处理情况，借助状态码可以知道服务端请求是正常的还是出现了错误</p>
-<p><img src="http://jokero1o.github.io/images/blog_http_4-1.png" alt=""></p>
-<h3 id="2XX成功"><a href="#2XX成功" class="headerlink" title="2XX成功"></a><a href="#2XX_u6210_u529F" title="2XX成功"></a>2XX成功</h3><p>2XX的响应结果表明请求被正常处理了。</p>
-<ol>
-<li>204 No Content<br>该状态码代表服务器接收的请求已成功处理，但在返回的响应报文中不含实体的主体部分。<br>一般在只需要从客户端向服务器发送信息，而对客户端不需要发送新信息内容的情况下使用</li>
-<li>206 Partial Content<br>该状态码表示客户端进行了范围请求，而服务器成功执行了这部分的GET请求。响应报文中包含由 Content-Range 指定范围的实体内容</li>
-</ol>
-<h3 id="3XX重定向"><a href="#3XX重定向" class="headerlink" title="3XX重定向"></a><a href="#3XX_u91CD_u5B9A_u5411" title="3XX重定向"></a>3XX重定向</h3><p>3XX响应结果表明浏览器需要执行某些特殊的处理以正确处理请求。</p>
-<ol>
-<li>301 Moved Permanently<br>永久性重定向。该状态码表示请求的资源已被分配了新的URI，以后应使用资源现在所指的URI</li>
-<li>302 Found<br>临时性重定向。该状态码表示请求的资源已被分配了新的URI，希望用户(本次)能使用新的 URI访问</li>
-<li>303 See Other<br>该状态码表示由于请求对应的资源存在着另一个URI，应使用GET方法定向获取请求的资源</li>
-<li>304 Not Modified<br>该状态码表示客户端发送附带条件的请求时，服务器端允许请求访问资源，但未满足条件的情况</li>
-<li>307 Temporary Redirect<br>临时重定向。该状态码与302 Found有着相同的含义。尽管302标准禁止POST变成GET，但实际使用时大家并不遵守。</li>
-</ol>
-<h3 id="4XX客户端错误"><a href="#4XX客户端错误" class="headerlink" title="4XX客户端错误"></a><a href="#4XX_u5BA2_u6237_u7AEF_u9519_u8BEF" title="4XX客户端错误"></a>4XX客户端错误</h3><p>4XX的响应结果表明客户端是发生错误的原因所在。</p>
-<ol>
-<li>400 Bad Request<br>该状态码表示请求报文中存在语法错误。当错误发生时，需修改请求的内容后再发送请求。</li>
-<li>401 Unauthorized<br>该状态码表示发送的请求需要有通过HTTP认证(BASIC 认证、 DIGEST 认证)的认证信息</li>
-<li>403 Forbidden<br>该状态码表明对请求资源的 问被服务器拒绝了</li>
-<li>404 Not Found<br>该状态码表明服务器上无法找到请求的资源</li>
-</ol>
-<h3 id="5XX-服务器错误"><a href="#5XX-服务器错误" class="headerlink" title="5XX 服务器错误"></a><a href="#5XX__u670D_u52A1_u5668_u9519_u8BEF" title="5XX 服务器错误"></a>5XX 服务器错误</h3><p>5XX的响应结果表明服务器本身发生错误</p>
-<ol>
-<li>500 Internal Server Error<br>该状态码表明服务器端在执行请求时发生了错误。也有可能是Web应用存在的bug或某些临时的错误。</li>
-<li>503 Service Unavailable<br>该状态码表明服务器暂时处于超负荷或正在进行停机维，现在无法处理请求</li>
-</ol>
-
+            
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2017年09月15日 14:59</p>
-        <p>原始链接： <a class="post-url" href="/2017/05/04/图解Http四返回结果的HTTP状态码/" title="图解Http四返回结果的HTTP状态码">http://mjjde.github.io/2017/05/04/图解Http四返回结果的HTTP状态码/</a></p>
+        <p>最后更新： 2017年09月15日 14:58</p>
+        <p>原始链接： <a class="post-url" href="/categories/index.html" title="categories">http://mjjde.github.io/categories/index.html</a></p>
         <footer>
             <a href="http://mjjde.github.io">
                 <img src="/images/avatar.jpg" alt="Joker Mei">
@@ -197,7 +154,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://mjjde.github.io/2017/05/04/图解Http四返回结果的HTTP状态码/&title=《图解Http四返回结果的HTTP状态码》 — 清风向阳&pic=http://mjjde.github.ioimages/avatar.jpg" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://mjjde.github.io/categories/&title=《categories》 — 清风向阳&pic=http://mjjde.github.ioimages/avatar.jpg" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -207,23 +164,22 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://mjjde.github.io/2017/05/04/图解Http四返回结果的HTTP状态码/&title=《图解Http四返回结果的HTTP状态码》 — 清风向阳&source=
-HTTP状态码负责表示客户端HTTP请求的返回结果，标记服务器端的处理是否正常、通知出现的错误等工作" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://mjjde.github.io/categories/&title=《categories》 — 清风向阳&source=" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
           <li>
-            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://mjjde.github.io/2017/05/04/图解Http四返回结果的HTTP状态码/" data-title="Facebook">
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://mjjde.github.io/categories/" data-title="Facebook">
               <i class="fa fa-facebook"></i>
             </a>
           </li>
           <li>
-            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《图解Http四返回结果的HTTP状态码》 — 清风向阳&url=http://mjjde.github.io/2017/05/04/图解Http四返回结果的HTTP状态码/&via=http://mjjde.github.io" data-title="Twitter">
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《categories》 — 清风向阳&url=http://mjjde.github.io/categories/&via=http://mjjde.github.io" data-title="Twitter">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
           <li>
-            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://mjjde.github.io/2017/05/04/图解Http四返回结果的HTTP状态码/" data-title="Google+">
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://mjjde.github.io/categories/" data-title="Google+">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -233,7 +189,7 @@ HTTP状态码负责表示客户端HTTP请求的返回结果，标记服务器端
 <div class="post-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" id="wxShare-close">×</a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://mjjde.github.io/2017/05/04/图解Http四返回结果的HTTP状态码/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://mjjde.github.io/categories/" alt="微信分享二维码">
 </div>
 
 <div class="mask"></div>
@@ -242,13 +198,6 @@ HTTP状态码负责表示客户端HTTP请求的返回结果，标记服务器端
         <ul class="article-footer-menu">
             
             
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/HTTP/" class="color5">HTTP</a>
-      
-  </li>
-
         </ul>
         
     </footer>
@@ -256,32 +205,6 @@ HTTP状态码负责表示客户端HTTP请求的返回结果，标记服务器端
 </article>
 
 
-    <aside class="post-toc-pos post-toc-top" id="post-toc">
-        <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#状态码告知从服务端返回的请求结果"><span class="post-toc-text">状态码告知从服务端返回的请求结果</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2XX成功"><span class="post-toc-text">2XX成功</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3XX重定向"><span class="post-toc-text">3XX重定向</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4XX客户端错误"><span class="post-toc-text">4XX客户端错误</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5XX-服务器错误"><span class="post-toc-text">5XX 服务器错误</span></a></li></ol>
-        </nav>
-    </aside>
-    
-
-<nav id="article-nav">
-  
-    <a href="/2017/05/05/图解Http五与HTTP协作的Web服务器/" id="article-nav-newer" class="article-nav-link-wrap">
-
-      <span class="article-nav-title">
-        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
-        
-          图解Http五与HTTP协作的Web服务器
-        
-      </span>
-    </a>
-  
-  
-    <a href="/2017/04/29/图解Http三HTTP报文内的HTTP信息/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">图解Http三HTTP报文内的HTTP信息</span>
-      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-    </a>
-  
-</nav>
 
 
 
