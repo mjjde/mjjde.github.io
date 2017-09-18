@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>面向对象设计-里氏替换原则 | 清风向阳</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Joker,Joker's Blog" />
+  
+  <meta name="description" content="里氏替换原则的立足点来自于继承和多态。主要为我们的项目带来了解耦可扩展的特性。里氏代换原则是对开闭原则的补充，它讲的是基类和子类的关系。只有当这种关系存在时，里氏代换关系才存在。当然在项目中应该尽可能的使用父类来代替具体的子类。">
+<meta name="keywords" content="设计模式,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象设计-里氏替换原则">
+<meta property="og:url" content="http://mjjde.github.io/2017/09/18/面向对象设计-里氏替换原则/index.html">
+<meta property="og:site_name" content="清风向阳">
+<meta property="og:description" content="里氏替换原则的立足点来自于继承和多态。主要为我们的项目带来了解耦可扩展的特性。里氏代换原则是对开闭原则的补充，它讲的是基类和子类的关系。只有当这种关系存在时，里氏代换关系才存在。当然在项目中应该尽可能的使用父类来代替具体的子类。">
+<meta property="og:image" content="http://mjjde.github.io/images/lsp_1.png">
+<meta property="og:updated_time" content="2017-09-18T09:56:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面向对象设计-里氏替换原则">
+<meta name="twitter:description" content="里氏替换原则的立足点来自于继承和多态。主要为我们的项目带来了解耦可扩展的特性。里氏代换原则是对开闭原则的补充，它讲的是基类和子类的关系。只有当这种关系存在时，里氏代换关系才存在。当然在项目中应该尽可能的使用父类来代替具体的子类。">
+<meta name="twitter:image" content="http://mjjde.github.io/images/lsp_1.png">
+  
+  
+    <link rel="icon" href="/favicon_pic.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Joker&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/avatar.jpg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Joker&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个认真的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Joker"  href="//joker-studio.pub">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/mjjde">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-面向对象设计-里氏替换原则" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      面向对象设计-里氏替换原则
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/设计模式/">设计模式</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2017-09-18
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <blockquote>
+<p>里氏替换原则的立足点来自于继承和多态。主要为我们的项目带来了解耦可扩展的特性。里氏代换原则是对开闭原则的补充，它讲的是基类和子类的关系。只有当这种关系存在时，里氏代换关系才存在。当然在项目中应该尽可能的使用父类来代替具体的子类。<br><a id="more"></a></p>
+</blockquote>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=32957955&auto=0&height=66"></iframe>
+
+
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>里氏替换原则:如果对每一个类型为S的对象o1，都有类型为T的对象o2，使得以T定义的所有程序P在所有的对象o1代换o2时，程序P的行为没有变化，那么类型S是类型T的子类型</p>
+<p>简版定义:在使用父类的地方可以透明的替换成子类，而不影响项目的正常运行。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>长方形和正方形的例子可以很好的介绍里氏替换原则，在数学中，长方形包括了正方形，长方形有宽和高不一定相等，而相等的就是正方形。所以长方形是正方形的父类。</p>
+<p>我们可以定义长方形</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">pulic class Rectangle&#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> <span class="built_in">width</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> <span class="built_in">height</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setWidth(<span class="keyword">int</span> <span class="built_in">width</span>)&#123;</div><div class="line">		<span class="keyword">this</span>.<span class="built_in">width</span> = <span class="built_in">width</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setHeight(<span class="keyword">int</span> <span class="built_in">height</span>)&#123;</div><div class="line">		<span class="keyword">this</span>.<span class="built_in">height</span> = <span class="built_in">height</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">int</span> getWidth()&#123;</div><div class="line">		<span class="built_in">return</span> <span class="keyword">this</span>.<span class="built_in">width</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">int</span> getHeight()&#123;</div><div class="line">		<span class="built_in">return</span> <span class="keyword">this</span>.<span class="built_in">height</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们可以定义子类正方形</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">extends</span> <span class="title">Rectangle</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWidth</span><span class="params">(<span class="keyword">int</span> width)</span></span>&#123;</div><div class="line">		<span class="keyword">super</span>.setWidth(width);</div><div class="line">		<span class="keyword">super</span>.setHeight(width);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHeight</span><span class="params">(<span class="keyword">int</span> height)</span></span>&#123;</div><div class="line">		<span class="keyword">super</span>.setHeight(height);</div><div class="line">		<span class="keyword">super</span>.setWidth(heoght);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> class Test&#123;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> zoom(Rectangle rectangle,<span class="keyword">int</span> <span class="built_in">width</span>,<span class="keyword">int</span> <span class="built_in">height</span>)&#123;</div><div class="line">		rectangle.setWidth(rectangle.getWidth + <span class="built_in">width</span>);</div><div class="line">		rectangle.setHeight(rectangle.getHeight + <span class="built_in">height</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于上面的代码我们传入的是长方形是没有问题的，那么如果我们传入了正方形，在宽和高不等时我们无法转换成一个正方形。</p>
+<p>这样就违反了我们的里氏替换原则。</p>
+<p>我们在定义父类的时候尽可能的只定义通用的属性或者方法，父类不代表任何一种类型。具体的实现交给子类。<br>尽量将通用的方法封装进入父类，或者让子类实现差异性。</p>
+<p><img src="/images/lsp_1.png" alt=""></p>
+<p>按上图的设计，将通用属性方法封装到专门的父类Base里，将通用方法各自实现。</p>
+<p>在使用的时候如下</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span>&#123;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">zoom</span>(<span class="params">Base <span class="keyword">base</span>,<span class="keyword">int</span> width,<span class="keyword">int</span> height</span>)</span>&#123;</div><div class="line">	<span class="keyword">base</span>.zoom(width,height);</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>封装只有的zoom就用了子类各自的实现，这里就可以安全的替换成任何子类</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们在定义父类的时候应该基于抽象，而不能用具体的类来做父类，这样就可能导致父类与子类的差异的方法被各自覆写，导致父类不具有父类特性。子类一直在覆写方法。同样这样也无法满足里氏替换原则。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2017年09月18日 17:56</p>
+        <p>原始链接： <a class="post-url" href="/2017/09/18/面向对象设计-里氏替换原则/" title="面向对象设计-里氏替换原则">http://mjjde.github.io/2017/09/18/面向对象设计-里氏替换原则/</a></p>
+        <footer>
+            <a href="http://mjjde.github.io">
+                <img src="/images/avatar.jpg" alt="Joker Mei">
+                Joker Mei
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://mjjde.github.io/2017/09/18/面向对象设计-里氏替换原则/&title=《面向对象设计-里氏替换原则》 — 清风向阳&pic=/images/designs.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://mjjde.github.io/2017/09/18/面向对象设计-里氏替换原则/&title=《面向对象设计-里氏替换原则》 — 清风向阳&source=
+里氏替换原则的立足点来自于继承和多态。主要为我们的项目带来了解耦可扩展的特性。里氏代换原则是对开闭原则的补充，它讲的是基类和子类的关系。只有当这种关系存..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://mjjde.github.io/2017/09/18/面向对象设计-里氏替换原则/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《面向对象设计-里氏替换原则》 — 清风向阳&url=http://mjjde.github.io/2017/09/18/面向对象设计-里氏替换原则/&via=http://mjjde.github.io" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://mjjde.github.io/2017/09/18/面向对象设计-里氏替换原则/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://mjjde.github.io/2017/09/18/面向对象设计-里氏替换原则/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/设计模式/" class="color5">设计模式</a>
+      
+    <a href="/tags/java/" class="color5">java</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定义"><span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#例子"><span class="post-toc-text">例子</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/18/面向对象设计-开闭原则/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">面向对象设计-开闭原则</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2017 Joker Mei<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://mjjde.github.io",
+      animate: false,
+      isHome: false,
+      share: true
+  }
+</script>
+<div class="sidebar">
+    <!-- <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div> -->
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Android技术/">Android技术</a><a class="category-link" href="/categories/其他技术/">其他技术</a><a class="category-link" href="/categories/网络技术/">网络技术</a><a class="category-link" href="/categories/设计模式/">设计模式</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div id="mobile-header-menu-container">
+        <span class="title">Menu</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>
