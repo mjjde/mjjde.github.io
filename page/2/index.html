@@ -100,6 +100,72 @@
       <div class="outer">
         <section id="main" class="body-wrap">
   
+    <article id="post-Android-Binder技术之ServiceManager获取" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/26/Android-Binder技术之ServiceManager获取/"  >Android-Binder技术之ServiceManager获取</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/Android技术/">Android技术</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2017/04/26/Android-Binder技术之ServiceManager获取/" >
+                
+                <img src="http://mjjde.github.io/images/banner.jpg" alt="Android-Binder技术之ServiceManager获取" title="Android-Binder技术之ServiceManager获取">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                
+既然ServiceManager已经启动了，那么就可以被获取了，获取的方法是defaultServiceManager(),注意这个方法返回的并不是ServiceManager进程，而是一个用C写在底层的IServiceManager对象。那么服务端需要获取ServiceManager来注册对象，也就是通过操作IServiceManager对象进行的，同样客户端需要获取ServiceManager注册过的Service，也是通过操作IServiceManager来进行的。接下来我们就来分析一下defaultServiceManager()方法。
+            </p>
+        </div>
+      
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2017-04-26</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/Android/" class="color3">Android</a>
+      
+    <a href="/tags/Binder/" class="color2">Binder</a>
+      
+    <a href="/tags/ServiceManager/" class="color5">ServiceManager</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2017/04/26/Android-Binder技术之ServiceManager获取/#more" class="article-more-link" >更多阅读&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
     <article id="post-Android-Binder技术ServiceManager之服务注册请求的发送" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -678,68 +744,6 @@ Activity的生命周期变化有两种情况，一个是人为，一个是系统
 
 
   
-    <article id="post-EventBus2-4-0源码分析之订阅" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/23/EventBus2-4-0源码分析之订阅/"  >EventBus2-4-0源码分析之订阅</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/Android技术/">Android技术</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2015/12/23/EventBus2-4-0源码分析之订阅/" >
-                
-                <img src="http://mjjde.github.io/images/banner.jpg" alt="EventBus2-4-0源码分析之订阅" title="EventBus2-4-0源码分析之订阅">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                
-EventBus最新的版本是3.0了但是beta版，所有我们还是按2.4分析源码是如何工作的，EventBus是一个简化Activities, Fragments, Threads, Services等等直接通信的框架。GitHub上的原文：Android optimized event bus that simplifies communication between Activities, Fragments, Threads, Services, etc. Less code, better quality。
-            </p>
-        </div>
-      
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2015-12-23</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/Rxjava/" class="color2">Rxjava</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2015/12/23/EventBus2-4-0源码分析之订阅/#more" class="article-more-link" >更多阅读&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -800,7 +804,7 @@ EventBus最新的版本是3.0了但是beta版，所有我们还是按2.4分析�
             <a class="category-link" href="/categories/Android技术/">Android技术</a><a class="category-link" href="/categories/其他技术/">其他技术</a><a class="category-link" href="/categories/网络技术/">网络技术</a><a class="category-link" href="/categories/设计模式/">设计模式</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/java/" style="font-size: 12.5px;">java</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a> <a href="/tags/设计模式/" style="font-size: 12.5px;">设计模式</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
