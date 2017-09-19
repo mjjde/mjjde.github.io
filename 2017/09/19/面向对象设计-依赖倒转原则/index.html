@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>面向对象设计-依赖倒转原则 | 清风向阳</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Joker,Joker's Blog" />
+  
+  <meta name="description" content="依赖倒转原则是提供项目稳定易维护的主要手段之一，也是面向对象设计的主要实现方式之一。该原则要求我们面向抽象or接口来编程。这和里氏替换原则相呼应。">
+<meta name="keywords" content="设计模式,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象设计-依赖倒转原则">
+<meta property="og:url" content="http://mjjde.github.io/2017/09/19/面向对象设计-依赖倒转原则/index.html">
+<meta property="og:site_name" content="清风向阳">
+<meta property="og:description" content="依赖倒转原则是提供项目稳定易维护的主要手段之一，也是面向对象设计的主要实现方式之一。该原则要求我们面向抽象or接口来编程。这和里氏替换原则相呼应。">
+<meta property="og:updated_time" content="2017-09-19T08:31:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面向对象设计-依赖倒转原则">
+<meta name="twitter:description" content="依赖倒转原则是提供项目稳定易维护的主要手段之一，也是面向对象设计的主要实现方式之一。该原则要求我们面向抽象or接口来编程。这和里氏替换原则相呼应。">
+  
+  
+    <link rel="icon" href="/favicon_pic.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Joker&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/avatar.jpg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Joker&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个认真的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Joker"  href="//joker-studio.pub">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/mjjde">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-面向对象设计-依赖倒转原则" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      面向对象设计-依赖倒转原则
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/设计模式/">设计模式</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2017-09-19
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <blockquote>
+<p>依赖倒转原则是提供项目稳定易维护的主要手段之一，也是面向对象设计的主要实现方式之一。该原则要求我们面向抽象or接口来编程。这和里氏替换原则相呼应。</p>
+</blockquote>
+<a id="more"></a>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=454131810&auto=1&height=66"></iframe>
+
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>依赖倒转原则:抽象不应依赖具体,具体应该依赖抽象。</p>
+<p>抽象：即高度抽象出来接口或者抽象类，不能执行实例化操作</p>
+<p>具体：即实现了抽象出来的接口或者抽象类的实体类，可以执行实例化</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>对于一个IM聊天系统，发送的消息我们可以定义成Message</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TxtMessage</span>&#123;</span></div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getContent</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"文本消息"</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>消息发送器SendMessage</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SendMessage</span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span>(<span class="params">TxtMessage message</span>)</span>&#123;</div><div class="line">		System.<span class="keyword">out</span>.println(message.getContent());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于上面代码的设计，我们如果需要提供其他消息的支持，比如说图片，那么我们需要修改SendMessage类。这样就不易于项目的稳定性，同时也违反了我们的面向对象设计原则-依赖倒转原则。</p>
+<p>那么如果我们抽象出IMessage接口</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">interface</span> <span class="title">IMessage</span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getContent</span>(<span class="params"></span>)</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于的文本消息实现该接口</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">class</span> <span class="title">TxtMessage</span> <span class="keyword"><span class="keyword">implements</span> <span class="type">IMessage</span></span></span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getContent()&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"文本消息"</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>图片消息</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">class</span> <span class="title">ImageMessage</span> <span class="keyword"><span class="keyword">implements</span> <span class="type">IMessage</span></span></span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getContent()&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"图片消息"</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么在使用的时候我们直接依赖IMessage接口即可</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SendMessage</span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span>(<span class="params">IMessage message</span>)</span>&#123;</div><div class="line">		System.<span class="keyword">out</span>.println(message.getContent());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样以后再次增加起亚的类型的消息的时候我们只要去实现IMessage接口就可以使用了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>依赖倒转原则其实就是要求我们尽可能的去提区共同的特性来建立接口或抽象类，我们则直接面向抽象编程，对于该共同的特性是如何实现的，我们在编码的时候不用关注，只要能给我们正确的返回，这样就对实现类进行解耦，对每个实现类需要就扩展，不需要就不写。 这样的项目就会有很大的灵活度。而且我们是面向的接口来编程的，对这里的源代码几乎在以后的维护中都不会被修改的。<br>这里就涉及到了多个设计原则。</p>
+<p>所以设计原则都是相辅相成的。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2017年09月19日 16:31</p>
+        <p>原始链接： <a class="post-url" href="/2017/09/19/面向对象设计-依赖倒转原则/" title="面向对象设计-依赖倒转原则">http://mjjde.github.io/2017/09/19/面向对象设计-依赖倒转原则/</a></p>
+        <footer>
+            <a href="http://mjjde.github.io">
+                <img src="/images/avatar.jpg" alt="Joker Mei">
+                Joker Mei
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://mjjde.github.io/2017/09/19/面向对象设计-依赖倒转原则/&title=《面向对象设计-依赖倒转原则》 — 清风向阳&pic=/images/designs.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://mjjde.github.io/2017/09/19/面向对象设计-依赖倒转原则/&title=《面向对象设计-依赖倒转原则》 — 清风向阳&source=
+依赖倒转原则是提供项目稳定易维护的主要手段之一，也是面向对象设计的主要实现方式之一。该原则要求我们面向抽象or接口来编程。这和里氏替换原则相呼应。
+" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://mjjde.github.io/2017/09/19/面向对象设计-依赖倒转原则/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《面向对象设计-依赖倒转原则》 — 清风向阳&url=http://mjjde.github.io/2017/09/19/面向对象设计-依赖倒转原则/&via=http://mjjde.github.io" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://mjjde.github.io/2017/09/19/面向对象设计-依赖倒转原则/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://mjjde.github.io/2017/09/19/面向对象设计-依赖倒转原则/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/设计模式/" class="color5">设计模式</a>
+      
+    <a href="/tags/java/" class="color5">java</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定义"><span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#例子"><span class="post-toc-text">例子</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/18/面向对象设计-里氏替换原则/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">面向对象设计-里氏替换原则</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2017 Joker Mei<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://mjjde.github.io",
+      animate: false,
+      isHome: false,
+      share: true
+  }
+</script>
+<div class="sidebar">
+    <!-- <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div> -->
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Android技术/">Android技术</a><a class="category-link" href="/categories/其他技术/">其他技术</a><a class="category-link" href="/categories/网络技术/">网络技术</a><a class="category-link" href="/categories/设计模式/">设计模式</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 17.5px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 17.5px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 15px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 15px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12.5px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a> <a href="/tags/设计模式/" style="font-size: 17.5px;">设计模式</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div id="mobile-header-menu-container">
+        <span class="title">Menu</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>
