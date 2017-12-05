@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>成熟的组件化开发 | 清风向阳</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Joker,Joker's Blog" />
+  
+  <meta name="description" content="组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。  什么是组件化开发现在的项目一般有自己的纵向划分，下层是自己的library底层库，比如push，log等等通用的SDK库。那么上层就是业务代码，是一大块的业务代码的杂糅。">
+<meta name="keywords" content="android,组件化,gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="成熟的组件化开发">
+<meta property="og:url" content="http://mjjde.github.io/2017/11/28/成熟的组件化开发/index.html">
+<meta property="og:site_name" content="清风向阳">
+<meta property="og:description" content="组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。  什么是组件化开发现在的项目一般有自己的纵向划分，下层是自己的library底层库，比如push，log等等通用的SDK库。那么上层就是业务代码，是一大块的业务代码的杂糅。">
+<meta property="og:updated_time" content="2017-12-05T06:44:58.089Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="成熟的组件化开发">
+<meta name="twitter:description" content="组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。  什么是组件化开发现在的项目一般有自己的纵向划分，下层是自己的library底层库，比如push，log等等通用的SDK库。那么上层就是业务代码，是一大块的业务代码的杂糅。">
+  
+  
+    <link rel="icon" href="/favicon_pic.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Joker&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/avatar.jpg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Joker&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个认真的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Joker"  href="//joker-studio.pub">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/mjjde">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-成熟的组件化开发" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      成熟的组件化开发
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2017-11-28
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <blockquote>
+<p>组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。</p>
+</blockquote>
+<h4 id="什么是组件化开发"><a href="#什么是组件化开发" class="headerlink" title="什么是组件化开发"></a>什么是组件化开发</h4><p>现在的项目一般有自己的纵向划分，下层是自己的library底层库，比如push，log等等通用的SDK库。那么上层就是业务代码，是一大块的业务代码的杂糅。如果相对小型的项目，开发人员不多的情况下，这样的开发模式视乎是有自己的优势的。</p>
+<p>但是一旦项目慢慢的庞大起来，这样的开发模式似乎力不从心了。常常因为一个问题的修改而翻遍整个项目代码。也经常因为等待另一个人的工作而耽误了自己的时间，其实这是在划分任务的时候，没有一个很清晰的业务划分，而导致了成员内的工作交杂互相依赖了。</p>
+<p>那么如果去解决这一的问题呢。显然在个开发者论坛，博客上也给出了相应的方案，那就是增加一次横向划分，在原来的纵向架构上对业务层进行横向的按业务模块再次划分。 这样的开发模式已经成为了一种趋势，为大型项目开发提供更好的项目管理和业务开发的手段。</p>
+<h4 id="Git-amp-Repo"><a href="#Git-amp-Repo" class="headerlink" title="Git &amp; Repo"></a>Git &amp; Repo</h4><p>在如何建立横向开发时我们先要考虑怎么样存放或者说是管理众多的Project.在我们之前只需要使用一个git地址就可以实现对项目的管理。那么当一个项目变成了多个项目的时候我们又要怎么进行项目的版本控制呢?</p>
+<p>既然Git是处理一个项目的管理工具，那么有没有一个可以管理多个项目版本的工具呢。</p>
+<p>Repo就是为满足上面需求的工具。那么Repo 和 Git 有什么区别和联系呢</p>
+<ol>
+<li>Repo是谷歌用Python脚本写的调用git的一个脚本。主要是用来下载、管理Android项目的软件仓库（也就是说Repo是用来管理给Git管理的一个个仓库的）</li>
+<li>Git是一个开源的分布式版本控制系统，用以有效、高速的处理从很小到非常大的项目版本管理。</li>
+</ol>
+<p>通常的小型的项目只需要一个仓库就可以解决了，即使是分出来了几个lib。那么对与多人维护项目的不同模块的代码的时候都是在操作同一个仓库，必定会造成相互干扰的情况。</p>
+<p>那么对于组件化开发来说，其目的之一就是避免开发时的相互干扰，所以建立一系列的仓库是变的可需求的行为。</p>
+<p>那么管理这些仓库最好的工具就是repo。将项目中的模块分拆出来建入不同的仓库去管理。</p>
+<p>那么一个项目就会拆成类似下图的形式。</p>
+<h4 id="如何管理模块module"><a href="#如何管理模块module" class="headerlink" title="如何管理模块module"></a>如何管理模块module</h4><p>这些被拆分出来的模块必定是被定义为 <code>apply plugin: &#39;com.android.library&#39;</code>,其创建实际是和在主工程上右键建立module一致，只是我们创建的模块module是copy出来与主项目同一目录了。这里要注意copy的时候需要在主工程的module settings里移除该module。</p>
+<p>那么既然建立了模块的project，也已经有了相应的代码管理工具，那么主工程如何去导入呢。</p>
+<p>android的导入module的工作是在settings.gradle中。</p>
+<p>settings.gradle去导入module的主要API是 <code>include &quot;:moduleName&quot;</code>,但是我们现在的module的目录已经不在主项目里了，那么就必须向module的项目的目录加入到主项目主，对于的API是 <code>project(&quot;:moduleName&quot;).projectDir = new File(rootDir.parent, moduleName)</code>,这样我们就将拆分出来的模块导入了主项目中。</p>
+<h4 id="模块module的依赖管理"><a href="#模块module的依赖管理" class="headerlink" title="模块module的依赖管理"></a>模块module的依赖管理</h4><p>上面我们知道了如何将新建的模块module导入主工程中，但是并没用产生任何的依赖关系。我们知道如果要想依赖本地lib的话我们需要到<code>build.gradle</code>里使用<code>project(&quot;:moduleName&quot;)</code>，依赖远程的我们使用<code>compile(&quot;:aar&quot;)</code>。ok，我们试想一下。现在的主项目A中用两个模块module B和C。让后模块B和C又同时的依赖的D，那么在主项目中通过<code>compile(&quot;:B&quot;)</code>,<code>compile(&quot;:C&quot;)</code>,来依赖了这两个模块，在sync的时候编译器告诉我们项目依赖重复了。</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">  A</div><div class="line">B   <span class="keyword">C</span></div><div class="line"><span class="keyword">D</span>   <span class="keyword">D</span></div></pre></td></tr></table></figure>
+<p>显然这种形式的依赖必然是重复的，那么我们又改如何去处理模块间的依赖呢。</p>
+<p>我们可以建立自己的依赖机制，将依赖去重后手动的compile。那么我们如何去实现了。</p>
+<p>要知道的知识是gradle脚本中可以完成很多事情，定义自己的依赖关键字。</p>
+<ul>
+<li>我们在主工程下的<code>build.gradle</code>定义如下关键字：</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">subprojects</span>&#123;</div><div class="line">	<span class="keyword">configurations</span>&#123;</div><div class="line">		defcompile</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>然后在依赖的时候使用该关键字。</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">defcompile</span> <span class="string">"xxxxxx"</span></div></pre></td></tr></table></figure>
+<ul>
+<li>收集我们定义的依赖<br>同样是在我们主工程下的<code>build.gradle</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">subprojects&#123;</div><div class="line">	configurations&#123;</div><div class="line">		defcompile</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">//利用HashSet去重</span></div><div class="line">	afterEvaluate&#123;</div><div class="line">		def dependencyList = <span class="keyword">new</span> HashSet&lt;<span class="built_in">String</span>&gt;()</div><div class="line">		project.configurations.getByName(<span class="string">'defcompile'</span>).incoming.resolutionResult.allComponents.each &#123;</div><div class="line">			<span class="keyword">if</span> (!it.toString().startsWith(<span class="string">'project'</span>)) &#123;</div><div class="line">				dependencyList += it.toString()</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	dependencyList.each &#123; <span class="built_in">module</span> -&gt;</div><div class="line">		<span class="built_in">String</span> groupName = <span class="built_in">module</span>.split(<span class="string">':'</span>)[<span class="number">0</span>]</div><div class="line">		<span class="built_in">String</span> moduleName = <span class="built_in">module</span>.split(<span class="string">':'</span>)[<span class="number">1</span>]</div><div class="line">		<span class="built_in">String</span>[] groupNames = groupName.split(<span class="string">'\\.'</span>)</div><div class="line">		<span class="keyword">if</span> (groupNames.length &gt; <span class="number">2</span>) &#123;</div><div class="line">			<span class="built_in">String</span> projectName = <span class="string">"android-$&#123;groupNames[2]&#125;-$&#123;moduleName&#125;"</span>.toString()</div><div class="line">			<span class="keyword">if</span> (projectName <span class="keyword">in</span> projectList) &#123;</div><div class="line">				project.evaluationDependsOn(<span class="string">":$&#123;projectName&#125;"</span>)</div><div class="line">				project(<span class="string">":$&#123;projectName&#125;"</span>).configurations.getByName(<span class="string">'defcompile'</span>).incoming.resolutionResult.allComponents.each &#123;</div><div class="line">					dependencyList -= it.toString() <span class="comment">//只去处理当前项目的依赖</span></div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	dependencyList.each &#123; <span class="built_in">module</span> -&gt;</div><div class="line">		<span class="built_in">String</span> groupName = <span class="built_in">module</span>.split(<span class="string">':'</span>)[<span class="number">0</span>]</div><div class="line">		<span class="built_in">String</span> moduleName = <span class="built_in">module</span>.split(<span class="string">':'</span>)[<span class="number">1</span>]</div><div class="line">		<span class="built_in">String</span>[] groupNames = groupName.split(<span class="string">'\\.'</span>)</div><div class="line">		<span class="keyword">if</span> (groupNames.length &gt; <span class="number">2</span>) &#123;</div><div class="line">			<span class="built_in">String</span>[] temps = moduleName.split(<span class="string">"_"</span>);</div><div class="line">			<span class="keyword">if</span> (temps.length &gt; <span class="number">2</span>) &#123;</div><div class="line">				moduleName = temps[<span class="number">0</span>] + <span class="string">"_"</span> + temps[<span class="number">1</span>]</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">String</span> projectName = <span class="string">"android-$&#123;groupNames[2]&#125;-$&#123;moduleName&#125;"</span>.toString()</div><div class="line">			<span class="keyword">if</span> (projectName <span class="keyword">in</span> projectList) &#123;</div><div class="line">				project.dependencies.add(<span class="string">'compile'</span>, project(<span class="string">":$&#123;projectName&#125;"</span>))</div><div class="line">			&#125;<span class="keyword">else</span>&#123;</div><div class="line">				project.dependencies.add(<span class="string">'compile'</span>, <span class="built_in">module</span>, &#123;</div><div class="line">					transitive = <span class="literal">false</span></div><div class="line">				&#125;)</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			project.dependencies.add(<span class="string">'compile'</span>, <span class="built_in">module</span>, &#123;</div><div class="line">				transitive = <span class="literal">false</span></div><div class="line">			&#125;)</div><div class="line">		&#125;</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们看到通过<code>defcompile</code>定义的远程依赖，我们都会对它的依赖做一次去重，这样就保证了依赖的单一性。</p>
+<p>ok，既然可以确保远程依赖（也就是组件模块的aar）的单一性问题，那么接下来就是如何进行本地调试了。</p>
+<h4 id="本地调试"><a href="#本地调试" class="headerlink" title="本地调试"></a>本地调试</h4><p>我们知道模块化已经不具备本地可调试功能，因为没有将本地的lib直接通过<code>project(&quot;:moduleName&quot;)</code>来依赖，那么我们怎么解决了，其实上面的代码已经包括了这部分的内容。</p>
+<p>我们会在主项目下创建个文件例如 <code>modulelist</code>,里面存放着我们需要调试的本地项目名。</p>
+<p>在主工程的build.gradle中读取</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">subprojects<span class="selector-class">.each</span> &#123;</div><div class="line">    <span class="keyword">if</span> (ext<span class="selector-class">.currProject</span> != it.name) &#123;</div><div class="line">        ext<span class="selector-class">.projectList</span> += it<span class="selector-class">.name</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，在我们解析<code>defcompile</code>的时候如果判断是在<code>ext.projectList</code>中的话就使用<code>project(&quot;:moduleName&quot;)</code>来依赖，else 使用compile来处理。这样的就可以进行本地调试了。而不用去修改其他东西，只需要对<code>modulelist</code>来维护即可。</p>
+<h4 id="封版策略"><a href="#封版策略" class="headerlink" title="封版策略"></a>封版策略</h4><p>在我们开发完要封版的时候，其实我们是要进行aar版本的控制的，即在开发阶段我们使用<code>+</code>的方式来依赖最新的aar，那么在我们锁版的时候，需要指向一个具体的版本，那么我们在代码里面直接去修改必定是不合适的。繁琐而又易错。</p>
+<p>我们对于锁版依然是采用文件的形式来进行的。我们同样在主工程下创建文本<code>forcemodulelist</code> 来进行版本的锁定。</p>
+<p>需要使用如下进行解析</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//主工程build.gradle</span></div><div class="line"><span class="keyword">configurations</span>.all &#123;</div><div class="line">	resolutionStrategy.cacheChangingModulesFor(<span class="number">0</span>, TimeUnit.SECONDS)</div><div class="line">	resolutionStrategy.cacheDynamicVersionsFor(<span class="number">0</span>, TimeUnit.SECONDS)</div><div class="line">	<span class="keyword">def</span> forceModuleListFileName = <span class="string">"forcemodulelist"</span></div><div class="line">	<span class="keyword">def</span> forceModuleListFile = <span class="keyword">new</span> <span class="keyword">File</span>(<span class="keyword">project</span>.rootDir, forceModuleListFileName)</div><div class="line">	<span class="keyword">if</span> (forceModuleListFile.exists()) &#123;</div><div class="line">		forceModuleListFile.<span class="keyword">eachLine</span> &#123; line -&gt;</div><div class="line">		 	resolutionStrategy.force(<span class="string">"$&#123;line&#125;"</span>)</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过使用<code>resolutionStrategy.force(aar)</code>来进行强制的版本依赖。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2017年12月05日 14:44</p>
+        <p>原始链接： <a class="post-url" href="/2017/11/28/成熟的组件化开发/" title="成熟的组件化开发">http://mjjde.github.io/2017/11/28/成熟的组件化开发/</a></p>
+        <footer>
+            <a href="http://mjjde.github.io">
+                <img src="/images/avatar.jpg" alt="Joker Mei">
+                Joker Mei
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://mjjde.github.io/2017/11/28/成熟的组件化开发/&title=《成熟的组件化开发》 — 清风向阳&pic=http://mjjde.github.ioimages/avatar.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://mjjde.github.io/2017/11/28/成熟的组件化开发/&title=《成熟的组件化开发》 — 清风向阳&source=" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://mjjde.github.io/2017/11/28/成熟的组件化开发/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《成熟的组件化开发》 — 清风向阳&url=http://mjjde.github.io/2017/11/28/成熟的组件化开发/&via=http://mjjde.github.io" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://mjjde.github.io/2017/11/28/成熟的组件化开发/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://mjjde.github.io/2017/11/28/成熟的组件化开发/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/android/" class="color3">android</a>
+      
+    <a href="/tags/组件化/" class="color4">组件化</a>
+      
+    <a href="/tags/gradle/" class="color2">gradle</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#什么是组件化开发"><span class="post-toc-text">什么是组件化开发</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Git-amp-Repo"><span class="post-toc-text">Git & Repo</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#如何管理模块module"><span class="post-toc-text">如何管理模块module</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#模块module的依赖管理"><span class="post-toc-text">模块module的依赖管理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#本地调试"><span class="post-toc-text">本地调试</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#封版策略"><span class="post-toc-text">封版策略</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/19/面向对象设计-依赖倒转原则/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">面向对象设计-依赖倒转原则</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2017 Joker Mei<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://mjjde.github.io",
+      animate: false,
+      isHome: false,
+      share: true
+  }
+</script>
+<div class="sidebar">
+    <!-- <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div> -->
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Android技术/">Android技术</a><a class="category-link" href="/categories/其他技术/">其他技术</a><a class="category-link" href="/categories/网络技术/">网络技术</a><a class="category-link" href="/categories/设计模式/">设计模式</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 16px;">Android</a> <a href="/tags/Android-IPC/" style="font-size: 10px;">Android-IPC</a> <a href="/tags/Binder/" style="font-size: 16px;">Binder</a> <a href="/tags/DiskLruCache/" style="font-size: 10px;">DiskLruCache</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/HTTP/" style="font-size: 20px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Notification/" style="font-size: 10px;">Notification</a> <a href="/tags/RemoteView/" style="font-size: 10px;">RemoteView</a> <a href="/tags/Rxjava/" style="font-size: 14px;">Rxjava</a> <a href="/tags/ServiceManager/" style="font-size: 14px;">ServiceManager</a> <a href="/tags/android/" style="font-size: 12px;">android</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/java/" style="font-size: 18px;">java</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/volley/" style="font-size: 12px;">volley</a> <a href="/tags/widget/" style="font-size: 10px;">widget</a> <a href="/tags/事件/" style="font-size: 10px;">事件</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/设计模式/" style="font-size: 18px;">设计模式</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div id="mobile-header-menu-container">
+        <span class="title">Menu</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>
