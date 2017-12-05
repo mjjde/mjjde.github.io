@@ -8,17 +8,17 @@
   
     <meta name="keywords" content="Joker,Joker's Blog" />
   
-  <meta name="description" content="组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。  什么是组件化开发现在的项目一般有自己的纵向划分，下层是自己的library底层库，比如push，log等等通用的SDK库。那么上层就是业务代码，是一大块的业务代码的杂糅。">
+  <meta name="description" content="组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。">
 <meta name="keywords" content="android,组件化,gradle">
 <meta property="og:type" content="article">
 <meta property="og:title" content="成熟的组件化开发">
 <meta property="og:url" content="http://mjjde.github.io/2017/11/28/成熟的组件化开发/index.html">
 <meta property="og:site_name" content="清风向阳">
-<meta property="og:description" content="组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。  什么是组件化开发现在的项目一般有自己的纵向划分，下层是自己的library底层库，比如push，log等等通用的SDK库。那么上层就是业务代码，是一大块的业务代码的杂糅。">
-<meta property="og:updated_time" content="2017-12-05T06:44:58.089Z">
+<meta property="og:description" content="组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。">
+<meta property="og:updated_time" content="2017-12-05T06:50:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="成熟的组件化开发">
-<meta name="twitter:description" content="组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。  什么是组件化开发现在的项目一般有自己的纵向划分，下层是自己的library底层库，比如push，log等等通用的SDK库。那么上层就是业务代码，是一大块的业务代码的杂糅。">
+<meta name="twitter:description" content="组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。">
   
   
     <link rel="icon" href="/favicon_pic.ico">
@@ -135,6 +135,9 @@
             <blockquote>
 <p>组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的情况，这样也会导致开发效率下降，另一方面对问题的排查也带来的很多的麻烦。</p>
 </blockquote>
+<a id="more"></a>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http//music.163.com/outchain/player?type=2&id=109161&auto=1&height=66"></iframe>
+
 <h4 id="什么是组件化开发"><a href="#什么是组件化开发" class="headerlink" title="什么是组件化开发"></a>什么是组件化开发</h4><p>现在的项目一般有自己的纵向划分，下层是自己的library底层库，比如push，log等等通用的SDK库。那么上层就是业务代码，是一大块的业务代码的杂糅。如果相对小型的项目，开发人员不多的情况下，这样的开发模式视乎是有自己的优势的。</p>
 <p>但是一旦项目慢慢的庞大起来，这样的开发模式似乎力不从心了。常常因为一个问题的修改而翻遍整个项目代码。也经常因为等待另一个人的工作而耽误了自己的时间，其实这是在划分任务的时候，没有一个很清晰的业务划分，而导致了成员内的工作交杂互相依赖了。</p>
 <p>那么如果去解决这一的问题呢。显然在个开发者论坛，博客上也给出了相应的方案，那就是增加一次横向划分，在原来的纵向架构上对业务层进行横向的按业务模块再次划分。 这样的开发模式已经成为了一种趋势，为大型项目开发提供更好的项目管理和业务开发的手段。</p>
@@ -148,7 +151,6 @@
 <p>通常的小型的项目只需要一个仓库就可以解决了，即使是分出来了几个lib。那么对与多人维护项目的不同模块的代码的时候都是在操作同一个仓库，必定会造成相互干扰的情况。</p>
 <p>那么对于组件化开发来说，其目的之一就是避免开发时的相互干扰，所以建立一系列的仓库是变的可需求的行为。</p>
 <p>那么管理这些仓库最好的工具就是repo。将项目中的模块分拆出来建入不同的仓库去管理。</p>
-<p>那么一个项目就会拆成类似下图的形式。</p>
 <h4 id="如何管理模块module"><a href="#如何管理模块module" class="headerlink" title="如何管理模块module"></a>如何管理模块module</h4><p>这些被拆分出来的模块必定是被定义为 <code>apply plugin: &#39;com.android.library&#39;</code>,其创建实际是和在主工程上右键建立module一致，只是我们创建的模块module是copy出来与主项目同一目录了。这里要注意copy的时候需要在主工程的module settings里移除该module。</p>
 <p>那么既然建立了模块的project，也已经有了相应的代码管理工具，那么主工程如何去导入呢。</p>
 <p>android的导入module的工作是在settings.gradle中。</p>
@@ -185,7 +187,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2017年12月05日 14:44</p>
+        <p>最后更新： 2017年12月05日 14:50</p>
         <p>原始链接： <a class="post-url" href="/2017/11/28/成熟的组件化开发/" title="成熟的组件化开发">http://mjjde.github.io/2017/11/28/成熟的组件化开发/</a></p>
         <footer>
             <a href="http://mjjde.github.io">
@@ -218,7 +220,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://mjjde.github.io/2017/11/28/成熟的组件化开发/&title=《成熟的组件化开发》 — 清风向阳&source=" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://mjjde.github.io/2017/11/28/成熟的组件化开发/&title=《成熟的组件化开发》 — 清风向阳&source=
+组件化开发是一个大型项目的发展趋势，对于一个大规模多人合作的项目来说，化整为零是一个不错的思考方向，常常在多人开发的时候会出现相互干扰，任务分工不明确的..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
